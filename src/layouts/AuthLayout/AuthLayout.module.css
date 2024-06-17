@@ -1,0 +1,39 @@
+.container {
+    background-color: #001F3F;
+    padding: 4% 9%
+}
+
+.fondo {
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 1% 25% 0.5% 25%;
+    border-radius: 25px;
+}
+
+.logo {
+    width: 100%; /* Ajusta el tamaño según el contenedor */
+    max-width: 16rem; /* Limita el tamaño máximo */
+}
+
+.contenedor_logo {
+    text-align: center;
+}
+.main {
+    background-color: white;
+    border-radius: 25px;
+}
+
+.derechos {
+    color: white;
+    text-align: center;
+    font-size:small;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+/* Tamaño típico de celular */
+@media only screen and (max-width: 767px) {
+    /* Estilos para pantalla de celular */
+
+.fondo {
+    padding: 1% 5% 0.5% 5%;
+}
+}

@@ -1,0 +1,38 @@
+.boton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  color: #ffffff; /* Blanco */
+  border: none;
+  border-radius: 25px;
+  background: #b87a07; /* Verde bosque */
+  padding: 0.5rem 1rem; /* Ajusta el padding según tus necesidades */
+  cursor: pointer;
+  margin-inline-start: 1rem;
+  font-size: 15px;
+}
+
+.icono {
+  width: 1.3rem;
+  height: 1.3rem;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-right: 0.5rem;
+}
+
+.boton:hover {
+  background-color: rgb(170, 111, 0); /* Blanco */
+  color: white; /* Verde claro */ /* Verde claro */
+}
+
+.boton:hover::before {
+  transform: skewX(30deg) translate(150%, -50%);
+  transition-delay: 0.1s;
+}
+
+.boton:active {
+    transform: scale(0.9);
+  }
+  

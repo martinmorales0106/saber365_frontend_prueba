@@ -1,0 +1,31 @@
+.titulo {
+  text-align: center;
+  padding-top: 1.5rem;
+  color: rgb(54, 53, 53);
+}
+
+.link {
+  text-decoration: none;
+  color: rgb(54, 53, 53);
+}
+
+.click {
+  background-color: #b87a07;
+  margin-bottom: 0.75rem;
+  width: 50%;
+  margin-top: 0.5rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  color: #fff;
+  border-radius: 0.25rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  font-size: medium;
+  cursor: pointer;
+}
+.containerClick {
+  text-align: center;
+  padding: 0% 12% 4% 12%;
+  align-items: center;
+  justify-content: center;
+}

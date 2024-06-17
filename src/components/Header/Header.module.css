@@ -1,0 +1,76 @@
+.container {
+  background-color: #001f3f;
+  display: flex;
+  padding-right: 2%;
+  padding-left: 1%;
+  border-bottom-width: 1px;
+  /* position: fixed;
+  width: 99%;
+  top: 0;
+  z-index: 1000; */
+}
+
+.contenedor_logo {
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+}
+
+.logo {
+  width: 200px;
+}
+
+.contenedor_enlaces {
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  color: white;
+}
+
+.text {
+  text-align: center;
+  padding-left: 2%;
+}
+.contenedor_botones {
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  justify-content: end;
+  align-items: center;
+}
+
+.link {
+    text-decoration: none;
+    color: #da8f05 
+}
+
+.icono {
+  width: 1.7rem;
+  height: 1.7rem;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-right: 2.5rem;
+  padding-left: 2.5rem;
+}
+.iconoUsuario{
+  width: 1.2rem;
+  height: 1.2rem;
+  align-items: center;
+  justify-content:center;
+  padding-right: 0.5rem;
+}
+.cuenta {
+  color: white;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.parrafoCuenta{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}

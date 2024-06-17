@@ -1,0 +1,93 @@
+.titulo {
+  text-align: center;
+  padding-top: 1.5rem;
+  color: rgb(54, 53, 53);
+}
+
+.formulario {
+  padding: 0% 10% 5% 10%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #cbd8ee;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+}
+.icono {
+  text-align: center;
+  width: 100%;
+  max-width: 1.3rem;
+  height: 1.3rem;
+}
+
+.input {
+  width: 80%;
+  margin: 0.3rem;
+  padding: 0.5rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  background-color: #ebf0f8;
+  border-radius: 0.25rem;
+  font-size: medium;
+  align-items: center;
+  justify-content: center;
+}
+.input::placeholder {
+  color: rgb(97, 96, 96);
+}
+
+.input2 {
+  width: 84%;
+  margin: 0.3rem;
+  padding: 0.5rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  background-color: #ebf0f8;
+  color: rgb(97, 96, 96);
+  font-size: medium;
+  align-items: center;
+  justify-content: center;
+}
+
+.contenedor_botones {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.boton {
+  background-color: #b87a07;
+  margin-bottom: 0.75rem;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: #fff;
+  border-radius: 0.25rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.span {
+  color: #b87a07;
+}
+
+.parrafo {
+  text-align: center;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.crear_cuenta {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.link {
+  text-decoration: none;
+  color: #b87a07;
+}

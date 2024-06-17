@@ -1,0 +1,46 @@
+.fondo1 {
+    background-color: #0f3861;
+    padding: 1%;
+    padding-top: 2rem;
+    display: flex;
+    justify-content:space-around;
+}
+
+.encabezado {
+    width: 50%;
+    text-align: center;
+}
+
+.titulo {
+    padding: 1rem;
+    color: white;
+    font-family:'Roboto', sans-serif;
+    font-size: 2rem;
+}
+
+.parrafos {
+    color: white;
+    padding: 2rem;
+    font-size: 1.3rem;
+    font-family:'Roboto', sans-serif;
+}
+
+.boton1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.container_imagen1 {
+    width: 40%;
+    text-align: center;
+}
+
+.imagen1 {
+    width: 30rem;
+}
+
+.link {
+    text-decoration: none;
+  }
