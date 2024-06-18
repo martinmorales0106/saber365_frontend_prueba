@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthProvider";
 import ConfirmarCuenta from "./pages/ConfirmarCuenta/ConfirmarCuenta";
 import RutaProtegida from "./layouts/RutaProtegida/RutaProtegida";
 import PerfilUsuario from "./layouts/PerfilUsuario/PerfilUsuario";
+import UsuarioInicio from "./pages/UsuarioInicio/UsuarioInicio";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           </Route>
 
           <Route path="/usuario" element={<PerfilUsuario />}>
+          <Route index element={<UsuarioInicio />} />
           </Route>
         </Routes>
       </AuthProvider>

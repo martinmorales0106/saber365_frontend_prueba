@@ -5,11 +5,18 @@ import { IconContext } from "react-icons";
 import * as FaIcons from "react-icons/fa";
 import { Link } from "react-router-dom";
 import * as AiIcons from "react-icons/ai";
+import logo from "../../assets/Logo principal color.png";
+import useAuth from "../../hooks/useAuth";
+import iconoUsuario from "../../assets/usuario-inicio.png";
+import cerrar from "../../assets/cerrar-sesion.png";
+import pruebasimg from "../../assets/pruebasImg.png";
+import resultadosImg from "../../assets/resultadosImg.png";
+import perfilImg from "../../assets/perfilImg.png";
 
 const pag = [
   {
     title: "Inicio",
-    path: "/",
+    path: "/usuario",
     cName: styles.navText,
     icon: <img src={inicioImg} alt="inicio" className={styles.icono} />,
   },
@@ -17,32 +24,61 @@ const pag = [
     title: "Pruebas",
     path: "/pruebas",
     cName: styles.navText,
-    icon: <img src={inicioImg} alt="pruebas" className={styles.icono} />,
+    icon: <img src={pruebasimg} alt="pruebas" className={styles.icono} />,
   },
   {
     title: "Resultados",
     path: "/resultados",
     cName: styles.navText,
-    icon: <img src={inicioImg} alt="resultados" className={styles.icono} />,
+    icon: <img src={resultadosImg} alt="resultados" className={styles.icono} />,
+  },
+  {
+    title: "Perfil",
+    path: "/perfil",
+    cName: styles.navText,
+    icon: <img src={perfilImg} alt="resultados" className={styles.icono} />,
   },
 ];
 
 const HeaderUsuario = () => {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
+  const { auth, cerrarSesionAuth } = useAuth();
+
+  const handleCerrarSesion = () => {
+    cerrarSesionAuth();
+    localStorage.removeItem("token");
+  };
 
   return (
     <div>
       <IconContext.Provider value={{ color: "#fff" }}>
         <div className={styles.navbar}>
-          <div >
+          <div>
             <Link to="#" className={styles.menuBars}>
               <FaIcons.FaBars onClick={showSidebar} />
             </Link>
           </div>
-          <p>Hola</p>
+          <div className={styles.contenedor_logo}>
+            <Link to="/">
+              <img className={styles.logo} src={logo} alt="Logo de saber365" />
+            </Link>
+          </div>
+          <div className={styles.parrafos}>
+            <div>
+              <p>{auth.nombreUsuario}</p>
+              <p>{auth.grado}</p>
+            </div>
+          </div>
+          <div className={styles.parrafos}>
+            <img src={iconoUsuario} className={styles.iconoUsuario} />
+          </div>
+          <div className={styles.cerrar}>
+            <Link to="/sin-autenticar" onClick={handleCerrarSesion}>
+              <img src={cerrar} className={styles.icono} />
+            </Link>
+          </div>
         </div>
-
         <nav
           className={
             sidebar ? `${styles.navMenu} ${styles.active}` : styles.navMenu

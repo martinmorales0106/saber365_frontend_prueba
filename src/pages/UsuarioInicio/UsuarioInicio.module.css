@@ -1,0 +1,43 @@
+.fondo {
+    background-color: #001F3F;
+}
+
+.container {
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 2rem;
+    
+}
+
+.contenedor {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 25px;
+}
+
+.banner {
+    width: 80%;
+    display: flex;
+    background-color: #2ECC71;
+    padding: 1rem;
+    border-radius: 25px;
+}
+
+.bannerParrafo{
+    color: white;
+    width: 65%;
+}
+
+.bannerTitulo{
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
+.bannerContenido{
+    padding-right: 2rem;
+    padding-left: 2rem;
+    text-align: center;
+    font-size: large;
+    font-weight: 400;
+}
