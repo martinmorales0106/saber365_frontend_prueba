@@ -23,7 +23,15 @@ const HeaderAuth = () => {
           </Link>
         </div>
         <div className={styles.contenedor_botones}>
-          <div className={styles.cuenta}>
+        {auth.admin ? (<div className={styles.cuenta}>
+              <Link to="/admin" className={styles.link} >
+              <p>Hola, {auth.nombreUsuario}</p>
+                <p className={styles.parrafoCuenta}>
+                  <img src={iconoUsuario} className={styles.iconoUsuario} /> Mi
+                  Admin
+                </p>
+              </Link>
+          </div>): (<div className={styles.cuenta}>
               <Link to="/usuario" className={styles.link} >
               <p>Hola, {auth.nombreUsuario}</p>
                 <p className={styles.parrafoCuenta}>
@@ -31,7 +39,8 @@ const HeaderAuth = () => {
                   Cuenta
                 </p>
               </Link>
-          </div>
+          </div>)}
+          
           <div className={styles.cerrar}>
             <Link to="/sin-autenticar" onClick={handleCerrarSesion}>
               <img src={cerrar} className={styles.icono} />

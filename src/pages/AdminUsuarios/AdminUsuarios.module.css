@@ -1,0 +1,92 @@
+.contenedor {
+  background-color: #0f3861;
+  padding: 2rem;
+}
+
+.titulo {
+  color: #ffffff;
+}
+
+.icono {
+  width: 2rem;
+  height: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.icono2 {
+  width: 1rem;
+}
+
+.tituloContenido {
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.subTitulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.botones {
+  display: flex;
+}
+
+.resultados {
+  width: 100%px;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  background-color: #d7e5f4;
+}
+
+.tabla {
+  border-collapse: collapse;
+  margin: 2rem 0;
+  font-size: 1rem;
+  font-family: sans-serif;
+  width: 98%;
+  text-align: center;
+  box-shadow: 0 0 10px #0f38618e;
+}
+
+.tabla thead tr {
+  background-color: #0f3861;
+  color: #ffffff;
+  text-align: middle;
+}
+
+.tabla tbody tr {
+  border-bottom: 2px solid #0f3861;
+}
+
+.tabla tbody tr:last-child {
+  border-bottom: none; /* Eliminar el borde inferior del último tr */
+}
+
+.tabla td {
+    padding: 0.4rem;
+  }
+
+.admin {
+  text-transform: uppercase;
+}
+
+.boton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.boton img {
+  width: 1.2rem; /* Ajusta el tamaño según tu diseño */
+  height: 1.1rem;
+}

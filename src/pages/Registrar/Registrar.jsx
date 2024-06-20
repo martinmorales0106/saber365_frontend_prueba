@@ -108,6 +108,8 @@ const Registrar = () => {
       return;
     }
 
+    
+
     try {
       const { data } = await clienteAxios.post(`/usuarios`, {
         email,
