@@ -6,9 +6,9 @@ import PropTypes from "prop-types"; // Importa PropTypes
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({});
+  const storedUser = localStorage.getItem("authUser");
+  const [auth, setAuth] = useState(JSON.parse(storedUser));
   const [cargando, setCargando] = useState(true);
-  console.log(auth);
 
   useEffect(() => {
     const autenticarUsuario = async () => {

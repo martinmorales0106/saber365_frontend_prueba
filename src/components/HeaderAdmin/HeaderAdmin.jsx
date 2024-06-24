@@ -29,13 +29,13 @@ const pag = [
   },
   {
     title: "Simulacros",
-    path: "/pruebas",
+    path: "/admin/simulacros",
     cName: styles.navText,
     icon: <img src={pruebasimg} alt="pruebas" className={styles.icono} />,
   },
   {
     title: "Preguntas",
-    path: "/resultados",
+    path: "/admin/preguntas",
     cName: styles.navText,
     icon: <img src={preguntasImg} alt="resultados" className={styles.icono} />,
   },

@@ -112,4 +112,10 @@
   .cerrar {
     padding-right: 2rem;
   }
-  
+
+  .perfil {
+    width: 100%;
+    color: white;
+    text-align: center;
+    justify-content: center;
+  }

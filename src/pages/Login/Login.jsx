@@ -38,6 +38,7 @@ const Login = () => {
       });
       setAlerta({});
       localStorage.setItem("token", data.token);
+      localStorage.setItem("authUser", JSON.stringify(data));
       setAuth(data);
       navigate("/");
     } catch (error) { 
