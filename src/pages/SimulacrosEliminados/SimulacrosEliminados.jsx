@@ -62,7 +62,6 @@ const SimulacrosEliminados = () => {
               <th>Sesiones</th>
               <th>Puntaje Máximo</th>
               <th>Precio</th>
-              <th>Activo</th>
               <th>Eliminado</th>
               <th>Recuperar</th>
             </tr>
@@ -89,9 +88,6 @@ const SimulacrosEliminados = () => {
                   <td>{simulacro.numero_sesiones}</td>
                   <td>{simulacro.puntaje_maximo}</td>
                   <td>{simulacro.precio}</td>
-                  <td className={styles.admin}>
-                    {simulacro.activo.toString()}
-                  </td>
                   <td>{formatearFecha(simulacro.deletedAt)}</td>
                   <td>
                     <button
