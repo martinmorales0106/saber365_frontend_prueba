@@ -73,7 +73,7 @@ const SimulacrosEliminados = () => {
                 <td>No hay Simulacros disponibles</td>
               </tr>
             ) : (
-              simulacrosEliminados.map((simulacro) => (
+              simulacrosEliminados?.map((simulacro) => (
                 <tr key={simulacro.id}>
                 <td className={styles.contenedorImagen}>
                     <img
