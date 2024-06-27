@@ -1,0 +1,46 @@
+
+.estilos1 {
+    background-color: #001f3f;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.fondo {
+    width: 100%;
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 0.8rem;
+    align-items: center;
+}
+.estilos2 {
+    background-color: #da8f05;
+    color: white;
+}
+
+.estilos3 {
+    background-color: rgba(52, 152, 219, 0.2);
+    color: white;
+}
+
+.estilos4 {
+    padding-left: 1rem/* 16px */;
+    padding-right: 1rem;
+    padding-top: 0.5rem/* 4px */;
+    padding-bottom: 0.5rem/* 4px */;
+    border-radius: 0.5rem/* 8px */;
+}
+
+.estilos5 {
+    background-color: #d7e5f4ec;
+    border-bottom-right-radius: 0.5rem/* 8px */;
+    border-bottom-left-radius: 0.5rem;
+}
+
+.estilos6 {
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    margin-bottom: 1rem;
+}

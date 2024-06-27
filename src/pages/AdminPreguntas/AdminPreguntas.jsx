@@ -135,7 +135,6 @@ const AdminPreguntas = () => {
                     <td className={styles.contenedorImagen}>
                       <img
                         src={pregunta.imagen}
-                        alt={pregunta.pregunta}
                         className={styles.imagen}
                       />
                     </td>

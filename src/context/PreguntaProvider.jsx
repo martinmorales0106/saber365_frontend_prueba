@@ -11,7 +11,7 @@ const PreguntaProvider = ({ children }) => {
   const [modalPregunta, setModalPregunta] = useState(false);
   const [preguntasEliminadas, setPreguntasEliminadas] = useState([]);
   const [preguntap, setPreguntap] = useState({});
-
+  
   const mostrarAlerta = (alerta) => {
     setAlerta(alerta);
     setTimeout(() => {
@@ -121,7 +121,13 @@ const PreguntaProvider = ({ children }) => {
     async function fetchPreguntas() {
       try {
         const token = localStorage.getItem("token");
-        if (!token) throw new Error("Token no encontrado");
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
 
         const config = {
           headers: {
@@ -183,7 +189,13 @@ const PreguntaProvider = ({ children }) => {
     async function fetchPreguntasEliminadas() {
       try {
         const token = localStorage.getItem("token");
-        if (!token) throw new Error("Token no encontrado");
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
 
         const config = {
           headers: {
@@ -241,6 +253,8 @@ const PreguntaProvider = ({ children }) => {
     }
   };
 
+  
+
   return (
     <PreguntaContext.Provider
       value={{
@@ -255,6 +269,7 @@ const PreguntaProvider = ({ children }) => {
         recuperarPregunta,
         handleModalEditarPregunta,
         preguntap,
+        
       }}
     >
       {children}

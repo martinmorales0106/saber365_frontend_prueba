@@ -22,7 +22,7 @@ const pag = [
   },
   {
     title: "Pruebas",
-    path: "/pruebas",
+    path: "/usuario/pruebas",
     cName: styles.navText,
     icon: <img src={pruebasimg} alt="pruebas" className={styles.icono} />,
   },

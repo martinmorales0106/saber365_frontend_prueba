@@ -76,7 +76,7 @@ const PreguntasEliminadas = () => {
                   <td>No hay Preguntas disponibles</td>
                 </tr>
               ) : (
-                preguntasEliminadas.map((pregunta) => (
+                preguntasEliminadas && preguntasEliminadas.map((pregunta) => (
                   <tr key={pregunta.id}>
                   <td>{pregunta.contexto}</td>
                     <td className={styles.contenedorImagen}>

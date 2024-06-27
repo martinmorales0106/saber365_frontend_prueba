@@ -19,6 +19,11 @@ import SimulacrosEliminados from "./pages/SimulacrosEliminados/SimulacrosElimina
 import AdminPreguntas from "./pages/AdminPreguntas/AdminPreguntas";
 import { PreguntaProvider } from "./context/PreguntaProvider";
 import PreguntasEliminadas from "./pages/PreguntasEliminadas/PreguntasEliminadas";
+import UsuarioPruebas from "./pages/UsuarioPruebas/UsuarioPruebas";
+import { PerfilUsuarioProvider } from "./context/PerfilUsuarioProvider";
+import ConfirmarRealizarPrueba from "./pages/ConfirmarRealizarPrueba/ConfirmarRealizarPrueba";
+import { TabsProvider } from "./context/TabsProvider";
+import RealizarPrueba from "./pages/RealizarPrueba/RealizarPrueba";
 
 function App() {
   return (
@@ -27,41 +32,60 @@ function App() {
         <UsuarioProvider>
           <SimulacroProvider>
             <PreguntaProvider>
-              <Routes>
-                <Route path="/" element={<RutaProtegida />}>
-                  <Route index element={<Inicio />} />
-                </Route>
+              <PerfilUsuarioProvider>
+                <TabsProvider>
+                  <Routes>
+                    <Route path="/" element={<RutaProtegida />}>
+                      <Route index element={<Inicio />} />
+                    </Route>
 
-                <Route path="/sin-autenticar" element={<SinRegistrar />}>
-                  <Route index element={<Inicio />} />
-                </Route>
+                    <Route path="/sin-autenticar" element={<SinRegistrar />}>
+                      <Route index element={<Inicio />} />
+                    </Route>
 
-                <Route path="/autenticar" element={<AuthLayout />}>
-                  <Route index element={<Login />} />
-                  <Route path="registrar" element={<Registrar />} />
-                  <Route path="confirmar/:id" element={<ConfirmarCuenta />} />
-                </Route>
+                    <Route path="/autenticar" element={<AuthLayout />}>
+                      <Route index element={<Login />} />
+                      <Route path="registrar" element={<Registrar />} />
+                      <Route
+                        path="confirmar/:id"
+                        element={<ConfirmarCuenta />}
+                      />
+                    </Route>
 
-                <Route path="/usuario" element={<PerfilUsuario />}>
-                  <Route index element={<UsuarioInicio />} />
-                </Route>
+                    <Route path="/usuario" element={<PerfilUsuario />}>
+                      <Route index element={<UsuarioInicio />} />
+                      <Route path="pruebas" element={<UsuarioPruebas />} />
+                      <Route
+                        path="confirmar-prueba/:id"
+                        element={<ConfirmarRealizarPrueba />}
+                      />
+                      <Route
+                        path="realizar-prueba/:id"
+                        element={<RealizarPrueba />}
+                      />
+                    </Route>
 
-                <Route path="/admin" element={<PerfilAdmin />}>
-                  <Route index element={<UsuarioInicio />} />
-                  <Route path="usuarios" element={<AdminUsuarios />} />
-                  <Route
-                    path="usuarios/usuarios-eliminados"
-                    element={<UsuariosEliminados />}
-                  />
-                  <Route path="simulacros" element={<AdminSimulacros />} />
-                  <Route
-                    path="simulacros/simulacros-eliminados"
-                    element={<SimulacrosEliminados />}
-                  />
-                  <Route path="preguntas" element={<AdminPreguntas />} />
-                  <Route path="preguntas/preguntas-eliminadas" element={<PreguntasEliminadas />} />
-                </Route>
-              </Routes>
+                    <Route path="/admin" element={<PerfilAdmin />}>
+                      <Route index element={<UsuarioInicio />} />
+                      <Route path="usuarios" element={<AdminUsuarios />} />
+                      <Route
+                        path="usuarios/usuarios-eliminados"
+                        element={<UsuariosEliminados />}
+                      />
+                      <Route path="simulacros" element={<AdminSimulacros />} />
+                      <Route
+                        path="simulacros/simulacros-eliminados"
+                        element={<SimulacrosEliminados />}
+                      />
+                      <Route path="preguntas" element={<AdminPreguntas />} />
+                      <Route
+                        path="preguntas/preguntas-eliminadas"
+                        element={<PreguntasEliminadas />}
+                      />
+                    </Route>
+                  </Routes>
+                </TabsProvider>
+              </PerfilUsuarioProvider>
             </PreguntaProvider>
           </SimulacroProvider>
         </UsuarioProvider>

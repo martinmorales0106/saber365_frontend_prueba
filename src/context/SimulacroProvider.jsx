@@ -6,12 +6,13 @@ import Swal from "sweetalert2";
 const SimulacroContext = createContext();
 
 const SimulacroProvider = ({ children }) => {
+
   const [simulacros, setSimulacros] = useState([]);
   const [alerta, setAlerta] = useState({});
   const [modalSimulacro, setModalSimulacro] = useState(false);
   const [simulacrop, setSimulacrop] = useState({});
   const [simulacrosEliminados, setSimulacrosEliminados] = useState([]);
-
+  
 
   const mostrarAlerta = (alerta) => {
     setAlerta(alerta);
@@ -125,11 +126,18 @@ const SimulacroProvider = ({ children }) => {
   };
 
    // Cargar 
+   
    useEffect(() => {
     async function fetchSimulacros() {
       try {
         const token = localStorage.getItem("token");
-        if (!token) return;
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
 
         const config = {
           headers: {
@@ -197,7 +205,13 @@ const SimulacroProvider = ({ children }) => {
     async function fetchSimulacrosEliminados() {
       try {
         const token = localStorage.getItem("token");
-        if (!token) return;
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
 
         const config = {
           headers: {
@@ -211,7 +225,7 @@ const SimulacroProvider = ({ children }) => {
         );
         setSimulacrosEliminados(response.data);
       } catch (error) {
-        console.error("Error al cargar los simulacros:", error);
+        console.error("Error al cargar los simulacros eliminados:", error);
       }
     }
 

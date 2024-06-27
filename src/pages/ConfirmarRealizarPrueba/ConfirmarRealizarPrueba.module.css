@@ -1,0 +1,124 @@
+.content {
+  display: flex;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.imagen {
+  background-color: #0f3861;
+  width: 40%;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+.contenedorImagen {
+  text-align: center;
+  padding-bottom: 1rem;
+  padding-top: 1.5rem;
+}
+
+.imagenCuadernillo {
+  border-radius: 25px 25px 25px 25px;
+}
+
+.sesion1Img {
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.estructuraCuadernillo {
+  padding-top: 1rem;
+}
+
+.tablaPreguntas {
+  text-align: center;
+}
+
+.imgTablaPreguntas {
+  width: 25rem;
+}
+.detalles {
+  width: 60%;
+  background-color: #ccf3f5;
+  padding: 2%;
+  padding-left: 4%;
+  padding-right: 4%;
+  border-radius: 8px;
+}
+
+.encabezado {
+  display: flex;
+}
+
+.titulo {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iniciarPrueba {
+  width: 12rem;
+}
+
+.parrafo1 {
+  padding-top: 2rem;
+  text-align: justify;
+}
+
+.subtitulo {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.viñetas {
+  padding-left: 1rem;
+  text-align: justify;
+}
+
+.tablaEncabezado {
+  justify-content: space-between;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  border-collapse: separate;
+  border-spacing: 0.5rem;
+}
+
+.tablaEncabezado thead tr {
+  text-align: middle;
+}
+
+.sesionRealizada {
+  background-color: rgb(38, 141, 38);
+  border-radius: 25px;
+  padding: 0.5rem;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .imagen,
+  .detalles {
+    width: 100%;
+  }
+
+  .iniciarPrueba {
+    width: 100%;
+  }
+
+  .imgTablaPreguntas {
+    width: 100%;
+  }
+}

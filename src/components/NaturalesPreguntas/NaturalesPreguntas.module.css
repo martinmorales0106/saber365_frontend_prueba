@@ -1,0 +1,185 @@
+.contenedor {
+  background-color: #001f3f;
+  margin: 0%;
+}
+
+.fondo {
+  padding: 0.2rem;
+  background-color: rgba(52, 152, 219, 0.2);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  color: white;
+}
+
+.boton {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  background-color: rgba(4, 62, 100, 0.884);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagenBoton {
+  width: 1.3rem;
+  cursor: pointer;
+}
+
+.numeracion {
+  font-size: large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.numero {
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  cursor: pointer;
+}
+
+.seleccionado {
+  background-color: #da8f05;
+  color: white;
+  border-radius: 5px;
+}
+
+.containerPreguntas {
+  display: flex;
+}
+
+.preguntas1 {
+  width: 55%;
+  margin: 0.8rem;
+  padding: 0.5rem;
+}
+
+.preguntas2 {
+  width: 45%;
+  margin: 0.8rem;
+  padding: 0.5rem;
+}
+
+.contexto {
+  text-align: justify;
+  font-size: 18px;
+  color: black;
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.containerImg {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 25px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.imagenAmpliada {
+  width: 100%; /* O el ancho que desees */
+  height: auto; /* Mantiene la proporción original de la imagen */
+  cursor: zoom-out; /* Cambia el cursor al hacer clic para indicar que se puede reducir */
+  transition: width 0.3s, height 0.3s; /* Agrega una transición suave */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Estilo para la imagen normal */
+.imagen {
+  width: 100%; /* Establece el ancho al 100% del contenedor */
+  object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo la relación de aspecto y cubriendo el contenedor */
+  cursor: pointer; /* Cambia el cursor al hacer clic para indicar que se puede ampliar */
+  transition: transform 0.3s; /* Agrega una transición suave */
+  cursor: zoom-in;
+}
+
+.pregunta {
+  text-align: justify;
+  font-size: 18px;
+  color: black;
+  background-color: white;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.opcionesRespuestas {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 25px;
+  margin-top: 0.8rem;
+  margin-bottom: 0.8rem;
+  align-items: center;
+  font-size: 18px;
+}
+.opcionesRespuestas label {
+  display: flex;
+  align-items: center;
+}
+.opcionesRespuestas input[type="radio"] {
+  margin-right: 8px; /* Ajusta el espaciado entre el círculo y el texto */
+  transform: scale(1.5); /* Ajusta el tamaño del círculo de selección */
+}
+
+/* Estilo opcional para cambiar el color del círculo de selección al pasar el ratón */
+.opcionesRespuestas input[type="radio"]:hover {
+  filter: brightness(1.8); /* Cambia el brillo al pasar el ratón */
+}
+
+.letra {
+  font-size: large;
+  font-weight: bold;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+
+.opcion {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-align: justify;
+}
+.boton2 {
+  background-color: #b87a07;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 25px;
+  padding-bottom: 0.5rem;
+  color: #fff;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  text-align: center;
+  align-items: center;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.boton3 {
+  background-color: rgb(4, 62, 100);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 25px;
+  padding-bottom: 0.5rem;
+  color: #fff;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  text-align: center;
+  align-items: center;
+  font-size: medium;
+  cursor: pointer;
+}

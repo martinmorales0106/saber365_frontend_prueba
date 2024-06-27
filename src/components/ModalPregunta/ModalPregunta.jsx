@@ -138,7 +138,6 @@ const ModalPregunta = () => {
     if (
       [
         contexto,
-        imagen,
         preguntaText,
         opcionA,
         opcionB,

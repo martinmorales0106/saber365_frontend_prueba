@@ -1,0 +1,91 @@
+.fondo {
+    background-color: #001f3f;
+  }
+  
+  .container {
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 3%;
+    border-radius: 0 0 25px 25px;
+  }
+  
+  .containerPruebas {
+    padding: 1%;
+    background-color: white;
+    border-radius: 25px;
+    display: flex;
+    flex-wrap: wrap; /* Esta propiedad permite que los elementos se envuelvan en filas múltiples */
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .imagen {
+    border-radius: 25px 25px 0px 0px;
+  }
+  
+  .simulacros {
+    line-height: 1.8;
+    background-color: #c9f3f57c;
+    border-radius: 25px;
+    margin: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .simulacros:hover {
+      transform: scale(1.05); /* Ajusta el valor según tu preferencia */
+      line-height: 1.8;
+  
+    }
+  
+  .titulo {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+  
+  .preguntas {
+    display: flex;
+   
+    justify-content: center;
+    align-items: center;
+    padding-left: 1%;
+    padding-right: 1%;
+    cursor: pointer;
+  }
+  
+  .contenedor2 {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+  
+  .icono {
+    width: 25px;
+  }
+  
+  .precio {
+    color: #ad7100;
+    font: bold;
+  }
+  
+  .descripcion {
+    padding-left: 3%;
+    padding-right: 3%;
+    font-size: 15px;
+  }
+  
+  .puntaje {
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+  
+  .boton {
+    cursor: pointer;
+  }
+
+  .link {
+    text-decoration: none;
+  }
