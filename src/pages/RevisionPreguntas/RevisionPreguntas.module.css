@@ -1,0 +1,187 @@
+.estilo1 {
+    background-color: aqua;
+}
+
+.estilo2 {
+    background-color: blue;
+}
+
+.fondo {
+    background-color: #001F3F;
+}
+.contenedor{
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 1rem 3rem;
+}
+
+.encabezado {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    padding: 1rem;
+}
+
+.container {
+    background-color: white;
+    border-radius: 25px;
+    padding: 1rem;
+    display: flex;
+}
+.preguntas{
+    width: 40%;
+    background-color: #c9f3f57a;
+    padding: 1rem;
+    border-radius: 25px;
+    margin:0.5rem
+}
+.prueba {
+    width: 60%;
+    background-color: #c9f3f57a;
+    padding: 1rem;
+    border-radius: 25px;
+    margin:0.5rem
+}
+
+.numeros{
+    display:flex;
+    align-items: flex-start;
+    flex-wrap: wrap; 
+}
+.indice{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: large;
+    font-weight: 500;
+}
+
+.imagenNumeros{
+    width: 2.2rem
+}
+
+.contenedorNumeros{
+    margin:0.5rem;
+    cursor: pointer;
+}
+
+.numeroSeleccionado {
+    border: 2px solid rgb(0, 255, 64); /* Puedes personalizar el borde según tus necesidades */
+  }
+  .numeroSeleccionadoPerdido{
+    border: 2px solid rgb(219, 15, 7); 
+  }
+
+  .contexto {
+    text-align: justify;
+    font-size: 18px;
+    color: black;
+    background-color: white;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 25px;
+  }
+
+  .containerImg {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 25px;
+    background-color: white;
+    padding: 1rem;
+  }
+  .imagen {
+    width: 100%; /* Establece el ancho al 100% del contenedor */
+    object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo la relación de aspecto y cubriendo el contenedor */
+    cursor: pointer; /* Cambia el cursor al hacer clic para indicar que se puede ampliar */
+    transition: transform 0.3s; /* Agrega una transición suave */
+    cursor: zoom-in;
+  }
+
+  .link {
+    text-decoration: none;
+  }
+
+  .pregunta {
+    text-align: justify;
+    font-size: 18px;
+    color: black;
+    background-color: white;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 25px;
+  }
+
+  .opcionesRespuestas {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 25px;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    align-items: center;
+    font-size: 18px;
+  }
+  .opcionesRespuestas label {
+    display: flex;
+    align-items: center;
+  }
+  .opcion {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    text-align: justify;
+  }
+  
+  .opcionSeleccionada {
+    background-color: rgb(255, 101, 101);
+    border-radius: 25px;
+  }
+  
+  /* Estilo para respuesta correcta */
+  .respuestaCorrecta {
+    background-color: #aaffaa;
+    border-radius: 25px;
+  }
+
+  .mensaje {
+    background-color: #2d9043;
+    padding: 1rem;
+    border-radius: 25px;
+    margin-top: 2rem;
+  }
+  .mensaje2 {
+    background-color: #653328;
+    padding: 1rem;
+    border-radius: 25px;
+    margin-top: 2rem;
+  }
+
+  .mensajeTitulo{
+    color: white;
+    text-align: center;
+  }
+  .subMensaje{
+    display: flex;
+    color: white;
+    margin-top: 1.6rem;
+  }
+
+  .imagenResultado{
+    width: 10rem;
+    height: 10rem;
+  }
+  .parrafo{
+    text-align: justify;
+    padding-right: 0.5rem;
+  }
+  .boton {
+    padding: 1rem;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .botonRegreso {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+  }

@@ -1,0 +1,155 @@
+.contenedor {
+  background-color: #001f3f;
+  margin: 0%;
+}
+
+.fondo {
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgba(52, 152, 219, 0.2);
+}
+
+.encabezado {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  color: white;
+  padding: 1.5rem;
+}
+
+.container {
+  background-color: white;
+  border-radius: 25px;
+  padding-left: 2rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.contenedorDatosUsuarios {
+  display: flex;
+  justify-content: space-between;
+}
+
+.datosUsuario {
+  padding: 1rem;
+}
+
+.contenedorDatos {
+  display: flex;
+}
+
+.contenedorIcono {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-right: 0.5rem;
+}
+.iconos {
+  width: 2rem;
+  height: 2rem;
+}
+
+.informacionDatos {
+  display: flex;
+  justify-content: space-around;
+}
+
+.puntaje {
+  display: flex;
+  padding: 1rem;
+}
+.puntajeGlobal {
+  color: #ffa500;
+}
+
+.containerResultado {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-around;
+}
+
+.nivel {
+  padding: 1.2rem;
+  background-color: #c9f3f57c;
+  border-radius: 15px;
+}
+
+.areaimg {
+  display: flex;
+  justify-content: space-between;
+}
+.parrafoNivel {
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.contenedorImagen {
+  display: flex;
+  align-items: center;
+}
+
+.puntajeArea {
+  display: flex;
+  align-items: center;
+}
+.resultadoArea {
+  padding-left: 0.5rem;
+  align-items: center;
+}
+.porcentaje {
+  font-size: large;
+}
+.posicion {
+  text-align: center;
+}
+
+.boton {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding: 0.6rem;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.areaimg2 {
+  display: flex;
+}
+
+.nivel2 {
+  padding: 0.8rem;
+}
+.areaPregunta {
+  font-size: 1.5rem;
+  width: 10rem;
+}
+.link {
+  text-decoration: none;
+}

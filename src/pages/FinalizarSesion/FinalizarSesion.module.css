@@ -1,0 +1,33 @@
+.fondo {
+    background-color: #001F3F;
+    padding: 4% 9%
+}
+
+.container {
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 1% 5% 2% 5%;
+    border-radius: 25px;
+}
+.logo {
+    width: 260px;
+}
+
+.contenedor_logo {
+    text-align: center;
+}
+
+.parrafos{
+    color: rgb(218, 214, 214);
+    text-align: center;
+    padding: 1rem;
+}
+
+.boton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1rem;
+}
+.link {
+    text-decoration: none;
+}

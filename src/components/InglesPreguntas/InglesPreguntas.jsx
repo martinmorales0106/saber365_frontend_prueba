@@ -4,9 +4,21 @@ import adelanteImg from "../../assets/adelanteImg.png";
 import styles from "./InglesPreguntas.module.css";
 import useTabs from "../../hooks/useTabs";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
+import useAuth from "../../hooks/useAuth";
 
 const InglesPreguntas = () => {
-  const { preguntasFiltradas, preguntasSimulacro, submitPreguntas } = usePerfilUsuario();
+  const {
+    preguntasFiltradas,
+    preguntasSimulacro,
+    submitPreguntas,
+    simulacroId,
+    simulacrosUsuario,
+  } = usePerfilUsuario();
+
+  const simulacroEncontrado = simulacrosUsuario.find(
+    (simulacro) => simulacro.id === parseInt(simulacroId, 10)
+  );
+
   const {
     selectedTab,
     handleSeleccionRespuesta,
@@ -14,6 +26,8 @@ const InglesPreguntas = () => {
     // setOpcionesSeleccionadas,
     formRef,
   } = useTabs();
+
+  const { auth } = useAuth();
 
   const [imagenAmpliada, setImagenAmpliada] = useState(false);
 
@@ -53,28 +67,34 @@ const InglesPreguntas = () => {
       )}`;
       alert(mensajeAlerta);
     } else {
-      // const resultados = preguntasSimulacro.map((pregunta) => {
-      //   const idPregunta = pregunta.id;
-      //   const area = pregunta.area;
-      //   const sesion = pregunta.sesion;
-      //   const respuestaCorrecta = pregunta.respuesta_correcta;
-      //   const respuestaUsuario = opcionesSeleccionadas[idPregunta];
+      const resultados = preguntasSimulacro.map((pregunta) => {
+        const idPregunta = pregunta.id;
+        const area = pregunta.area;
+        const sesion = pregunta.sesion;
+        const respuestaCorrecta = pregunta.respuesta_correcta;
+        const respuestaUsuario = opcionesSeleccionadas[idPregunta];
 
-      //   const esRespuestaCorrecta = respuestaUsuario === respuestaCorrecta;
-      //   return {
-      //     idPregunta,
-      //     area,
-      //     sesion,
-      //     respuestaCorrecta,
-      //     respuestaUsuario,
-      //     esCorrecta: esRespuestaCorrecta,
-      //   };
-      // });
+        const esRespuestaCorrecta = respuestaUsuario === respuestaCorrecta;
+        return {
+          idPregunta,
+          area,
+          sesion,
+          respuestaCorrecta,
+          respuestaUsuario,
+          esCorrecta: esRespuestaCorrecta,
+        };
+      });
 
       // const tiempo = Number(localStorage.getItem("contadorSegundos"));
 
       await submitPreguntas({
-      
+        id_usuario: auth.id,
+        id_simulacro: preguntasSimulacro[0].id_simulacro,
+        estado_preguntas_sesion1: resultados,
+        estado_preguntas_sesion2: null,
+        tiempo_prueba_sesion1: null,
+        tiempo_prueba_sesion2: null,
+        numero_sesion: simulacroEncontrado.numero_sesiones,
       });
       // setOpcionesSeleccionadas("");
     }
@@ -133,7 +153,9 @@ const InglesPreguntas = () => {
             className={styles.boton}
             style={{
               display:
-                preguntaLocal + 1 >= preguntasFiltradas.length ? "none" : "block",
+                preguntaLocal + 1 >= preguntasFiltradas.length
+                  ? "none"
+                  : "block",
             }}
           >
             <img

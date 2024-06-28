@@ -6,6 +6,7 @@ import tablaPreguntasGratis from "../../assets/tablaPreguntasGratis.png";
 
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import Boton from "../../components/Boton/Boton";
+import { useEffect } from "react";
 
 
 const ConfirmarRealizarPrueba = () => {
@@ -13,7 +14,9 @@ const ConfirmarRealizarPrueba = () => {
   const { simulacrosUsuario } = usePerfilUsuario();
   const { setSimulacroId } = usePerfilUsuario();
 
-  setSimulacroId(id);
+  useEffect(() => {
+    setSimulacroId(id); // Ahora se actualiza después del renderizado
+  }, [setSimulacroId, id]);
 
   const simulacroEncontrado = simulacrosUsuario.find(
     (simulacro) => simulacro.id === parseInt(id, 10)

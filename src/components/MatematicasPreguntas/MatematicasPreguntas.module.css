@@ -52,6 +52,7 @@
 
 .containerPreguntas {
   display: flex;
+  border-radius: 24px;
 }
 
 .preguntas1 {

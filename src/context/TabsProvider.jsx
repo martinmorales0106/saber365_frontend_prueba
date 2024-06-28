@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import PropTypes from "prop-types"; // Importa PropTypes
 
@@ -8,10 +8,29 @@ const TabsContext = createContext();
 const TabsProvider = ({ children }) => {
 
 
-  const [selectedTab, setSelectedTab] = useState("");
+  const [selectedTab, setSelectedTab] = useState(() => {
+    const storedValue = localStorage.getItem("selectedTab");
+    return storedValue ? storedValue : "Matemáticas";
+  });
 
-  const [opcionesSeleccionadas, setOpcionesSeleccionadas] = useState({});
+  const [opcionesSeleccionadas, setOpcionesSeleccionadas] = useState(() => {
+    // Recuperar opciones seleccionadas del localStorage al inicio
+    const savedOptions = localStorage.getItem("opcionesSeleccionadas");
+    return savedOptions ? JSON.parse(savedOptions) : {};
+  });
 
+  const guardarOpcionesEnLocalStorage = () => {
+    // Guardar opciones seleccionadas en el localStorage
+    localStorage.setItem(
+      "opcionesSeleccionadas",
+      JSON.stringify(opcionesSeleccionadas)
+    );
+  };
+
+  useEffect(() => {
+    guardarOpcionesEnLocalStorage();
+  }, [opcionesSeleccionadas]);
+  
 
   const handleSeleccionRespuesta = (opcion, id) => {
     // Copia del estado actual de opciones seleccionadas
@@ -26,6 +45,7 @@ const TabsProvider = ({ children }) => {
 
   const handleTabChange = (index) => {
     setSelectedTab(index);
+    localStorage.setItem("selectedTab", index.toString());
   };
 
 

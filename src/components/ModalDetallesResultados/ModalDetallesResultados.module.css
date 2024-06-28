@@ -1,0 +1,108 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0rem;
+}
+
+.modal {
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 0 10px rgb(0, 0, 0);
+  background-color: #c9f3f5bb;
+  width: 50%;
+  max-height: 90vh; /* Ajusta la altura máxima según tus necesidades */
+  overflow-y: auto;
+}
+
+.contenedorBoton {
+  display: flex;
+}
+
+.closeButton {
+  margin-left: auto;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.content {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.areaimg {
+  display: flex;
+}
+.contenedorIcono {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  padding-right: 0.5rem;
+}
+.iconos {
+  width: 2rem;
+  height: 2rem;
+}
+
+.puntaje {
+  display: flex;
+  padding: 1rem;
+}
+.resultadoArea {
+  padding-left: 0.5rem;
+  align-items: center;
+}
+.porcentaje {
+  font-size: 1.3rem;
+}
+.puntajeArea{
+  display: flex;
+  align-items: center;
+}
+.posicion{
+  text-align: center;
+  padding-left: 0.5rem;
+}
+
+.encabezado{
+  display: flex;
+  justify-content: space-around;
+}
+
+.contenedorImagen{
+  display: flex;
+  align-items: center;
+}
+.imagenNivel{
+  width: 9rem;
+  height: 5rem;
+}
+.posicionContainer{
+  display: flex;
+  font-size: large;
+}
+.contenedorNivel{
+  padding: 1rem 2rem;
+  text-align: justify;
+}
+.tituloNivel{
+  padding-bottom: 0.6rem;
+}
+.listaHabilidades{
+  font-weight: 400;
+}

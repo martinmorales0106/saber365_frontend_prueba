@@ -1,22 +1,32 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types"; // Importa PropTypes
 import clienteAxios from "../config/clienteAxios";
+import { useNavigate } from "react-router-dom";
 
 const PerfilUsuarioContext = createContext();
 
 const PerfilUsuarioProvider = ({ children }) => {
+  const navigate = useNavigate();
+
   const [simulacrosUsuario, setSimulacrosUsuario] = useState([]);
   const [alerta, setAlerta] = useState({});
   const [preguntasUsuario, setPreguntasUsuario] = useState([]);
   const [simulacroId, setSimulacroId] = useState(null);
   const [preguntasSimulacro, setPreguntasSimulacro] = useState([]);
   const [preguntasFiltradas, setPreguntasFiltradas] = useState([]);
-  const [selectArea, setSelectArea] = useState("")
+  const [selectArea, setSelectArea] = useState("");
+  const [simulacroRealizado, setSimulacroRealizado] = useState({});
+  const [cargando, setCargando] = useState(true);
+  const [simulacroFinalizado, setSimulacroFinalizado] = useState({});
+  const [modalResultado, setModalResultado] = useState(false);
+  const [resultadoArea, setResultadoArea] = useState({});
+  const [preguntasSimulacroArea, setPreguntasSimulacroArea] = useState([]);
 
-
+  console.log(simulacroRealizado);
+  
   useEffect(() => {
     if (preguntasSimulacro.length > 0) {
-      const filtrarPreguntasMatematicas = () => {
+      const filtrarPreguntasMatematicas = async () => {
         const filtradas = preguntasSimulacro.filter(
           (pregunta) => pregunta.area === selectArea
         );
@@ -88,7 +98,10 @@ const PerfilUsuarioProvider = ({ children }) => {
           },
         };
 
-        const response = await clienteAxios(`/perfil-usuario/obtener-preguntas`, config);
+        const response = await clienteAxios(
+          `/perfil-usuario/obtener-preguntas`,
+          config
+        );
         setPreguntasUsuario(response.data);
       } catch (error) {
         mostrarAlerta({
@@ -102,7 +115,7 @@ const PerfilUsuarioProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const obtenerPreguntasPorSimulacro = () => {
+    const obtenerPreguntasPorSimulacro = async () => {
       if (simulacroId && preguntasUsuario.length > 0) {
         const idSimulacroNumero = Number(simulacroId);
         const preguntasFiltradas = preguntasUsuario.filter(
@@ -116,9 +129,113 @@ const PerfilUsuarioProvider = ({ children }) => {
     obtenerPreguntasPorSimulacro();
   }, [simulacroId, preguntasUsuario]);
 
- const submitPreguntas = () => {
-  console.log("enviando respuestas");
- }
+  const submitPreguntas = async (respuesta) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await clienteAxios.post(
+      "/perfil-usuario/simulacro-realizado",
+      respuesta,
+      config
+    );
+    
+    setSimulacroRealizado(data);
+    navigate(`/usuario/finalizar-sesion/${data.id}`);
+  };
+
+  const obtenerSimulacroFinalizado = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setCargando(false);
+        return;
+      }
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await clienteAxios(
+        `/perfil-usuario/simulacro-finalizado/${id}`,
+        config
+      );
+      setSimulacroFinalizado(data);
+      navigate(`/usuario/resultados`);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setCargando(false);
+  };
+
+  const obtenerSimulacroRealizado = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setCargando(false);
+        return;
+      }
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await clienteAxios(
+        `/perfil-usuario/simulacro-realizado/${id}`,
+        config
+      );
+      setSimulacroRealizado(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+    setCargando(false);
+  };
+
+  const submitRespuestas = async (respuesta) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await clienteAxios.post(
+      "/perfil-usuario/simulacro-finalizado",
+      respuesta,
+      config
+    );
+    console.log(data);
+    await obtenerSimulacroFinalizado(data.nuevoRegistro.id);
+  }
+
+
+  const handleModalResultado = () => {
+    setModalResultado(!modalResultado);
+  };
+
+  const handleResultadoArea = (infoArea) => {
+    setResultadoArea(infoArea);
+    setModalResultado(true);
+  };
+
+  const filtrarPreguntasSimulacrosPorArea = (area) => {
+    const preguntasFiltradas = preguntasSimulacro.filter(
+      (pregunta) => pregunta.area === area
+    );
+    localStorage.setItem("filtroArea", area);
+    setPreguntasSimulacroArea(preguntasFiltradas);
+  };
 
   return (
     <PerfilUsuarioContext.Provider
@@ -132,7 +249,18 @@ const PerfilUsuarioProvider = ({ children }) => {
         preguntasSimulacro,
         preguntasFiltradas,
         setSelectArea,
-        submitPreguntas
+        submitPreguntas,
+        simulacroRealizado,
+        submitRespuestas,
+        cargando,
+        simulacroFinalizado,
+        handleModalResultado,
+        modalResultado,
+        handleResultadoArea,
+        resultadoArea,
+        filtrarPreguntasSimulacrosPorArea,
+        preguntasSimulacroArea,
+        obtenerSimulacroRealizado,
       }}
     >
       {children}

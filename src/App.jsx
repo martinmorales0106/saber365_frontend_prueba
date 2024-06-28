@@ -24,6 +24,9 @@ import { PerfilUsuarioProvider } from "./context/PerfilUsuarioProvider";
 import ConfirmarRealizarPrueba from "./pages/ConfirmarRealizarPrueba/ConfirmarRealizarPrueba";
 import { TabsProvider } from "./context/TabsProvider";
 import RealizarPrueba from "./pages/RealizarPrueba/RealizarPrueba";
+import FinalizarSesion from "./pages/FinalizarSesion/FinalizarSesion";
+import Resultados from "./pages/Resultados/Resultados";
+import RevisionPreguntas from "./pages/RevisionPreguntas/RevisionPreguntas";
 
 function App() {
   return (
@@ -63,6 +66,16 @@ function App() {
                         path="realizar-prueba/:id"
                         element={<RealizarPrueba />}
                       />
+                      <Route
+                        path="finalizar-sesion/:id"
+                        element={<FinalizarSesion />}
+                      />
+                      <Route path="resultados" element={<Resultados />} />
+                      <Route
+                      exact
+                      path="revision-preguntas/:area"
+                      element={<RevisionPreguntas />}
+                    />
                     </Route>
 
                     <Route path="/admin" element={<PerfilAdmin />}>
