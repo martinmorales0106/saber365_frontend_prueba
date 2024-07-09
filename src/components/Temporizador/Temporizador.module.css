@@ -1,0 +1,18 @@
+.contenedorTiempo {
+    display: flex;
+    align-items: center;
+}
+.tiempo {
+    color: white;
+    font-size:larger;
+    align-items: center;
+}
+
+.contador {
+    color: #18C83F;
+    font-size: 25px;
+    align-items: center;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    
+}

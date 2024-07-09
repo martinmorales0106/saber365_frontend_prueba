@@ -18,7 +18,7 @@ const Inicio = () => {
             avanza hacia tus metas académicas.
             <br /> ¡Tu camino hacia el conocimiento comienza aquí!
           </p>
-          {auth.id ? (<div className={styles.boton1}>
+          {auth ? (<div className={styles.boton1}>
             <Link to="/" className={styles.link}>
               <Boton text="🚀 Ir a mi Cuenta" />
             </Link>

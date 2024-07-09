@@ -13,7 +13,7 @@ import gradoImg from "../../assets/Grado.png";
 import contraseña from "../../assets/login-contraseña.png";
 import imgColegio from "../../assets/colegio.png";
 
-const GRADO = ["SÉPTIMO", "NOVENO", "UNDÉCIMO"];
+const GRADO = ["UNDÉCIMO"];
 
 const Registrar = () => {
   const navigate = useNavigate();

@@ -28,7 +28,7 @@ const pag = [
   },
   {
     title: "Resultados",
-    path: "/resultados",
+    path: "/usuario/resultados",
     cName: styles.navText,
     icon: <img src={resultadosImg} alt="resultados" className={styles.icono} />,
   },

@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import styles from "./Tabs.module.css";
+import Temporizador from "../Temporizador/Temporizador";
 
 const Tabs = ({
   tabs,
@@ -35,7 +36,7 @@ const Tabs = ({
             </button>
           ))}
         <div className={styles.tiempo}>
-          
+        <Temporizador/>
         </div>
         </div>
         <div

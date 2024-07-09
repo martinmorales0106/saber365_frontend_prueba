@@ -8,9 +8,7 @@ import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import { FormatearTiempo } from "../../helpers/FormatearTiempo";
 
 const UsuarioPruebas = () => {
-  const { simulacrosUsuario } = usePerfilUsuario();
-
-  // Verifica si simulacrosComprados.simulacrosComprados es un array antes de realizar el mapeo
+  const { simulacrosUsuario, simulacrosCompletados } = usePerfilUsuario();
 
   return (
     <Fragment>
@@ -18,36 +16,54 @@ const UsuarioPruebas = () => {
         <div className={styles.container}>
           <div className={styles.containerPruebas}>
             {simulacrosUsuario.length ? (
-              simulacrosUsuario.map((simulacro) => (
-                <div key={simulacro.id} className={styles.simulacros}>
-                  <img src={simulacro.imagen} className={styles.imagen} />
-                  <div className={styles.titulo}>
-                    <h3>{simulacro.titulo}</h3>
-                    <h3>{simulacro.grado}</h3>
-                  </div>
-                  <p className={styles.descripcion}>{simulacro.descripcion}</p>
-                  <div className={styles.contenedor2}>
-                    <div className={styles.preguntas}>
-                      <img src={preguntasImg} className={styles.icono} />
-                      <p>{simulacro.cantidad_preguntas} Preguntas</p>
+              simulacrosUsuario.map((simulacro) => {
+                // Verificar si el simulacro actual está en simulacrosCompletados
+                const simulacroCompletado = simulacrosCompletados.find(
+                  (sc) => sc.id_simulacro === simulacro.id
+                );
+
+                return (
+                  <div key={simulacro.id} className={styles.simulacros}>
+                    <img src={simulacro.imagen} className={styles.imagen} />
+                    <div className={styles.titulo}>
+                      <h3>{simulacro.titulo}</h3>
+                      <h3>{simulacro.grado}</h3>
                     </div>
-                    <div className={styles.preguntas}>
-                      <img src={tiempoImg} className={styles.icono} />
-                      <p>{FormatearTiempo(simulacro.tiempo)}</p>
-                    </div>
-                  </div>
-                  <p className={styles.puntaje}>
-                    Puntaje Máximo: {simulacro.puntaje_maximo}
-                  </p>
-                  <div className={styles.boton}>
-                    <Link to={`/usuario/confirmar-prueba/${simulacro.id}`} className={styles.link}>
+                    <p className={styles.descripcion}>{simulacro.descripcion}</p>
+                    <div className={styles.contenedor2}>
                       <div className={styles.preguntas}>
-                        <Boton text="Realizar Simulacro" />
+                        <img src={preguntasImg} className={styles.icono} />
+                        <p>{simulacro.cantidad_preguntas} Preguntas</p>
                       </div>
-                    </Link>
+                      <div className={styles.preguntas}>
+                        <img src={tiempoImg} className={styles.icono} />
+                        <p>{FormatearTiempo(simulacro.tiempo)}</p>
+                      </div>
+                    </div>
+                    <p className={styles.puntaje}>
+                      Puntaje Máximo: {simulacro.puntaje_maximo}
+                    </p>
+                    <div className={styles.boton}>
+                      {simulacroCompletado ? (
+                        <Link to={`/usuario/resultados`} className={styles.link}>
+                          <div className={styles.preguntas}>
+                            <Boton text="Ver Resultado" />
+                          </div>
+                        </Link>
+                      ) : (
+                        <Link
+                          to={`/usuario/confirmar-prueba/${simulacro.id}`}
+                          className={styles.link}
+                        >
+                          <div className={styles.preguntas}>
+                            <Boton text="Realizar Simulacro" />
+                          </div>
+                        </Link>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             ) : (
               <div>No hay simulacros disponibles</div>
             )}

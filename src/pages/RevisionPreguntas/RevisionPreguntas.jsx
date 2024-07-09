@@ -9,30 +9,51 @@ import Boton from "../../components/Boton/Boton";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 
 const RevisionPreguntas = () => {
-  const { area } = useParams();
-  const { simulacroFinalizado, preguntasSimulacroArea } = usePerfilUsuario();
-
-  const obtenerPreguntasPorArea = async (area) => {
-    const preguntasFiltradas =
-      simulacroFinalizado.resultadoSimulacro.estado_preguntas.filter(
-        (pregunta) => pregunta.area === area
-      );
-    return preguntasFiltradas;
-  };
+  const { id, area } = useParams();
+  const {
+    simulacroFinalizado,
+    preguntasSimulacroArea,
+    obtenerSimulacroFinalizado,
+    filtrarPreguntasSimulacrosPorArea,
+    setSimulacroId,
+  } = usePerfilUsuario();
 
   const [estadoPreguntas, setEstadoPreguntas] = useState([]);
-
   const [preguntaLocal, setPreguntaLocal] = useState(0);
 
   useEffect(() => {
-    const obtenerPreguntas = async () => {
-      const preguntas = await obtenerPreguntasPorArea(area);
-      setEstadoPreguntas(preguntas);
+    const fetchSimulacroFinalizado = async () => {
+      await obtenerSimulacroFinalizado(id);
     };
-    obtenerPreguntas();
-  }, [area]);
+    fetchSimulacroFinalizado();
+  }, [id]);
 
-  const numerosPreguntas = estadoPreguntas.map((pregunta, index) => index + 1);
+  useEffect(() => {
+    if (simulacroFinalizado && simulacroFinalizado.resultadoSimulacro) {
+      setSimulacroId(simulacroFinalizado.resultadoSimulacro.id_simulacro);
+    }
+  }, [simulacroFinalizado, setSimulacroId]);
+
+  useEffect(() => {
+    const fetchSimulacroArea = async () => {
+      if (simulacroFinalizado && simulacroFinalizado.resultadoSimulacro) {
+        await filtrarPreguntasSimulacrosPorArea(area);
+        const preguntas = await obtenerPreguntasPorArea(area);
+        setEstadoPreguntas(preguntas);
+      }
+    };
+    fetchSimulacroArea();
+  }, [area, simulacroFinalizado]);
+
+  const obtenerPreguntasPorArea = async (area) => {
+    if (!simulacroFinalizado || !simulacroFinalizado.resultadoSimulacro) return [];
+    const preguntasFiltradas = simulacroFinalizado.resultadoSimulacro.estado_preguntas.filter(
+      (pregunta) => pregunta.area === area
+    );
+    return preguntasFiltradas;
+  };
+
+  const numerosPreguntas = estadoPreguntas?.map((pregunta, index) => index + 1);
 
   const seleccionarPregunta = (numeroPregunta) => {
     setPreguntaLocal(numeroPregunta - 1);
@@ -49,7 +70,7 @@ const RevisionPreguntas = () => {
           <div className={styles.preguntas}>
             <h2>Preguntas</h2>
             <p>
-              Navega por cada unas de las preguntas para conocer sus respuestas
+              Navega por cada una de las preguntas para conocer sus respuestas
             </p>
             <hr />
             <div className={styles.numeros}>
@@ -60,17 +81,17 @@ const RevisionPreguntas = () => {
                   onClick={() => seleccionarPregunta(numero)}
                   className={`${styles.contenedorNumeros} ${
                     numero === preguntaLocal + 1 &&
-                    estadoPreguntas[numero - 1].esCorrecta
+                    estadoPreguntas[numero - 1]?.esCorrecta
                       ? styles.numeroSeleccionado
                       : ""
                   } ${
                     numero === preguntaLocal + 1 &&
-                    !estadoPreguntas[numero - 1].esCorrecta
+                    !estadoPreguntas[numero - 1]?.esCorrecta
                       ? styles.numeroSeleccionadoPerdido
                       : ""
                   }`}
                 >
-                  <div>
+                  <div className={styles.auxiliar}>
                     <div>
                       <span key={numero} className={styles.indice}>
                         {numero}{" "}
@@ -79,7 +100,7 @@ const RevisionPreguntas = () => {
                     <div>
                       <img
                         src={
-                          estadoPreguntas[numero - 1].esCorrecta
+                          estadoPreguntas[numero - 1]?.esCorrecta
                             ? ganadaImg
                             : perdidaImg
                         }
@@ -246,7 +267,10 @@ const RevisionPreguntas = () => {
                       </form>
                     </div>
                     <div className={styles.botonRegreso}>
-                      <Link to="/usuario/resultados" className={styles.link}>
+                      <Link
+                        to={`/usuario/resultados/resultado/${simulacroFinalizado?.resultadoSimulacro?.id}`}
+                        className={styles.link}
+                      >
                         <Boton text="Regresar" />
                       </Link>
                     </div>
@@ -261,3 +285,4 @@ const RevisionPreguntas = () => {
 };
 
 export default RevisionPreguntas;
+

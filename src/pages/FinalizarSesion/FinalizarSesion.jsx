@@ -12,20 +12,24 @@ const FinalizarSesion = () => {
     preguntasSimulacro,
     submitRespuestas,
     obtenerSimulacroRealizado,
+    setSimulacroFinalizadoId,
   } = usePerfilUsuario();
   const { auth } = useAuth();
   const { id } = useParams();
 
   useEffect(() => {
     const fetchSimulacroRealizado = async () => {
+      setSimulacroFinalizadoId(id);
       await obtenerSimulacroRealizado(id);
     };
     fetchSimulacroRealizado();
   }, [id]);
 
-  if (!simulacroRealizado.id) {
+  if (!simulacroRealizado.id && !preguntasSimulacro.id) {
     return <di>Cargando...</di>;
   }
+
+  localStorage.setItem("contadorSegundos", "");
 
   // Combinar los arrays de estado_preguntas_sesion
   const estado_preguntas_combinado =
@@ -221,9 +225,7 @@ const FinalizarSesion = () => {
                   to={`/confirmar-prueba/${simulacroRealizado.id_simulacro}`}
                   className={styles.link}
                 >
-                  <Boton
-                    text="Ir a completar la otra sesión"
-                  />
+                  <Boton text="Ir a completar la otra sesión" />
                 </Link>
               </div>
             </>

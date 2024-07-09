@@ -27,6 +27,7 @@ import RealizarPrueba from "./pages/RealizarPrueba/RealizarPrueba";
 import FinalizarSesion from "./pages/FinalizarSesion/FinalizarSesion";
 import Resultados from "./pages/Resultados/Resultados";
 import RevisionPreguntas from "./pages/RevisionPreguntas/RevisionPreguntas";
+import UsuarioResultados from "./pages/UsuarioResultados/UsuarioResultados";
 
 function App() {
   return (
@@ -70,12 +71,19 @@ function App() {
                         path="finalizar-sesion/:id"
                         element={<FinalizarSesion />}
                       />
-                      <Route path="resultados" element={<Resultados />} />
                       <Route
-                      exact
-                      path="revision-preguntas/:area"
-                      element={<RevisionPreguntas />}
-                    />
+                        path="resultados/resultado/:id"
+                        element={<Resultados />}
+                      />
+                      <Route
+                        exact
+                        path="revision-preguntas/:id/:area"
+                        element={<RevisionPreguntas />}
+                      />
+                      <Route
+                        path="resultados"
+                        element={<UsuarioResultados />}
+                      />
                     </Route>
 
                     <Route path="/admin" element={<PerfilAdmin />}>

@@ -20,31 +20,57 @@ import { formatearFecha } from "../../helpers/formatearFecha";
 import Boton from "../../components/Boton/Boton";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import ModalDetallesResultados from "../../components/ModalDetallesResultados/ModalDetallesResultados";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useEffect } from "react";
+
 
 const Resultados = () => {
+  const { id } = useParams();
+
   const {
     simulacroFinalizado,
     handleResultadoArea,
     filtrarPreguntasSimulacrosPorArea,
+    obtenerSimulacroFinalizado,
+    posicionSimulacro,
+    obtenerPosicionSimulacro,
+    posicionPorArea,
+    obtenerPosicionPorArea,
   } = usePerfilUsuario();
 
-  console.log(simulacroFinalizado);
+  console.log(simulacroFinalizado?.resultadoSimulacro?.id_usuario);
+
+  useEffect(() => {
+    const fetchSimulacroFinalizado = async () => {
+      await obtenerSimulacroFinalizado(id);
+    };
+    fetchSimulacroFinalizado();
+  }, [id]);
+
+  useEffect(() => {
+    const fetchSimulacroFinalizado2 = async () => {
+      await obtenerPosicionSimulacro(simulacroFinalizado?.resultadoSimulacro?.id_simulacro, simulacroFinalizado?.resultadoSimulacro?.id_usuario);
+      await obtenerPosicionPorArea(simulacroFinalizado?.resultadoSimulacro?.id_simulacro, simulacroFinalizado?.resultadoSimulacro?.id_usuario);
+    };
+    fetchSimulacroFinalizado2();
+  }, [simulacroFinalizado]);
+
+  if (!simulacroFinalizado) {
+    return <di>Cargando...</di>;
+  }
+
   const totalSegundos =
-    simulacroFinalizado.resultadoSimulacro.tiempo_prueba || 0;
+  simulacroFinalizado?.resultadoSimulacro?.simulacro.tiempo - simulacroFinalizado?.resultadoSimulacro?.tiempo_prueba || 0;
   const horas = Math.floor(totalSegundos / 3600);
   const minutos = Math.floor((totalSegundos % 3600) / 60);
   const segundos = totalSegundos % 60;
-  const horasRestantes =
-    simulacroFinalizado.resultadoSimulacro.simulacro.tiempo === "18000"
-      ? 5 - horas
-      : 9 - horas;
+  
 
   let totalPreguntas = 0;
   let respuestasCorrectas = 0;
 
   const estado_preguntas =
-    simulacroFinalizado.resultadoSimulacro.estado_preguntas || [];
+    simulacroFinalizado?.resultadoSimulacro?.estado_preguntas || [];
 
   if (Array.isArray(estado_preguntas)) {
     for (const pregunta of estado_preguntas) {
@@ -58,9 +84,9 @@ const Resultados = () => {
   }
 
   const nivelPorArea =
-    simulacroFinalizado.resultadoSimulacro.nivel_por_area || {};
+    simulacroFinalizado?.resultadoSimulacro?.nivel_por_area || {};
   const puntajePorArea =
-    simulacroFinalizado.resultadoSimulacro.puntaje_por_area || {};
+    simulacroFinalizado?.resultadoSimulacro?.puntaje_por_area || {};
 
   return (
     <div>
@@ -80,7 +106,7 @@ const Resultados = () => {
                   </div>
                   <h3>
                     {
-                      simulacroFinalizado.resultadoSimulacro.usuario
+                      simulacroFinalizado?.resultadoSimulacro?.usuario
                         .nombreUsuario
                     }
                   </h3>
@@ -88,7 +114,7 @@ const Resultados = () => {
                 <div className={styles.informacionDatos}>
                   <p>
                     Grado:{" "}
-                    {simulacroFinalizado.resultadoSimulacro.usuario.grado}
+                    {simulacroFinalizado?.resultadoSimulacro?.usuario.grado}
                   </p>
                 </div>
               </div>
@@ -98,7 +124,7 @@ const Resultados = () => {
                     <img src={colegioResultadoImg} className={styles.iconos} />
                   </div>
                   <h3>
-                    {simulacroFinalizado.resultadoSimulacro.usuario.colegio}
+                    {simulacroFinalizado?.resultadoSimulacro?.usuario.colegio}
                   </h3>
                 </div>
                 <div className={styles.informacionDatos}></div>
@@ -110,13 +136,13 @@ const Resultados = () => {
                   </div>
                   <h3>
                     Aplicación del Simulacro{" "}
-                    {simulacroFinalizado.resultadoSimulacro.simulacro.titulo}
+                    {simulacroFinalizado?.resultadoSimulacro?.simulacro.titulo}
                   </h3>
                 </div>
                 <div className={styles.informacionDatos}>
                   <p>
                     {formatearFecha(
-                      simulacroFinalizado.resultadoSimulacro.createdAt
+                      simulacroFinalizado?.resultadoSimulacro?.createdAt
                     )}
                   </p>
                 </div>
@@ -134,7 +160,7 @@ const Resultados = () => {
                 </div>
                 <div className={styles.informacionDatos}>
                   <h1>
-                    {simulacroFinalizado.resultadoSimulacro.puntaje_global}
+                    {simulacroFinalizado?.resultadoSimulacro?.puntaje_global}
                     <span className={styles.puntajeGlobal}>/500</span>
                   </h1>
                 </div>
@@ -148,7 +174,7 @@ const Resultados = () => {
                 </div>
                 <div className={styles.informacionDatos}>
                   <h1>
-                    {horasRestantes}h:{minutos}&apos;:{segundos}&quot;
+                    {horas}h:{minutos}&apos;:{segundos}&quot;
                   </h1>
                 </div>
               </div>
@@ -176,7 +202,7 @@ const Resultados = () => {
                   <h3>Posición en el simulacro</h3>
                 </div>
                 <div className={styles.informacionDatos}>
-                  <h1>1</h1>
+                  <h1>{posicionSimulacro}</h1>
                 </div>
               </div>
             </div>
@@ -229,7 +255,8 @@ const Resultados = () => {
                       </div>
                     )}
                     {(nivelPorArea[area] === "Avanzado" ||
-                      nivelPorArea[area] === "B1") && (
+                      nivelPorArea[area] === "B1" ||
+                      nivelPorArea[area] === "B+") && (
                       <div className={styles.contenedorImagen}>
                         <img src={nivelAvanzadoImg} />
                         <p>{nivelPorArea[area]}</p>
@@ -243,7 +270,7 @@ const Resultados = () => {
                     </h3>
                   </div>
                   <p>Posición en esta prueba:</p>
-                  <h3 className={styles.posicion}>1</h3>
+                  <h3 className={styles.posicion}>{posicionPorArea[area]}</h3>
                   <div className={styles.boton}>
                     <Boton
                       text="Ver detalles"
@@ -251,7 +278,7 @@ const Resultados = () => {
                         handleResultadoArea({
                           puntaje: puntajePorArea[area],
                           nivel: nivelPorArea[area],
-                          puesto: 1,
+                          puesto: posicionPorArea[area],
                           area,
                         })
                       }
@@ -285,7 +312,10 @@ const Resultados = () => {
                   </div>
                   <p className={styles.areaPregunta}>{area}</p>
 
-                  <Link className={styles.link} to={`/usuario/revision-preguntas/${area}`}>
+                  <Link
+                    className={styles.link}
+                    to={`/usuario/revision-preguntas/${simulacroFinalizado?.resultadoSimulacro?.id}/${area}`}
+                  >
                     <div className={styles.boton2}>
                       <Boton
                         text="Ver preguntas"

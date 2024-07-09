@@ -19,6 +19,7 @@ const ModalDetallesResultados = () => {
   const [area, setArea] = useState("");
   const [puntaje, setPuntaje] = useState("");
   const [nivel, setNivel] = useState("");
+  const [puesto, setPuesto] = useState("");
   const modalRef = useRef();
 
   const handleCloseModal = (event) => {
@@ -42,6 +43,7 @@ const ModalDetallesResultados = () => {
     setArea(resultadoArea.area);
     setPuntaje(resultadoArea.puntaje);
     setNivel(resultadoArea.nivel);
+    setPuesto(resultadoArea.puesto);
   }, [resultadoArea]);
 
   // Nivels de desempeño
@@ -256,7 +258,7 @@ const ModalDetallesResultados = () => {
                   </div>
                   <div className={styles.posicionContainer}>
                     <p>Posición en esta prueba:</p>
-                    <h4 className={styles.posicion}>1</h4>
+                    <h4 className={styles.posicion}>{puesto}</h4>
                   </div>
                 </div>
 

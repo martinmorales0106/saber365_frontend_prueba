@@ -10,7 +10,7 @@ const UsuarioInicio = () => {
         <div className={styles.contenedor}>
           <div className={styles.banner}>
             <div className={styles.bannerParrafo}>
-              <h1 className={styles.bannerTitulo}>¡Bienvenido a Saber365 <br/> {auth.nombre_Usuario}! 🚀</h1>
+              <h1 className={styles.bannerTitulo}>¡Bienvenido a Saber365 <br/> {auth.nombreUsuario}! 🚀</h1>
               <p className={styles.bannerContenido}>
                 Explora, aprende y avanza con nosotros. En Saber365, te
                 ofrecemos una experiencia única para prepararte y alcanzar tus

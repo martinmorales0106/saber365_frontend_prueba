@@ -12,7 +12,7 @@ const RutaProtegida = () => {
 
   return (
     <>
-      {auth.id ? (
+      {auth ? (
         <div>
       <HeaderAuth />
       <div>

@@ -74,7 +74,7 @@
   
   .tabla tbody td {
     padding: 0.4rem;
-    border-right: 2px solid #0f386141; /* Agregar esta línea */
+    border-right: 2px solid #edf4fa41; /* Agregar esta línea */
   }
   .tabla tbody tr:last-child {
     border-bottom: none; /* Eliminar el borde inferior del último tr */

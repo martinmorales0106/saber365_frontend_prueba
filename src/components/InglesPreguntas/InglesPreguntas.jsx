@@ -23,8 +23,9 @@ const InglesPreguntas = () => {
     selectedTab,
     handleSeleccionRespuesta,
     opcionesSeleccionadas,
-    // setOpcionesSeleccionadas,
-    formRef,
+    setOpcionesSeleccionadas,
+    setTiempoAgotado,
+    setSegundos,
   } = useTabs();
 
   const { auth } = useAuth();
@@ -50,7 +51,7 @@ const InglesPreguntas = () => {
     setImagenAmpliada(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit2 = async (e) => {
     e.preventDefault();
     // Verificar que todas las preguntas estén marcadas
     const preguntasSinMarcar = preguntasSimulacro.filter(
@@ -85,19 +86,24 @@ const InglesPreguntas = () => {
         };
       });
 
-      // const tiempo = Number(localStorage.getItem("contadorSegundos"));
+      const tiempo = Number(localStorage.getItem("contadorSegundos"));
 
       await submitPreguntas({
         id_usuario: auth.id,
         id_simulacro: preguntasSimulacro[0].id_simulacro,
         estado_preguntas_sesion1: resultados,
         estado_preguntas_sesion2: null,
-        tiempo_prueba_sesion1: null,
+        tiempo_prueba_sesion1: tiempo,
         tiempo_prueba_sesion2: null,
         numero_sesion: simulacroEncontrado.numero_sesiones,
       });
-      // setOpcionesSeleccionadas("");
+
+      setOpcionesSeleccionadas("");
+      localStorage.setItem("contadorSegundos", " ");
+      setSegundos(simulacroEncontrado?.tiempo); // Reiniciar el temporizador
+      setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
     }
+    setTiempoAgotado(true);
   };
 
   const mostrarAnteriores = () => {
@@ -201,7 +207,7 @@ const InglesPreguntas = () => {
               <h1>Pregunta</h1>
               <p className={styles.pregunta}>{pregunta.pregunta}</p>
               <h1>Respuestas</h1>
-              <form onSubmit={handleSubmit} ref={formRef}>
+              <form onSubmit={handleSubmit2}>
                 <div className={styles.opcionesRespuestas}>
                   <label>
                     <input
