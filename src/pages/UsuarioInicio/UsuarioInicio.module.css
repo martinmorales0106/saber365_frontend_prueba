@@ -1,43 +1,292 @@
 .fondo {
-    background-color: #001F3F;
+  background-color: #001f3f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
-    background-color: rgba(52, 152, 219, 0.2);
-    padding: 2rem;
-    
+  background-color: rgba(52, 152, 219, 0.2);
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Asegura que ocupe todo el ancho disponible */
 }
 
 .contenedor {
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    padding: 2rem;
-    border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Alinea los elementos internos en columna */
+  background-color: white;
+  padding: 2rem;
+  border-radius: 25px;
 }
 
 .banner {
-    width: 80%;
-    display: flex;
-    background-color: #2ECC71;
-    padding: 1rem;
-    border-radius: 25px;
+  display: flex;
+  background-color: #2ecc71;
+  padding: 1rem;
+  border-radius: 25px;
+  margin-bottom: 1rem;
+  /* Espacio opcional para separar del contenido siguiente */
 }
 
-.bannerParrafo{
-    color: white;
-    width: 65%;
+.bannerParrafo {
+  color: white;
+  width: 65%; /* Ajusta el ancho del párrafo según tus necesidades */
+  text-align: center; /* Centra el texto dentro del banner */
 }
 
-.bannerTitulo{
-    text-align: center;
-    padding-top: 2rem;
-    padding-bottom: 1rem;
+.bannerTitulo {
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }
-.bannerContenido{
-    padding-right: 2rem;
-    padding-left: 2rem;
-    text-align: center;
-    font-size: large;
-    font-weight: 400;
+
+.bannerContenido {
+  padding-right: 2rem;
+  padding-left: 2rem;
+  text-align: center;
+  font-size: large;
+  font-weight: 400;
+}
+
+.contenedorTop {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  padding-bottom: 1rem;
+  margin: 1rem;
+  margin-top: 1.5rem;
+}
+
+.topEstudiantes {
+  margin-top: 0.5rem; /* Espacio superior opcional */
+  width: 50%;
+}
+
+.itemPuntaje {
+  margin: 0.4rem;
+  counter-increment: custom-counter;
+  padding: 0.3rem;
+  display: flex;
+  background-color: #eef1f1;
+  align-items: center;
+  width: 80%;
+  justify-content: space-between;
+}
+
+.miPuntaje {
+  margin: 0.4rem;
+  padding: 0.3rem;
+  display: flex;
+  background-color: #eef1f1;
+  align-items: center;
+  width: 40%;
+  justify-content: space-between;
+  border: 2px solid #2ecc71;
+}
+
+.itemPuntaje::before {
+  content: counter(custom-counter);
+  display: inline-block;
+  width: 1.5rem; /* Ancho del número */
+  height: 1.5rem; /* Altura del número */
+  background-color: #2ecc71; /* Color de fondo del número */
+  color: white; /* Color del texto del número */
+  font-size: 1rem; /* Tamaño del texto del número */
+  font-weight: bold; /* Peso de la fuente del número */
+  text-align: center; /* Alineación del texto del número */
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5rem; /* Altura de línea del número */
+  margin-right: 0.5rem; /* Margen derecho entre el número y el contenido */
+  border-radius: 25%; /* Redondeado del fondo del número */
+}
+
+.indiceNumero {
+  display: inline-flex;
+  width: 1.5rem; /* Ancho del número */
+  height: 1.5rem; /* Altura del número */
+  background-color: #2ecc71; /* Color de fondo del número */
+  color: white; /* Color del texto del número */
+  font-size: 1rem; /* Tamaño del texto del número */
+  font-weight: bold; /* Peso de la fuente del número */
+  text-align: center; /* Alineación del texto del número */
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5rem; /* Altura de línea del número */
+  border-radius: 25%; /* Redondeado del fondo del número */
+}
+
+.contenedorNumero {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  text-align: start;
+}
+
+.usuarioInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.nombreUsuario {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+  text-transform: capitalize; /* Transforma el texto a mayúsculas */
+  align-items: center;
+}
+
+.grado {
+  font-size: 0.9rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+  text-transform: lowercase; /* Transforma el texto a mayúsculas */
+  align-items: center;
+}
+
+.puntajeGlobal {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+}
+
+.tiempoPrueba {
+  font-size: 0.9rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+}
+
+.tituloSimulacro {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold;
+}
+
+.bordeVerde {
+  border: 2px solid #2ecc71;
+}
+
+.contenedorPorArea {
+  width: 50%;
+  text-align: start;
+}
+
+.areaImg {
+  width: 1.5rem;
+  margin-right: 0.5rem;
+}
+.contenedorlogo {
+  display: flex;
+}
+
+.area {
+  padding-left: 1rem;
+}
+
+.areasContainer {
+  margin: 1rem;
+}
+
+.puntajeArea {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+}
+
+.containerPruebas {
+  width: 100%;
+  padding: 1%;
+  background-color: white;
+  border-radius: 25px;
+  display: flex;
+  flex-wrap: wrap; /* Esta propiedad permite que los elementos se envuelvan en filas múltiples */
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+
+}
+
+.simulacros {
+  line-height: 1.8;
+  border-radius: 25px;
+  margin: 0.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  transition: transform 0.3s ease;
+  background-color: #d7fbfd7c;
+}
+
+.simulacros:hover {
+  transform: scale(1.05); /* Ajusta el valor según tu preferencia */
+  line-height: 1.8;
+}
+
+.imagen {
+  border-radius: 25px 25px 25px 25px;
+  width: 4rem;
+}
+
+.titulo {
+  display: flex;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titulo h5 {
+  padding-left: 2rem;
+  color: #001f3f;
+}
+
+.tituloPrueba{
+  padding-left: 1rem;
+  color:#001f3f;
+}
+
+.fechaSimulacro{
+  padding-left: 1rem;
+}
+
+.contenedorPuntajes{
+  padding-left: 1rem;
+  font-size: 0.9rem;
+}
+
+.span {
+  font-weight: bold;
+  justify-content: start;
+  padding-right: 1rem;
+}
+.link {
+  text-decoration: none;
+}
+
+.desempeño {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.grafico {
+  width: 100%;
+  background-color: #eef1f1;
+  margin-bottom: 2rem;
+  border-radius: 5rem;
+}
+
+.h2MejorePuntajes {
+  margin-top: 1rem;
 }

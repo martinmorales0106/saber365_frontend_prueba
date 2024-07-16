@@ -3,7 +3,7 @@ import styles from "./Temporizador.module.css";
 import useTabs from "../../hooks/useTabs";
 
 const Temporizador = () => {
-  const { setTiempoAgotado, setSegundos, segundos, } = useTabs();
+  const { setTiempoAgotado, setSegundos, segundos } = useTabs();
 
   useEffect(() => {
     const temporizador = setInterval(() => {
@@ -12,20 +12,16 @@ const Temporizador = () => {
       } else {
         clearInterval(temporizador);
         setTiempoAgotado(true);
-        console.log("Tiempo agotado. Se enviaran todas las respuestas marcadas.");
       }
     }, 1000);
 
     return () => {
       clearInterval(temporizador);
-      if(segundos > "0"){
-        localStorage.setItem("contadorSegundos", (segundos-1).toString())
-      } else {
-        localStorage.setItem("contadorSegundos", "0")
+      if (segundos > 0) {
+        localStorage.setItem("contadorSegundos", (segundos -1).toString());
       }
     };
-  }, [segundos, setTiempoAgotado]);
-
+  }, [segundos, setTiempoAgotado, setSegundos]);
 
   const formatearTiempo = (tiempo) => {
     const horas = Math.floor(tiempo / 3600);

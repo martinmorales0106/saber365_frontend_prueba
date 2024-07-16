@@ -1,14 +1,43 @@
 import styles from "./UsuarioPruebas.module.css";
 import preguntasImg from "../../assets/preguntasImg.png";
 import tiempoImg from "../../assets/tiempoImg.png";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Boton from "../../components/Boton/Boton";
 import { Link } from "react-router-dom";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import { FormatearTiempo } from "../../helpers/FormatearTiempo";
+import NoResultado from "../../components/NoResultado/NoResultado";
+import Loading from "../../components/Loading/Loading";
 
 const UsuarioPruebas = () => {
-  const { simulacrosUsuario, simulacrosCompletados } = usePerfilUsuario();
+  const { simulacrosUsuario, simulacrosCompletados, puntajePorSimulacro,  } =
+    usePerfilUsuario();
+
+    const [loading, setLoading] = useState(true);
+    const [puntajeSimulacroMap, setPuntajeSimulacroMap] = useState({});
+
+    useEffect(() => {
+      // Establecer un tiempo fijo de carga de 1 segundos
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 800);
+      // Limpiar el temporizador cuando el componente se desmonte
+      return () => clearTimeout(timer);
+    }, []);
+
+    useEffect(() => {
+      // Crear un mapa de puntajes para acceder fácilmente a ellos
+      const puntajeMap = puntajePorSimulacro.reduce((map, puntaje) => {
+        map[puntaje.id_simulacro] = puntaje.max_puntaje_global;
+        return map;
+      }, {});
+      setPuntajeSimulacroMap(puntajeMap);
+    }, [puntajePorSimulacro]);
+  
+  
+    if (loading) {
+      return <Loading />;
+    }
 
   return (
     <Fragment>
@@ -22,6 +51,9 @@ const UsuarioPruebas = () => {
                   (sc) => sc.id_simulacro === simulacro.id
                 );
 
+                // Obtener el puntaje máximo global correspondiente al simulacro actual
+                const puntajeMaximo = puntajeSimulacroMap[simulacro.id] || simulacro.puntaje_maximo;
+
                 return (
                   <div key={simulacro.id} className={styles.simulacros}>
                     <img src={simulacro.imagen} className={styles.imagen} />
@@ -29,7 +61,9 @@ const UsuarioPruebas = () => {
                       <h3>{simulacro.titulo}</h3>
                       <h3>{simulacro.grado}</h3>
                     </div>
-                    <p className={styles.descripcion}>{simulacro.descripcion}</p>
+                    <p className={styles.descripcion}>
+                      {simulacro.descripcion}
+                    </p>
                     <div className={styles.contenedor2}>
                       <div className={styles.preguntas}>
                         <img src={preguntasImg} className={styles.icono} />
@@ -41,13 +75,17 @@ const UsuarioPruebas = () => {
                       </div>
                     </div>
                     <p className={styles.puntaje}>
-                      Puntaje Máximo: {simulacro.puntaje_maximo}
+                      Puntaje Máximo:{" "}
+                      {puntajeMaximo}
                     </p>
                     <div className={styles.boton}>
                       {simulacroCompletado ? (
-                        <Link to={`/usuario/resultados`} className={styles.link}>
+                        <Link
+                          to={`/usuario/resultados`}
+                          className={styles.link}
+                        >
                           <div className={styles.preguntas}>
-                            <Boton text="Ver Resultado" />
+                            <Boton text="Ir a mis resultados" />
                           </div>
                         </Link>
                       ) : (
@@ -65,7 +103,7 @@ const UsuarioPruebas = () => {
                 );
               })
             ) : (
-              <div>No hay simulacros disponibles</div>
+              <NoResultado text="No hay simulacros disponibles<"/>
             )}
           </div>
         </div>

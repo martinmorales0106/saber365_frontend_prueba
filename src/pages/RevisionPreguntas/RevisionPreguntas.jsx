@@ -7,6 +7,7 @@ import perdidaImg from "../../assets/perdidaImg.png";
 import resultadosPorPreguntasImg from "../../assets/resultadosPorPreguntasImg.png";
 import Boton from "../../components/Boton/Boton";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
+import Swal from "sweetalert2";
 
 const RevisionPreguntas = () => {
   const { id, area } = useParams();
@@ -18,6 +19,7 @@ const RevisionPreguntas = () => {
     setSimulacroId,
   } = usePerfilUsuario();
 
+  console.log(preguntasSimulacroArea);
   const [estadoPreguntas, setEstadoPreguntas] = useState([]);
   const [preguntaLocal, setPreguntaLocal] = useState(0);
 
@@ -45,11 +47,33 @@ const RevisionPreguntas = () => {
     fetchSimulacroArea();
   }, [area, simulacroFinalizado]);
 
+  useEffect(() => {
+    // Recuperar la pregunta seleccionada de sessionStorage
+    const preguntaSeleccionada = sessionStorage.getItem('preguntaSeleccionada');
+    if (preguntaSeleccionada) {
+      setPreguntaLocal(parseInt(preguntaSeleccionada));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Guardar la pregunta seleccionada en sessionStorage
+    sessionStorage.setItem('preguntaSeleccionada', preguntaLocal);
+  }, [preguntaLocal]);
+
+  useEffect(() => {
+    return () => {
+      // Limpiar sessionStorage cuando el componente se desmonte
+      sessionStorage.removeItem('preguntaSeleccionada');
+    };
+  }, []);
+
   const obtenerPreguntasPorArea = async (area) => {
-    if (!simulacroFinalizado || !simulacroFinalizado.resultadoSimulacro) return [];
-    const preguntasFiltradas = simulacroFinalizado.resultadoSimulacro.estado_preguntas.filter(
-      (pregunta) => pregunta.area === area
-    );
+    if (!simulacroFinalizado || !simulacroFinalizado.resultadoSimulacro)
+      return [];
+    const preguntasFiltradas =
+      simulacroFinalizado.resultadoSimulacro.estado_preguntas.filter(
+        (pregunta) => pregunta.area === area
+      );
     return preguntasFiltradas;
   };
 
@@ -59,6 +83,18 @@ const RevisionPreguntas = () => {
     setPreguntaLocal(numeroPregunta - 1);
   };
 
+const submitBoton = ()=>{
+  Swal.fire({
+    icon: "info",
+    title: "Oops...",
+    text: "Estamos trabajando para brindarte mas información!",
+    didOpen: () => {
+      const confirmButton = Swal.getConfirmButton();
+      confirmButton.style.backgroundColor = '#0f3861';
+      confirmButton.style.color = '#ffffff';
+    }
+  });
+}
   return (
     <div className={styles.fondo}>
       <div className={styles.contenedor}>
@@ -111,6 +147,29 @@ const RevisionPreguntas = () => {
                 </div>
               ))}
             </div>
+            <div>
+  
+              {preguntasSimulacroArea
+                .slice(preguntaLocal, preguntaLocal + 1)
+                .map((pregunta, index) => (
+                  <div key={index} className={styles.containerPreguntas}>
+                    <div className={styles.preguntas1}>
+                    <h2>Objetivo de Aprendizaje</h2>
+                      {pregunta.evidencia ? (
+                        <p className={styles.contexto}>{pregunta.evidencia}</p>
+                      ) : null}
+
+                      <h2>Justificación</h2>
+                      {pregunta.justificacion ? (
+                        <p className={styles.contexto}>{pregunta.justificacion}</p>
+                      ) : null}
+                      {pregunta.img_Justificacion ? (
+                        <p className={styles.contexto}>{pregunta.img_Justificacion}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+            </div>
             {estadoPreguntas[preguntaLocal]?.esCorrecta ? (
               <div className={styles.mensaje}>
                 <h3 className={styles.mensajeTitulo}>
@@ -133,7 +192,7 @@ const RevisionPreguntas = () => {
                   />
                 </div>
                 <div className={styles.boton}>
-                  <Boton text="Ver más" />
+                  <Boton text="Ver más" onClick={submitBoton}/>
                 </div>
               </div>
             ) : (
@@ -157,7 +216,7 @@ const RevisionPreguntas = () => {
                   />
                 </div>
                 <div className={styles.boton}>
-                  <Boton text="Ver más" />
+                  <Boton text="Ver más" onClick={submitBoton}/>
                 </div>
               </div>
             )}
@@ -285,4 +344,3 @@ const RevisionPreguntas = () => {
 };
 
 export default RevisionPreguntas;
-

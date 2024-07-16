@@ -1,4 +1,4 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import PropTypes from "prop-types"; // Importa PropTypes
 import useAuth from "../hooks/useAuth";
@@ -36,10 +36,8 @@ const TabsProvider = ({ children }) => {
   const [segundos, setSegundos] = useState(() => {
     // Recuperar el tiempo restante del localStorage al inicio
     const tiempoRestante = localStorage.getItem("contadorSegundos");
-    return tiempoRestante === "0" ? simulacroEncontrado?.tiempo : parseInt(tiempoRestante);
+    return tiempoRestante === "0"  ? simulacroEncontrado?.tiempo : parseInt(tiempoRestante);
   });
-
-  const formRef = useRef(null);
 
   useEffect(() => {
     if (segundos === 0 && !tiempoAgotado) {
@@ -69,7 +67,7 @@ const TabsProvider = ({ children }) => {
 
     await submitPreguntas({
       id_usuario: auth.id,
-      id_simulacro: preguntasSimulacro[0].id_simulacro,
+      id_simulacro: simulacroEncontrado?.id,
       estado_preguntas_sesion1: resultados,
       estado_preguntas_sesion2: null,
       tiempo_prueba_sesion1: tiempo,
@@ -78,14 +76,9 @@ const TabsProvider = ({ children }) => {
     });
 
     setOpcionesSeleccionadas("");
-
     setSegundos(simulacroEncontrado?.tiempo); // Reiniciar el temporizador
     setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
   };
-
-  useEffect(() => {
-    setSegundos(simulacroEncontrado?.tiempo);
-  }, [tiempoAgotado]);
 
   const guardarOpcionesEnLocalStorage = () => {
     // Guardar opciones seleccionadas en el localStorage
@@ -123,7 +116,6 @@ const TabsProvider = ({ children }) => {
         handleSeleccionRespuesta,
         opcionesSeleccionadas,
         setOpcionesSeleccionadas,
-        formRef,
         tiempoAgotado,
         setTiempoAgotado,
         setSegundos,

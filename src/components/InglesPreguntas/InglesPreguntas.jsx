@@ -99,7 +99,6 @@ const InglesPreguntas = () => {
       });
 
       setOpcionesSeleccionadas("");
-      localStorage.setItem("contadorSegundos", " ");
       setSegundos(simulacroEncontrado?.tiempo); // Reiniciar el temporizador
       setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
     }

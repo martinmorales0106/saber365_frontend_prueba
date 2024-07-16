@@ -34,7 +34,7 @@ const pag = [
   },
   {
     title: "Perfil",
-    path: "/perfil",
+    path: "/usuario/perfil",
     cName: styles.navText,
     icon: <img src={perfilImg} alt="resultados" className={styles.icono} />,
   },

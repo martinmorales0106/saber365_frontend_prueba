@@ -38,7 +38,6 @@ const Resultados = () => {
     obtenerPosicionPorArea,
   } = usePerfilUsuario();
 
-  console.log(simulacroFinalizado?.resultadoSimulacro?.id_usuario);
 
   useEffect(() => {
     const fetchSimulacroFinalizado = async () => {

@@ -27,7 +27,12 @@ const PerfilUsuarioProvider = ({ children }) => {
   const [simulacrosCompletados, setSimulacrosCompletados] = useState([]);
   const [posicionSimulacro, setPosicionSimulacro] = useState(0);
   const [posicionPorArea, setPosicionPorArea] = useState({});
+  const [topPuntajeGlobal, setTopPuntajeGlobal] = useState({});
+  const [topPuntajePorArea, setTopPuntajePorArea] = useState({});
+  const [puntajePorSimulacro, setPuntajePorSimulacro] = useState([]);
+  const [obtenerSimulacrosFinalizados, setObtenerSimulacrosFinalizados] = useState([]);
 
+  console.log(obtenerSimulacrosFinalizados);
 
   useEffect(() => {
     if (preguntasSimulacro.length > 0) {
@@ -211,7 +216,6 @@ const PerfilUsuarioProvider = ({ children }) => {
     } catch (error) {
       console.log(error.message);
     }
-    setCargando(false);
   };
 
   const obtenerPosicionSimulacro = async (id_simulacro, id_usuario) => {
@@ -235,7 +239,6 @@ const PerfilUsuarioProvider = ({ children }) => {
     } catch (error) {
       console.log(error.message);
     }
-    setCargando(false);
   };
 
   const obtenerPosicionPorArea = async (id_simulacro, id_usuario) => {
@@ -259,8 +262,80 @@ const PerfilUsuarioProvider = ({ children }) => {
     } catch (error) {
       console.log(error.message);
     }
-    setCargando(false);
   };
+
+  useEffect(() => {
+    async function fetchTopPuntajeGlobal() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const { data } = await clienteAxios(
+          `/perfil-usuario/obtener-mejores-puntajes/${auth.id}/${auth.grado}`,
+          config
+        );
+
+        setTopPuntajeGlobal(data);
+      } catch (error) {
+        mostrarAlerta({
+          msg: error.response?.data?.msg || error.message,
+          error: true,
+        });
+      } finally {
+        setCargando(false); // Mover esta línea al final para que cargando se establezca en false después de obtener los datos
+      }
+    }
+
+    fetchTopPuntajeGlobal();
+  }, [auth, setTopPuntajeGlobal]);
+
+  useEffect(() => {
+    async function fetchTopPuntajePorArea() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const { data } = await clienteAxios(
+          `/perfil-usuario/obtener-mejores-puntajes-por-area/${auth.id}/${auth.grado}`,
+          config
+        );
+        setTopPuntajePorArea(data);
+      } catch (error) {
+        mostrarAlerta({
+          msg: error.response?.data?.msg || error.message,
+          error: true,
+        });
+      }
+    }
+
+    fetchTopPuntajePorArea();
+  }, [auth]);
 
   const obtenerSimulacroRealizado = async (id) => {
     try {
@@ -283,7 +358,6 @@ const PerfilUsuarioProvider = ({ children }) => {
     } catch (error) {
       console.log(error.message);
     }
-    setCargando(false);
   };
 
   const submitRespuestas = async (respuesta) => {
@@ -308,6 +382,7 @@ const PerfilUsuarioProvider = ({ children }) => {
       return;
     }
     await obtenerSimulacroFinalizado(data.nuevoRegistro.id);
+
     navigate(`/usuario/resultados/resultado/${data.nuevoRegistro.id}`);
   };
 
@@ -327,6 +402,76 @@ const PerfilUsuarioProvider = ({ children }) => {
     localStorage.setItem("filtroArea", area);
     setPreguntasSimulacroArea(preguntasFiltradas);
   };
+
+  useEffect(() => {
+    async function fetchPuntajePorSimulacro() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const { data } = await clienteAxios(
+          `/perfil-usuario/obtener-mejores-puntajes-por-simulacro/${auth.grado}`,
+          config
+        );
+        setPuntajePorSimulacro(data);
+      } catch (error) {
+        mostrarAlerta({
+          msg: error.response?.data?.msg || error.message,
+          error: true,
+        });
+      }
+    }
+
+    fetchPuntajePorSimulacro();
+  }, [auth, simulacroFinalizado]);
+
+  useEffect(() => {
+    async function fetchObtenerSimulacrosRealizados() {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          mostrarAlerta({
+            msg: "No tienes permiso para ver esta información",
+            error: true,
+          });
+          return;
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        const { data } = await clienteAxios(
+          `/perfil-usuario/obtener-simulacros-realizados`,
+          config
+        );
+        setObtenerSimulacrosFinalizados(data);
+      } catch (error) {
+        mostrarAlerta({
+          msg: error.response?.data?.msg || error.message,
+          error: true,
+        });
+      }
+    }
+
+    fetchObtenerSimulacrosRealizados();
+  }, [simulacroRealizado]);
 
   return (
     <PerfilUsuarioContext.Provider
@@ -360,6 +505,10 @@ const PerfilUsuarioProvider = ({ children }) => {
         obtenerPosicionSimulacro,
         posicionPorArea,
         obtenerPosicionPorArea,
+        topPuntajeGlobal,
+        topPuntajePorArea,
+        puntajePorSimulacro,
+        obtenerSimulacrosFinalizados,
       }}
     >
       {children}

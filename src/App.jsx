@@ -28,6 +28,8 @@ import FinalizarSesion from "./pages/FinalizarSesion/FinalizarSesion";
 import Resultados from "./pages/Resultados/Resultados";
 import RevisionPreguntas from "./pages/RevisionPreguntas/RevisionPreguntas";
 import UsuarioResultados from "./pages/UsuarioResultados/UsuarioResultados";
+import PreguntasLayout from "./layouts/PreguntasLayout/PreguntasLayout";
+import UsuarioConfiguracion from "./pages/UsuarioConfiguracion/UsuarioConfiguracion";
 
 function App() {
   return (
@@ -63,14 +65,7 @@ function App() {
                         path="confirmar-prueba/:id"
                         element={<ConfirmarRealizarPrueba />}
                       />
-                      <Route
-                        path="realizar-prueba/:id"
-                        element={<RealizarPrueba />}
-                      />
-                      <Route
-                        path="finalizar-sesion/:id"
-                        element={<FinalizarSesion />}
-                      />
+
                       <Route
                         path="resultados/resultado/:id"
                         element={<Resultados />}
@@ -83,6 +78,20 @@ function App() {
                       <Route
                         path="resultados"
                         element={<UsuarioResultados />}
+                      />
+                      <Route
+                        path="perfil"
+                        element={<UsuarioConfiguracion />}
+                      />
+                    </Route>
+                    <Route path="/usuario" element={<PreguntasLayout />}>
+                      <Route
+                        path="realizar-prueba/:id"
+                        element={<RealizarPrueba />}
+                      />
+                      <Route
+                        path="finalizar-sesion/:id"
+                        element={<FinalizarSesion />}
                       />
                     </Route>
 

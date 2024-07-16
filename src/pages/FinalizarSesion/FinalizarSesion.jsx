@@ -17,6 +17,7 @@ const FinalizarSesion = () => {
   const { auth } = useAuth();
   const { id } = useParams();
 
+
   useEffect(() => {
     const fetchSimulacroRealizado = async () => {
       setSimulacroFinalizadoId(id);
@@ -29,7 +30,6 @@ const FinalizarSesion = () => {
     return <di>Cargando...</di>;
   }
 
-  localStorage.setItem("contadorSegundos", "");
 
   // Combinar los arrays de estado_preguntas_sesion
   const estado_preguntas_combinado =
@@ -169,7 +169,7 @@ const FinalizarSesion = () => {
 
     await submitRespuestas({
       id_usuario: auth.id,
-      id_simulacro: preguntasSimulacro[0].id_simulacro,
+      id_simulacro: simulacroRealizado?.id_simulacro,
       estado_preguntas: estado_preguntas_combinado,
       puntaje_global: puntajeGlobal,
       nivel_alcanzado: clasificarGlobal(puntajeGlobal),

@@ -1,0 +1,23 @@
+.fondo {
+  background-color: #001f3f;
+}
+
+.container {
+  background-color: rgba(52, 152, 219, 0.2);
+  padding: 2rem;
+}
+.contenedor {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 25px;
+}
+
+.icono {
+  width: 3rem;
+}
+
+.tituloConfiguracion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

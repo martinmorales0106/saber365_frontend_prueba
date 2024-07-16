@@ -1,7 +1,9 @@
+/* Fondo General */
 .fondo {
   background-color: #001f3f;
 }
 
+/* Contenedor Principal */
 .container {
   background-color: rgba(52, 152, 219, 0.2);
   padding: 2rem;
@@ -13,6 +15,7 @@
   border-radius: 25px;
 }
 
+/* Banner */
 .banner {
   display: flex;
   background-color: #2ecc71;
@@ -39,17 +42,39 @@
   font-weight: 400;
 }
 
+/* Subtítulo */
 .subtitulo {
-  padding: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  font-size: 24px;
+  color: #333333;
+}
+
+/* Tabla */
+.tableContainer {
+  
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tablaEncabezado {
-  justify-content: center;
   width: 100%;
-  text-align: center;
-  align-items: center;
+  margin-bottom: 20px;
   border-collapse: separate;
   border-spacing: 0.5rem;
+}
+
+.tablaEncabezado th, .tablaEncabezado td {
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+
+.tablaEncabezado th {
+  background-color: #0f3861;
+  color: white;
 }
 
 .tablaEncabezado tbody tr {
@@ -59,20 +84,35 @@
 .tablaEncabezado tbody td {
   padding: 0.4rem;
   border-right: 2px solid #0f386141;
-  text-align: center;
-  justify-content: center;
 }
 
 .tablaEncabezado tbody tr:last-child {
   border-bottom: none; /* Eliminar el borde inferior del último tr */
 }
 
-.boton {
-  display: flex;
-  text-align: center;
-  justify-content: center;
+.tablaEncabezado tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
+.tablaEncabezado tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Botón */
+.boton {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Enlace */
 .link {
   text-decoration: none;
+}
+
+/* Desempeño */
+.desempeño {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
 }

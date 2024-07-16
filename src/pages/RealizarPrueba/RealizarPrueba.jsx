@@ -6,7 +6,7 @@ import naturalesImg from "../../assets/naturalesImg.png";
 import inglesImg from "../../assets/inglesImg.png";
 import Tabs from "../../components/Tabs/Tabs";
 import useTabs from "../../hooks/useTabs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import MatematicasPreguntas from "../../components/MatematicasPreguntas/MatematicasPreguntas";
 import { useEffect } from "react";
@@ -14,6 +14,8 @@ import LecturaCriticaPreguntas from "../../components/LecturaCriticaPreguntas/Le
 import SocialesPreguntas from "../../components/SocialesPreguntas/SocialesPreguntas";
 import NaturalesPreguntas from "../../components/NaturalesPreguntas/NaturalesPreguntas";
 import InglesPreguntas from "../../components/InglesPreguntas/InglesPreguntas";
+import useAuth from "../../hooks/useAuth";
+
 
 const tabs = [
   {
@@ -70,13 +72,24 @@ const tabs = [
 
 const RealizarPrueba = () => {
   const { selectedTab, handleTabChange } = useTabs();
-  const { setSimulacroId, setSelectArea } = usePerfilUsuario();
+  const { setSimulacroId, setSelectArea, obtenerSimulacrosFinalizados, simulacroRealizado } = usePerfilUsuario();
   const { id } = useParams();
+  const {auth} = useAuth();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSimulacroId(id);
     setSelectArea(selectedTab);
-  }, [id, selectedTab]);
+
+    // Verificar si el simulacro está finalizado
+    const simulacroFinalizado = obtenerSimulacrosFinalizados.find((item) => item.id_simulacro === parseInt(id) && item.id_usuario === auth.id);
+    if (simulacroFinalizado) {
+      // Enviar al usuario a la página de finalización
+      navigate(`/usuario/finalizar-sesion/${simulacroFinalizado.id}`);
+    }
+  }, [id, selectedTab, obtenerSimulacrosFinalizados, navigate, simulacroRealizado]);
+
 
   return (
     <div>

@@ -1,3 +1,8 @@
+.customOkButton {
+  background-color: #ff0000; /* Cambia este valor por el color que prefieras */
+  color: #ffffff; /* Color del texto */
+}
+
 .estilo1 {
   background-color: aqua;
 }
@@ -29,14 +34,14 @@
   display: flex;
 }
 .preguntas {
-  width: 40%;
+  width: 45%;
   background-color: #c9f3f57a;
   padding: 1rem;
   border-radius: 25px;
   margin: 0.5rem;
 }
 .prueba {
-  width: 60%;
+  width: 55%;
   background-color: #c9f3f57a;
   padding: 1rem;
   border-radius: 25px;
