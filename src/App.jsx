@@ -30,6 +30,8 @@ import RevisionPreguntas from "./pages/RevisionPreguntas/RevisionPreguntas";
 import UsuarioResultados from "./pages/UsuarioResultados/UsuarioResultados";
 import PreguntasLayout from "./layouts/PreguntasLayout/PreguntasLayout";
 import UsuarioConfiguracion from "./pages/UsuarioConfiguracion/UsuarioConfiguracion";
+import OlvidePassword from "./pages/OlvidePassword/OlvidePassword";
+import NuevoPassword from "./pages/NuevoPassword/NuevoPassword";
 
 function App() {
   return (
@@ -56,6 +58,14 @@ function App() {
                         path="confirmar/:id"
                         element={<ConfirmarCuenta />}
                       />
+                      <Route
+                      path="olvide-password"
+                      element={<OlvidePassword />}
+                    />
+                    <Route
+                      path="olvide-password/:token"
+                      element={<NuevoPassword />}
+                    />
                     </Route>
 
                     <Route path="/usuario" element={<PerfilUsuario />}>

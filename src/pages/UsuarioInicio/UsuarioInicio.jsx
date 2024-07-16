@@ -190,7 +190,7 @@ const UsuarioInicio = () => {
             </div>
             <img src={bannerUsuarioImg} />
           </div>
-          <h2 className={styles.desempeño}>Desempeño por Simulacro</h2>
+          {simulacrosCompletados.length > 0 && (<h2 className={styles.desempeño}>Desempeño por Simulacro</h2>)}
           {simulacrosCompletados.length > 0 ? (
             <div className={styles.grafico}>
               {barChart(simulacrosCompletados)}
@@ -202,13 +202,13 @@ const UsuarioInicio = () => {
               textBoton="Realizar un simulacro"
             />
           )}
-          {topPuntajeGlobal && (
+          {topPuntajeGlobal > 0 && (
             <h2 className={styles.h2MejorePuntajes}>Top mejores puntajes</h2>
           )}
           <div className={styles.contenedorTop}>
             <div className={styles.topEstudiantes}>
-              {topPuntajeGlobal && <h4>Según puntajes globales</h4>}
-              {topPuntajeGlobal &&
+              {topPuntajeGlobal > 0 && <h4>Según puntajes globales</h4>}
+              {topPuntajeGlobal > 0 &&
               topPuntajeGlobal.mejoresPuntajesGlobales?.length > 0 ? (
                 <ol className={styles.listaPuntajes}>
                   {topPuntajeGlobal.mejoresPuntajesGlobales.map(
@@ -280,10 +280,10 @@ const UsuarioInicio = () => {
               ) : null}
             </div>
             <div className={styles.contenedorPorArea}>
-              {topPuntajePorArea.length !== 0 && (
+              {topPuntajePorArea.length > 0 && (
                 <h4>Según puntajes por área</h4>
               )}
-              {topPuntajePorArea &&
+              {topPuntajePorArea  > 0 &&
               Object.keys(topPuntajePorArea).length > 0 ? (
                 <div className={styles.areasContainer}>
                   {Object.keys(topPuntajePorArea).map((area, index) => (
@@ -337,11 +337,11 @@ const UsuarioInicio = () => {
               ) : null}
             </div>
           </div>
-          {simulacrosMasRecientes.length !== 0 && (
+          {simulacrosMasRecientes.length > 0 && (
             <h2>Últimos simulacros realizados</h2>
           )}
           <div className={styles.containerPruebas}>
-            {simulacrosMasRecientes.length
+            {simulacrosMasRecientes.length > 0
               ? simulacrosMasRecientes.map((simulacro) => (
                   <div key={simulacro.id} className={styles.simulacros}>
                     <div className={styles.titulo}>
@@ -406,7 +406,7 @@ const UsuarioInicio = () => {
               : null}
           </div>
           <div>
-            {simulacrosMasRecientes.length !== 0 && (
+            {simulacrosMasRecientes.length > 0 && (
               <div>
                 <Link to="/usuario/resultados" className={styles.link}>
                   <Boton text="Ver todos los Simulacros" />
