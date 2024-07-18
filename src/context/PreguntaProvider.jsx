@@ -11,7 +11,8 @@ const PreguntaProvider = ({ children }) => {
   const [modalPregunta, setModalPregunta] = useState(false);
   const [preguntasEliminadas, setPreguntasEliminadas] = useState([]);
   const [preguntap, setPreguntap] = useState({});
-  
+  const [cargando, setCargando] = useState(true);
+
   const mostrarAlerta = (alerta) => {
     setAlerta(alerta);
     setTimeout(() => {
@@ -253,8 +254,6 @@ const PreguntaProvider = ({ children }) => {
     }
   };
 
-  
-
   return (
     <PreguntaContext.Provider
       value={{
@@ -269,7 +268,8 @@ const PreguntaProvider = ({ children }) => {
         recuperarPregunta,
         handleModalEditarPregunta,
         preguntap,
-        
+        cargando,
+        setCargando,
       }}
     >
       {children}

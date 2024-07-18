@@ -2,26 +2,31 @@ import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import styles from "./PerfilAdmin.module.css";
 import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin";
+import Loading from "../../components/Loading/Loading";
 
 const PerfilAdmin = () => {
-    const { auth } = useAuth();
+  const { auth, cargando } = useAuth();
 
-    return (
-      <>
-        {auth.admin ? (
-          <div>
-            <div className={styles.aside}>
-              <HeaderAdmin/>
-            </div>
-            <main className={styles.main}>
-              <Outlet />
-            </main>
+  if (cargando) {
+    return <Loading />;
+  }
+
+  return (
+    <>
+      {auth.admin ? (
+        <div>
+          <div className={styles.aside}>
+            <HeaderAdmin />
           </div>
-        ) : (
-          <Navigate to="/sin-autenticar" />
-        )}
-      </>
-    );
-}
+          <main className={styles.main}>
+            <Outlet />
+          </main>
+        </div>
+      ) : (
+        <Navigate to="/sin-autenticar" />
+      )}
+    </>
+  );
+};
 
-export default PerfilAdmin
+export default PerfilAdmin;

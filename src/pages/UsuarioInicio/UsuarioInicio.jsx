@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Chart as ChartJS,
@@ -24,7 +23,6 @@ import lecturaImg from "../../assets/lecturaImg.png";
 import socialesImg from "../../assets/socialesImg.png";
 import naturalesImg from "../../assets/naturalesImg.png";
 import inglesImg from "../../assets/inglesImg.png";
-import Loading from "../../components/Loading/Loading";
 import NoResultado from "../../components/NoResultado/NoResultado";
 
 // Registrar los componentes de Chart.js
@@ -126,20 +124,8 @@ const UsuarioInicio = () => {
   const { topPuntajeGlobal, topPuntajePorArea, simulacrosCompletados } =
     usePerfilUsuario();
 
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Establecer un tiempo fijo de carga de 2 segundos
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 800);
-    // Limpiar el temporizador cuando el componente se desmonte
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (loading) {
-    return <Loading />;
-  }
+    console.log(simulacrosCompletados.length);
+    console.log(Object.keys(topPuntajePorArea).length);
 
   simulacrosCompletados.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -190,7 +176,9 @@ const UsuarioInicio = () => {
             </div>
             <img src={bannerUsuarioImg} />
           </div>
-          {simulacrosCompletados.length > 0 && (<h2 className={styles.desempeño}>Desempeño por Simulacro</h2>)}
+          {simulacrosCompletados.length > 0 && (
+            <h2 className={styles.desempeño}>Desempeño por Simulacro</h2>
+          )}
           {simulacrosCompletados.length > 0 ? (
             <div className={styles.grafico}>
               {barChart(simulacrosCompletados)}
@@ -202,13 +190,13 @@ const UsuarioInicio = () => {
               textBoton="Realizar un simulacro"
             />
           )}
-          {topPuntajeGlobal > 0 && (
+          {topPuntajeGlobal && (
             <h2 className={styles.h2MejorePuntajes}>Top mejores puntajes</h2>
           )}
           <div className={styles.contenedorTop}>
             <div className={styles.topEstudiantes}>
-              {topPuntajeGlobal > 0 && <h4>Según puntajes globales</h4>}
-              {topPuntajeGlobal > 0 &&
+              {topPuntajeGlobal && <h4>Según puntajes globales</h4>}
+              {topPuntajeGlobal &&
               topPuntajeGlobal.mejoresPuntajesGlobales?.length > 0 ? (
                 <ol className={styles.listaPuntajes}>
                   {topPuntajeGlobal.mejoresPuntajesGlobales.map(
@@ -280,10 +268,8 @@ const UsuarioInicio = () => {
               ) : null}
             </div>
             <div className={styles.contenedorPorArea}>
-              {topPuntajePorArea.length > 0 && (
-                <h4>Según puntajes por área</h4>
-              )}
-              {topPuntajePorArea  > 0 &&
+              {topPuntajePorArea && <h4>Según puntajes por área</h4>}
+              {topPuntajePorArea &&
               Object.keys(topPuntajePorArea).length > 0 ? (
                 <div className={styles.areasContainer}>
                   {Object.keys(topPuntajePorArea).map((area, index) => (

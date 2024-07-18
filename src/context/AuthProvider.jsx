@@ -13,10 +13,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const autenticarUsuario = async () => {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setCargando(false);
-        return;
-      }
+      if (!token) return;
 
       const config = {
         headers: {
@@ -32,8 +29,14 @@ const AuthProvider = ({ children }) => {
       } catch (error) {
         setAuth({});
       }
+      // Establecer un tiempo fijo de carga de 2 segundos
+      const timer = setTimeout(() => {
+        setCargando(false);
+      }, 1000);
 
-      setCargando(false);
+      // Limpiar el temporizador cuando el componente se desmonte
+      return () => clearTimeout(timer);
+      
     };
     autenticarUsuario();
   }, []);

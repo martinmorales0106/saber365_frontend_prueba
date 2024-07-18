@@ -7,23 +7,12 @@ import { Link } from "react-router-dom";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import { FormatearTiempo } from "../../helpers/FormatearTiempo";
 import NoResultado from "../../components/NoResultado/NoResultado";
-import Loading from "../../components/Loading/Loading";
 
 const UsuarioPruebas = () => {
   const { simulacrosUsuario, simulacrosCompletados, puntajePorSimulacro,  } =
     usePerfilUsuario();
 
-    const [loading, setLoading] = useState(true);
     const [puntajeSimulacroMap, setPuntajeSimulacroMap] = useState({});
-
-    useEffect(() => {
-      // Establecer un tiempo fijo de carga de 1 segundos
-      const timer = setTimeout(() => {
-        setLoading(false);
-      }, 800);
-      // Limpiar el temporizador cuando el componente se desmonte
-      return () => clearTimeout(timer);
-    }, []);
 
     useEffect(() => {
       // Crear un mapa de puntajes para acceder fácilmente a ellos
@@ -33,11 +22,6 @@ const UsuarioPruebas = () => {
       }, {});
       setPuntajeSimulacroMap(puntajeMap);
     }, [puntajePorSimulacro]);
-  
-  
-    if (loading) {
-      return <Loading />;
-    }
 
   return (
     <Fragment>

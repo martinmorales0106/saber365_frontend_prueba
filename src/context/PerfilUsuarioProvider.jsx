@@ -3,12 +3,13 @@ import PropTypes from "prop-types"; // Importa PropTypes
 import clienteAxios from "../config/clienteAxios";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const PerfilUsuarioContext = createContext();
 
 const PerfilUsuarioProvider = ({ children }) => {
   const navigate = useNavigate();
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
 
   const [simulacrosUsuario, setSimulacrosUsuario] = useState([]);
   const [alerta, setAlerta] = useState({});
@@ -19,7 +20,8 @@ const PerfilUsuarioProvider = ({ children }) => {
   const [preguntasFiltradas, setPreguntasFiltradas] = useState([]);
   const [selectArea, setSelectArea] = useState("");
   const [simulacroRealizado, setSimulacroRealizado] = useState({});
-  const [cargando, setCargando] = useState(true);
+  const [cargandoTopPuntaje, setCargandoPerfilTopPuntaje] = useState(true);
+  const [cargandoTopPuntajeArea, setCargandoPerfilTopPuntajeArea] = useState(true);
   const [simulacroFinalizado, setSimulacroFinalizado] = useState({});
   const [modalResultado, setModalResultado] = useState(false);
   const [resultadoArea, setResultadoArea] = useState({});
@@ -30,9 +32,8 @@ const PerfilUsuarioProvider = ({ children }) => {
   const [topPuntajeGlobal, setTopPuntajeGlobal] = useState({});
   const [topPuntajePorArea, setTopPuntajePorArea] = useState({});
   const [puntajePorSimulacro, setPuntajePorSimulacro] = useState([]);
-  const [obtenerSimulacrosFinalizados, setObtenerSimulacrosFinalizados] = useState([]);
-
-  console.log(obtenerSimulacrosFinalizados);
+  const [obtenerSimulacrosFinalizados, setObtenerSimulacrosFinalizados] =
+    useState([]);
 
   useEffect(() => {
     if (preguntasSimulacro.length > 0) {
@@ -197,10 +198,8 @@ const PerfilUsuarioProvider = ({ children }) => {
   const obtenerSimulacroFinalizado = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setCargando(false);
-        return;
-      }
+      if (!token) return;
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -221,10 +220,8 @@ const PerfilUsuarioProvider = ({ children }) => {
   const obtenerPosicionSimulacro = async (id_simulacro, id_usuario) => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setCargando(false);
-        return;
-      }
+      if (!token) return;
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -244,10 +241,8 @@ const PerfilUsuarioProvider = ({ children }) => {
   const obtenerPosicionPorArea = async (id_simulacro, id_usuario) => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setCargando(false);
-        return;
-      }
+      if (!token) return;
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -289,18 +284,23 @@ const PerfilUsuarioProvider = ({ children }) => {
         );
 
         setTopPuntajeGlobal(data);
+        // Establecer un tiempo fijo de carga de 2 segundos
+        const timer = setTimeout(() => {
+          setCargandoPerfilTopPuntaje(false);
+        }, 1000);
+
+        // Limpiar el temporizador cuando el componente se desmonte
+        return () => clearTimeout(timer);
       } catch (error) {
         mostrarAlerta({
           msg: error.response?.data?.msg || error.message,
           error: true,
         });
-      } finally {
-        setCargando(false); // Mover esta línea al final para que cargando se establezca en false después de obtener los datos
       }
     }
 
     fetchTopPuntajeGlobal();
-  }, [auth, setTopPuntajeGlobal]);
+  }, [auth, simulacrosCompletados]);
 
   useEffect(() => {
     async function fetchTopPuntajePorArea() {
@@ -326,6 +326,13 @@ const PerfilUsuarioProvider = ({ children }) => {
           config
         );
         setTopPuntajePorArea(data);
+        // Establecer un tiempo fijo de carga de 2 segundos
+        const timer = setTimeout(() => {
+          setCargandoPerfilTopPuntajeArea(false);
+        }, 1000);
+
+        // Limpiar el temporizador cuando el componente se desmonte
+        return () => clearTimeout(timer);
       } catch (error) {
         mostrarAlerta({
           msg: error.response?.data?.msg || error.message,
@@ -335,15 +342,13 @@ const PerfilUsuarioProvider = ({ children }) => {
     }
 
     fetchTopPuntajePorArea();
-  }, [auth]);
+  }, [auth, simulacrosCompletados]);
 
   const obtenerSimulacroRealizado = async (id) => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        setCargando(false);
-        return;
-      }
+      if (!token) return;
+
       const config = {
         headers: {
           "Content-Type": "application/json",
@@ -473,6 +478,77 @@ const PerfilUsuarioProvider = ({ children }) => {
     fetchObtenerSimulacrosRealizados();
   }, [simulacroRealizado]);
 
+  const updateUsuario = async (usuario) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.put(
+        `/perfil-usuario/editar-usuario/${usuario.id}`,
+        usuario,
+        config
+      );
+
+      setAuth(data.usuario);
+
+      mostrarAlerta({
+        msg: data.msg,
+        error: false,
+      });
+
+      Swal.fire("Editado!", "El usuario se modificó correctamente.", "success");
+    } catch (error) {
+      mostrarAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
+  };
+
+  const updateUsuarioContraseña = async (usuario) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.put(
+        `/perfil-usuario/editar-usuario-contrasena/${usuario.id}`,
+        usuario,
+        config
+      );
+
+      console.log(data);
+      mostrarAlerta({
+        msg: data.msg,
+        error: false,
+      });
+
+      Swal.fire(
+        "Editado!",
+        "La Contraseña se modificó correctamente.",
+        "success"
+      );
+    } catch (error) {
+      mostrarAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
+  };
+
   return (
     <PerfilUsuarioContext.Provider
       value={{
@@ -488,7 +564,8 @@ const PerfilUsuarioProvider = ({ children }) => {
         submitPreguntas,
         simulacroRealizado,
         submitRespuestas,
-        cargando,
+        cargandoTopPuntaje,
+        cargandoTopPuntajeArea,
         simulacroFinalizado,
         handleModalResultado,
         modalResultado,
@@ -509,6 +586,8 @@ const PerfilUsuarioProvider = ({ children }) => {
         topPuntajePorArea,
         puntajePorSimulacro,
         obtenerSimulacrosFinalizados,
+        updateUsuario,
+        updateUsuarioContraseña,
       }}
     >
       {children}

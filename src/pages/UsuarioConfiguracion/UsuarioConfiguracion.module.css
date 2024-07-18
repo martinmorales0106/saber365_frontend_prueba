@@ -2,22 +2,138 @@
   background-color: #001f3f;
 }
 
-.container {
+.container2 {
   background-color: rgba(52, 152, 219, 0.2);
   padding: 2rem;
 }
+
 .contenedor {
   background-color: white;
-  padding: 2rem;
-  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  border-radius: 25px 25px 0 0;
+  
 }
 
-.icono {
-  width: 3rem;
+.contenedor2 {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  border-radius: 0 0 25px 25px;
+  
+}
+
+.icono2 {
+  width: 2.8rem;
 }
 
 .tituloConfiguracion {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
+}
+
+
+.formulario {
+  padding: 0% 10% 5% 10%;
+  width: 50%;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #cbd8ee;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+}
+
+.icono {
+  text-align: center;
+  width: 100%;
+  max-width: 1.3rem;
+  height: 1.3rem;
+}
+
+.input {
+  width: 80%;
+  margin: 0.3rem;
+  padding: 0.5rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  background-color: #ebf0f8;
+  border-radius: 0.25rem;
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.input::placeholder {
+  color: rgb(97, 96, 96);
+}
+
+.input2 {
+  width: 84%;
+  margin: 0.3rem;
+  padding: 0.5rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  background-color: #ebf0f8;
+  font-size: medium;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+}
+
+.contenedor_botones {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.boton {
+  background-color: #b87a07;
+  margin-bottom: 0.75rem;
+  width: 100%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: #fff;
+  border-radius: 0.25rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.span {
+  color: #b87a07;
+}
+
+.parrafo {
+  text-align: center;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.crear_cuenta {
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.link {
+  text-decoration: none;
+  color: #b87a07;
+}
+
+.iconoMostrar {
+
+  transform: translateX(-50%);
+  cursor: pointer;
+  color: #606061;
+}
+
+.iconoMostrar:hover {
+  color: #000;
 }

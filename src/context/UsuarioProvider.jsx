@@ -7,7 +7,6 @@ import useAuth from "../hooks/useAuth";
 const UsuarioContext = createContext();
 
 const UsuarioProvider = ({ children }) => {
-
   const { setAuth } = useAuth();
 
   const [usuarios, setUsuarios] = useState([]);
@@ -15,7 +14,6 @@ const UsuarioProvider = ({ children }) => {
   const [usuariosEliminados, setUsuariosEliminados] = useState([]);
   const [modalUsuario, setModalUsuario] = useState(false);
   const [usuariop, setUsuariop] = useState({});
-
 
   const mostrarAlerta = (alerta) => {
     setAlerta(alerta);
@@ -227,12 +225,8 @@ const UsuarioProvider = ({ children }) => {
       });
 
       setModalUsuario(false);
-      
-      Swal.fire(
-        "Editado!",
-        "El usuario se modificó correctamente.",
-        "success"
-      );
+
+      Swal.fire("Editado!", "El usuario se modificó correctamente.", "success");
     } catch (error) {
       mostrarAlerta({
         msg: error.response.data.msg,
@@ -250,6 +244,7 @@ const UsuarioProvider = ({ children }) => {
     <UsuarioContext.Provider
       value={{
         usuarios,
+        setUsuarios,
         modalUsuario,
         handleModalUsuario,
         submitUsuario,
@@ -260,6 +255,7 @@ const UsuarioProvider = ({ children }) => {
         usuariosEliminados,
         eliminarUsuario,
         recuperarUsuario,
+        editarUsuario,
       }}
     >
       {children}

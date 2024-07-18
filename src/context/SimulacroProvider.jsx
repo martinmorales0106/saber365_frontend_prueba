@@ -12,6 +12,7 @@ const SimulacroProvider = ({ children }) => {
   const [modalSimulacro, setModalSimulacro] = useState(false);
   const [simulacrop, setSimulacrop] = useState({});
   const [simulacrosEliminados, setSimulacrosEliminados] = useState([]);
+  const [cargando, setCargando] = useState(true);
   
 
   const mostrarAlerta = (alerta) => {
@@ -279,6 +280,8 @@ const SimulacroProvider = ({ children }) => {
         recuperarSimulacro,
         handleModalEditarSimulacro,
         simulacrosEliminados,
+        setCargando,
+        cargando,
       }}
     >
       {children}
