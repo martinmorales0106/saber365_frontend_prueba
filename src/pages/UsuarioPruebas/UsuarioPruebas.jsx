@@ -7,36 +7,44 @@ import { Link } from "react-router-dom";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import { FormatearTiempo } from "../../helpers/FormatearTiempo";
 import NoResultado from "../../components/NoResultado/NoResultado";
+import useAuth from "../../hooks/useAuth";
 
 const UsuarioPruebas = () => {
-  const { simulacrosUsuario, simulacrosCompletados, puntajePorSimulacro,  } =
+  const { simulacrosUsuario, simulacrosCompletados, puntajePorSimulacro } =
     usePerfilUsuario();
+  
+  const {auth} = useAuth();
 
-    const [puntajeSimulacroMap, setPuntajeSimulacroMap] = useState({});
+  const simulacrosFiltrados = simulacrosUsuario.filter(
+    (simulacro) => simulacro.grado === auth.grado
+  );
 
-    useEffect(() => {
-      // Crear un mapa de puntajes para acceder fácilmente a ellos
-      const puntajeMap = puntajePorSimulacro.reduce((map, puntaje) => {
-        map[puntaje.id_simulacro] = puntaje.max_puntaje_global;
-        return map;
-      }, {});
-      setPuntajeSimulacroMap(puntajeMap);
-    }, [puntajePorSimulacro]);
+  const [puntajeSimulacroMap, setPuntajeSimulacroMap] = useState({});
+
+  useEffect(() => {
+    // Crear un mapa de puntajes para acceder fácilmente a ellos
+    const puntajeMap = puntajePorSimulacro.reduce((map, puntaje) => {
+      map[puntaje.id_simulacro] = puntaje.max_puntaje_global;
+      return map;
+    }, {});
+    setPuntajeSimulacroMap(puntajeMap);
+  }, [puntajePorSimulacro]);
 
   return (
     <Fragment>
       <div className={styles.fondo}>
         <div className={styles.container}>
           <div className={styles.containerPruebas}>
-            {simulacrosUsuario.length ? (
-              simulacrosUsuario.map((simulacro) => {
+            {simulacrosFiltrados.length > 0 ? (
+              simulacrosFiltrados.map((simulacro) => {
                 // Verificar si el simulacro actual está en simulacrosCompletados
                 const simulacroCompletado = simulacrosCompletados.find(
                   (sc) => sc.id_simulacro === simulacro.id
                 );
 
                 // Obtener el puntaje máximo global correspondiente al simulacro actual
-                const puntajeMaximo = puntajeSimulacroMap[simulacro.id] || simulacro.puntaje_maximo;
+                const puntajeMaximo =
+                  puntajeSimulacroMap[simulacro.id] || simulacro.puntaje_maximo;
 
                 return (
                   <div key={simulacro.id} className={styles.simulacros}>
@@ -59,8 +67,7 @@ const UsuarioPruebas = () => {
                       </div>
                     </div>
                     <p className={styles.puntaje}>
-                      Puntaje Máximo:{" "}
-                      {puntajeMaximo}
+                      Puntaje Máximo: {puntajeMaximo}
                     </p>
                     <div className={styles.boton}>
                       {simulacroCompletado ? (
@@ -87,7 +94,7 @@ const UsuarioPruebas = () => {
                 );
               })
             ) : (
-              <NoResultado text="No hay simulacros disponibles<"/>
+              <NoResultado text="No hay simulacros disponibles" />
             )}
           </div>
         </div>

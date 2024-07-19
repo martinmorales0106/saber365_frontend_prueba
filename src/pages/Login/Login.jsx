@@ -7,11 +7,13 @@ import styles from "./Login.module.css";
 import usuarioLogin from "../../assets/Usuario-login.png";
 import LoginContraseña from "../../assets/login-contraseña.png";
 import useAuth from "../../hooks/useAuth";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [alerta, setAlerta] = useState({});
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   const { setAuth } = useAuth();
 
@@ -41,7 +43,7 @@ const Login = () => {
       localStorage.setItem("authUser", JSON.stringify(data));
       setAuth(data);
       navigate("/");
-    } catch (error) { 
+    } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
         error: true,
@@ -83,16 +85,22 @@ const Login = () => {
           </label>
           <input
             id="contraseña"
-            type="password"
+            type={mostrarPassword ? "text" : "password"}
             placeholder="Contraseña"
-            className={styles.input}
+            className={styles.input2}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
           />
+          <span
+            onClick={() => setMostrarPassword(!mostrarPassword)}
+            className={styles.iconoMostrar}
+          >
+            {mostrarPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
         <div className={styles.parrafo}>
-          <hr/>
+          <hr />
           <p>
             Al ingresar aceptas los{" "}
             <span className={styles.span}>Términos y Condiciones</span>

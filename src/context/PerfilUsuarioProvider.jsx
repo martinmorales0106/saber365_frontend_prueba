@@ -21,7 +21,8 @@ const PerfilUsuarioProvider = ({ children }) => {
   const [selectArea, setSelectArea] = useState("");
   const [simulacroRealizado, setSimulacroRealizado] = useState({});
   const [cargandoTopPuntaje, setCargandoPerfilTopPuntaje] = useState(true);
-  const [cargandoTopPuntajeArea, setCargandoPerfilTopPuntajeArea] = useState(true);
+  const [cargandoTopPuntajeArea, setCargandoPerfilTopPuntajeArea] =
+    useState(true);
   const [simulacroFinalizado, setSimulacroFinalizado] = useState({});
   const [modalResultado, setModalResultado] = useState(false);
   const [resultadoArea, setResultadoArea] = useState({});
@@ -37,14 +38,14 @@ const PerfilUsuarioProvider = ({ children }) => {
 
   useEffect(() => {
     if (preguntasSimulacro.length > 0) {
-      const filtrarPreguntasMatematicas = async () => {
+      const filtrarPreguntas = async () => {
         const filtradas = preguntasSimulacro.filter(
           (pregunta) => pregunta.area === selectArea
         );
         setPreguntasFiltradas(filtradas);
       };
 
-      filtrarPreguntasMatematicas();
+      filtrarPreguntas();
     }
   }, [preguntasSimulacro, selectArea]);
 
@@ -192,6 +193,13 @@ const PerfilUsuarioProvider = ({ children }) => {
     );
 
     setSimulacroRealizado(data);
+    localStorage.setItem("inglesPregunta", "0");
+    localStorage.setItem("lecturaPregunta", "0");
+    localStorage.setItem("matemáticasPregunta", "0");
+    localStorage.setItem("naturalesPregunta", "0");
+    localStorage.setItem("socialesPregunta", "0");
+    localStorage.setItem("selectedTab", "Matemáticas");
+
     navigate(`/usuario/finalizar-sesion/${data.id}`);
   };
 

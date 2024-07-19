@@ -36,7 +36,9 @@ const TabsProvider = ({ children }) => {
   const [segundos, setSegundos] = useState(() => {
     // Recuperar el tiempo restante del localStorage al inicio
     const tiempoRestante = localStorage.getItem("contadorSegundos");
-    return tiempoRestante === "0"  ? simulacroEncontrado?.tiempo : parseInt(tiempoRestante);
+    return tiempoRestante === "0"
+      ? simulacroEncontrado?.tiempo
+      : parseInt(tiempoRestante);
   });
 
   useEffect(() => {
@@ -78,6 +80,12 @@ const TabsProvider = ({ children }) => {
     setOpcionesSeleccionadas("");
     setSegundos(simulacroEncontrado?.tiempo); // Reiniciar el temporizador
     setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
+    setSelectedTab("Matemáticas");
+    localStorage.setItem("inglesPregunta", "0");
+    localStorage.setItem("lecturaPregunta", "0");
+    localStorage.setItem("matemáticasPregunta", "0");
+    localStorage.setItem("naturalesPregunta", "0");
+    localStorage.setItem("socialesPregunta", "0");
   };
 
   const guardarOpcionesEnLocalStorage = () => {

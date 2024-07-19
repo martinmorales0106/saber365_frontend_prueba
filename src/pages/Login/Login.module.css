@@ -1,7 +1,7 @@
 .titulo {
   text-align: center;
   padding-top: 1.5rem;
-  color:rgb(54, 53, 53);;
+  color: rgb(54, 53, 53);
 }
 
 .formulario {
@@ -15,8 +15,10 @@
   background-color: #d5deec;
   border-radius: 0.25rem;
   margin-top: 1rem;
-
 }
+
+
+
 .icono {
   width: 100%;
   max-width: 1.3rem;
@@ -31,19 +33,37 @@
   border: none; /* Esto quitará el borde */
   outline: none;
   background-color: #ebf0f8;
-  font-size:medium;
+  font-size: medium;
+  display: flex;
   align-items: center;
   justify-content: center;
-  
 }
 
 .input::placeholder {
   color: rgb(97, 96, 96);
 }
 
+.input2 {
+  width: 70%;
+  margin: 0.3rem;
+  padding: 0.5rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  background-color: #ebf0f8;
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input2::placeholder {
+  color: rgb(97, 96, 96);
+}
+
+
 .contenedor_botones {
-    margin-top: 1.5rem;
-    text-align: center;
+  margin-top: 1.5rem;
+  text-align: center;
 }
 
 .boton {
@@ -57,26 +77,36 @@
   border: none; /* Esto quitará el borde */
   outline: none;
   font-size: medium;
-  cursor: pointer
+  cursor: pointer;
 }
 
-
 .span {
-    color: #b87a07;
+  color: #b87a07;
 }
 
 .parrafo {
-    text-align: center;
-    padding-top: 0.5rem;
+  text-align: center;
+  padding-top: 0.5rem;
 }
 
 .crear_cuenta {
-    display: flex;
-    text-align: center;
-    justify-content:space-between;
+  display: flex;
+  text-align: center;
+  justify-content: space-between;
 }
 
 .link {
-    text-decoration: none;
-    color: #b87a07 
+  text-decoration: none;
+  color: #b87a07;
+}
+
+.iconoMostrar {
+
+  transform: translateX(-50%);
+  cursor: pointer;
+  color: #606061;
+}
+
+.iconoMostrar:hover {
+  color: #000;
 }

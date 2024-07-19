@@ -21,6 +21,7 @@ const InglesPreguntas = () => {
 
   const {
     selectedTab,
+    setSelectedTab,
     handleSeleccionRespuesta,
     opcionesSeleccionadas,
     setOpcionesSeleccionadas,
@@ -101,6 +102,13 @@ const InglesPreguntas = () => {
       setOpcionesSeleccionadas("");
       setSegundos(simulacroEncontrado?.tiempo); // Reiniciar el temporizador
       setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
+      setSelectedTab("Matemáticas");
+      localStorage.setItem("inglesPregunta", "0");
+      localStorage.setItem("lecturaPregunta", "0");
+      localStorage.setItem("matemáticasPregunta", "0");
+      localStorage.setItem("naturalesPregunta", "0");
+      localStorage.setItem("socialesPregunta", "0");
+      
     }
     setTiempoAgotado(true);
   };

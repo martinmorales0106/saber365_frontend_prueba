@@ -52,6 +52,24 @@
   justify-content: center;
 }
 
+.input3 {
+  width: 70%;
+  margin: 0.3rem;
+  padding: 0.5rem;
+  border: none; /* Esto quitará el borde */
+  outline: none;
+  background-color: #ebf0f8;
+  font-size: medium;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input3::placeholder {
+  color: rgb(97, 96, 96);
+}
+
+
 .contenedor_botones {
   margin-top: 1.5rem;
   text-align: center;
@@ -91,3 +109,15 @@
   text-decoration: none;
   color: #b87a07;
 }
+
+.iconoMostrar {
+
+  transform: translateX(-50%);
+  cursor: pointer;
+  color: #606061;
+}
+
+.iconoMostrar:hover {
+  color: #000;
+}
+

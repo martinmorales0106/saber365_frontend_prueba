@@ -7,6 +7,7 @@ import tablaPreguntasGratis from "../../assets/tablaPreguntasGratis.png";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import Boton from "../../components/Boton/Boton";
 import { useEffect } from "react";
+import Loading from "../../components/Loading/Loading";
 
 
 const ConfirmarRealizarPrueba = () => {
@@ -24,7 +25,7 @@ const ConfirmarRealizarPrueba = () => {
 
   // Si el simulacro no se ha encontrado, mostrar un mensaje adecuado
   if (!simulacroEncontrado) {
-    return <p>Cargando simulacro o no encontrado...</p>;
+    return <Loading />
   }
 
   return (

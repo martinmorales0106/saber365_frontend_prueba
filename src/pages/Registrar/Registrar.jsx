@@ -12,6 +12,7 @@ import usuarioLogin from "../../assets/Usuario-login.png";
 import gradoImg from "../../assets/Grado.png";
 import contraseña from "../../assets/login-contraseña.png";
 import imgColegio from "../../assets/colegio.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const GRADO = ["UNDÉCIMO"];
 
@@ -26,6 +27,8 @@ const Registrar = () => {
   const [password, setPassword] = useState("");
   const [repetirPassword, setRepetirPassword] = useState("");
   const [alerta, setAlerta] = useState({});
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [mostrarRepetirPassword, setMostrarRepetirPassword] = useState(false);
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -138,10 +141,10 @@ const Registrar = () => {
         error: true,
       });
 
-        setTimeout(() => {
-          setAlerta({});
-        }, 5000);
-      }
+      setTimeout(() => {
+        setAlerta({});
+      }, 5000);
+    }
   };
 
   const handleCancel = () => {
@@ -203,7 +206,9 @@ const Registrar = () => {
             onChange={(e) => setGrado(e.target.value)}
             className={styles.input2}
           >
-            <option className={styles.input2} value="">-- Selecciona un Grado --</option>
+            <option className={styles.input2} value="">
+              -- Selecciona un Grado --
+            </option>
             {GRADO.map((opcion) => (
               <option key={opcion}>{opcion}</option>
             ))}
@@ -216,12 +221,18 @@ const Registrar = () => {
           </label>
           <input
             id="password"
-            type="password"
+            type={mostrarPassword ? "text" : "password"}
             placeholder="Contraseña"
-            className={styles.input}
+            className={styles.input3}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <span
+            onClick={() => setMostrarPassword(!mostrarPassword)}
+            className={styles.iconoMostrar}
+          >
+            {mostrarPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
         <div className={styles.container}>
           <label htmlFor="repetirContraseña">
@@ -229,12 +240,18 @@ const Registrar = () => {
           </label>
           <input
             id="repetirContraseña"
-            type="password"
+            type={mostrarRepetirPassword ? "text" : "password"}
             placeholder="Repetir Contraseña"
-            className={styles.input}
+            className={styles.input3}
             value={repetirPassword}
             onChange={(e) => setRepetirPassword(e.target.value)}
           />
+          <span
+            onClick={() => setMostrarRepetirPassword(!mostrarRepetirPassword)}
+            className={styles.iconoMostrar}
+          >
+            {mostrarRepetirPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
         </div>
         <div className={styles.parrafo}>
           <hr />

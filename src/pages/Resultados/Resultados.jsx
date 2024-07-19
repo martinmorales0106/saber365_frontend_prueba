@@ -22,7 +22,7 @@ import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import ModalDetallesResultados from "../../components/ModalDetallesResultados/ModalDetallesResultados";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
-
+import NoResultado from "../../components/NoResultado/NoResultado";
 
 const Resultados = () => {
   const { id } = useParams();
@@ -38,7 +38,6 @@ const Resultados = () => {
     obtenerPosicionPorArea,
   } = usePerfilUsuario();
 
-
   useEffect(() => {
     const fetchSimulacroFinalizado = async () => {
       await obtenerSimulacroFinalizado(id);
@@ -48,22 +47,25 @@ const Resultados = () => {
 
   useEffect(() => {
     const fetchSimulacroFinalizado2 = async () => {
-      await obtenerPosicionSimulacro(simulacroFinalizado?.resultadoSimulacro?.id_simulacro, simulacroFinalizado?.resultadoSimulacro?.id_usuario);
-      await obtenerPosicionPorArea(simulacroFinalizado?.resultadoSimulacro?.id_simulacro, simulacroFinalizado?.resultadoSimulacro?.id_usuario);
+      await obtenerPosicionSimulacro(
+        simulacroFinalizado?.resultadoSimulacro?.id_simulacro,
+        simulacroFinalizado?.resultadoSimulacro?.id_usuario
+      );
+      await obtenerPosicionPorArea(
+        simulacroFinalizado?.resultadoSimulacro?.id_simulacro,
+        simulacroFinalizado?.resultadoSimulacro?.id_usuario
+      );
     };
     fetchSimulacroFinalizado2();
   }, [simulacroFinalizado]);
 
-  if (!simulacroFinalizado) {
-    return <di>Cargando...</di>;
-  }
 
   const totalSegundos =
-  simulacroFinalizado?.resultadoSimulacro?.simulacro.tiempo - simulacroFinalizado?.resultadoSimulacro?.tiempo_prueba || 0;
+    simulacroFinalizado?.resultadoSimulacro?.simulacro.tiempo -
+      simulacroFinalizado?.resultadoSimulacro?.tiempo_prueba || 0;
   const horas = Math.floor(totalSegundos / 3600);
   const minutos = Math.floor((totalSegundos % 3600) / 60);
   const segundos = totalSegundos % 60;
-  
 
   let totalPreguntas = 0;
   let respuestasCorrectas = 0;
@@ -95,123 +97,214 @@ const Resultados = () => {
             <img src={resultadosColorImg} />
             <h1>Reporte de Resultados</h1>
           </div>
-          <div className={styles.container}>
-            <h3>Datos del Usuario</h3>
-            <div className={styles.contenedorDatosUsuarios}>
-              <div className={styles.datosUsuario}>
-                <div className={styles.contenedorDatos}>
-                  <div className={styles.contenedorIcono}>
-                    <img src={usuarioResultadosImg} className={styles.iconos} />
-                  </div>
-                  <h3>
-                    {
-                      simulacroFinalizado?.resultadoSimulacro?.usuario
-                        .nombreUsuario
-                    }
-                  </h3>
-                </div>
-                <div className={styles.informacionDatos}>
-                  <p>
-                    Grado:{" "}
-                    {simulacroFinalizado?.resultadoSimulacro?.usuario.grado}
-                  </p>
-                </div>
-              </div>
-              <div className={styles.datosUsuario}>
-                <div className={styles.contenedorDatos}>
-                  <div className={styles.contenedorIcono}>
-                    <img src={colegioResultadoImg} className={styles.iconos} />
-                  </div>
-                  <h3>
-                    {simulacroFinalizado?.resultadoSimulacro?.usuario.colegio}
-                  </h3>
-                </div>
-                <div className={styles.informacionDatos}></div>
-              </div>
-              <div className={styles.datosUsuario}>
-                <div className={styles.contenedorDatos}>
-                  <div className={styles.contenedorIcono}>
-                    <img src={fechaResultadosImg} className={styles.iconos} />
-                  </div>
-                  <h3>
-                    Aplicación del Simulacro{" "}
-                    {simulacroFinalizado?.resultadoSimulacro?.simulacro.titulo}
-                  </h3>
-                </div>
-                <div className={styles.informacionDatos}>
-                  <p>
-                    {formatearFecha(
-                      simulacroFinalizado?.resultadoSimulacro?.createdAt
-                    )}
-                  </p>
-                </div>
-              </div>
-            </div>
-            <hr />
-            <h3>Reporte general</h3>
-            <div className={styles.contenedorDatosUsuarios}>
-              <div className={styles.datosUsuario}>
-                <div className={styles.contenedorDatos}>
-                  <div className={styles.contenedorIcono}>
-                    <img src={trofeoImg} className={styles.iconos} />
-                  </div>
-                  <h3>Puntaje Global</h3>
-                </div>
-                <div className={styles.informacionDatos}>
-                  <h1>
-                    {simulacroFinalizado?.resultadoSimulacro?.puntaje_global}
-                    <span className={styles.puntajeGlobal}>/500</span>
-                  </h1>
-                </div>
-              </div>
-              <div className={styles.datosUsuario}>
-                <div className={styles.contenedorDatos}>
-                  <div className={styles.contenedorIcono}>
-                    <img src={tiempoImg} className={styles.iconos} />
-                  </div>
-                  <h3>Tiempo empleado</h3>
-                </div>
-                <div className={styles.informacionDatos}>
-                  <h1>
-                    {horas}h:{minutos}&apos;:{segundos}&quot;
-                  </h1>
-                </div>
-              </div>
-              <div className={styles.datosUsuario}>
-                <div className={styles.contenedorDatos}>
-                  <div className={styles.contenedorIcono}>
-                    <img
-                      src={respuestasCorrectasImg}
-                      className={styles.iconos}
-                    />
-                  </div>
-                  <h3>Respuestas correctas</h3>
-                </div>
-                <div className={styles.informacionDatos}>
-                  <h1>
-                    {respuestasCorrectas}/{totalPreguntas}
-                  </h1>
-                </div>
-              </div>
-              <div className={styles.datosUsuario}>
-                <div className={styles.contenedorDatos}>
-                  <div className={styles.contenedorIcono}>
-                    <img src={posicionImg} className={styles.iconos} />
-                  </div>
-                  <h3>Posición en el simulacro</h3>
-                </div>
-                <div className={styles.informacionDatos}>
-                  <h1>{posicionSimulacro}</h1>
-                </div>
-              </div>
-            </div>
-            <hr />
-            <h3>Resultado por prueba</h3>
-            <div className={styles.containerResultado}>
-              {Object.keys(nivelPorArea).map((area, index) => (
-                <div className={styles.nivel} key={index}>
-                  <div className={styles.areaimg}>
+          {Object.keys(simulacroFinalizado).length > 0 ? (
+            <div className={styles.container}>
+              <h3>Datos del Usuario</h3>
+              <div className={styles.contenedorDatosUsuarios}>
+                <div className={styles.datosUsuario}>
+                  <div className={styles.contenedorDatos}>
                     <div className={styles.contenedorIcono}>
+                      <img
+                        src={usuarioResultadosImg}
+                        className={styles.iconos}
+                      />
+                    </div>
+                    <h3>
+                      {
+                        simulacroFinalizado?.resultadoSimulacro?.usuario
+                          .nombreUsuario
+                      }
+                    </h3>
+                  </div>
+                  <div className={styles.informacionDatos}>
+                    <p>
+                      Grado:{" "}
+                      {simulacroFinalizado?.resultadoSimulacro?.usuario.grado}
+                    </p>
+                  </div>
+                </div>
+                <div className={styles.datosUsuario}>
+                  <div className={styles.contenedorDatos}>
+                    <div className={styles.contenedorIcono}>
+                      <img
+                        src={colegioResultadoImg}
+                        className={styles.iconos}
+                      />
+                    </div>
+                    <h3>
+                      {simulacroFinalizado?.resultadoSimulacro?.usuario.colegio}
+                    </h3>
+                  </div>
+                  <div className={styles.informacionDatos}></div>
+                </div>
+                <div className={styles.datosUsuario}>
+                  <div className={styles.contenedorDatos}>
+                    <div className={styles.contenedorIcono}>
+                      <img src={fechaResultadosImg} className={styles.iconos} />
+                    </div>
+                    <h3>
+                      Aplicación del Simulacro{" "}
+                      {
+                        simulacroFinalizado?.resultadoSimulacro?.simulacro
+                          .titulo
+                      }
+                    </h3>
+                  </div>
+                  <div className={styles.informacionDatos}>
+                    <p>
+                      {formatearFecha(
+                        simulacroFinalizado?.resultadoSimulacro?.createdAt
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <h3>Reporte general</h3>
+              <div className={styles.contenedorDatosUsuarios}>
+                <div className={styles.datosUsuario}>
+                  <div className={styles.contenedorDatos}>
+                    <div className={styles.contenedorIcono}>
+                      <img src={trofeoImg} className={styles.iconos} />
+                    </div>
+                    <h3>Puntaje Global</h3>
+                  </div>
+                  <div className={styles.informacionDatos}>
+                    <h1>
+                      {simulacroFinalizado?.resultadoSimulacro?.puntaje_global}
+                      <span className={styles.puntajeGlobal}>/500</span>
+                    </h1>
+                  </div>
+                </div>
+                <div className={styles.datosUsuario}>
+                  <div className={styles.contenedorDatos}>
+                    <div className={styles.contenedorIcono}>
+                      <img src={tiempoImg} className={styles.iconos} />
+                    </div>
+                    <h3>Tiempo empleado</h3>
+                  </div>
+                  <div className={styles.informacionDatos}>
+                    <h1>
+                      {horas}h:{minutos}&apos;:{segundos}&quot;
+                    </h1>
+                  </div>
+                </div>
+                <div className={styles.datosUsuario}>
+                  <div className={styles.contenedorDatos}>
+                    <div className={styles.contenedorIcono}>
+                      <img
+                        src={respuestasCorrectasImg}
+                        className={styles.iconos}
+                      />
+                    </div>
+                    <h3>Respuestas correctas</h3>
+                  </div>
+                  <div className={styles.informacionDatos}>
+                    <h1>
+                      {respuestasCorrectas}/{totalPreguntas}
+                    </h1>
+                  </div>
+                </div>
+                <div className={styles.datosUsuario}>
+                  <div className={styles.contenedorDatos}>
+                    <div className={styles.contenedorIcono}>
+                      <img src={posicionImg} className={styles.iconos} />
+                    </div>
+                    <h3>Posición en el simulacro</h3>
+                  </div>
+                  <div className={styles.informacionDatos}>
+                    <h1>{posicionSimulacro}</h1>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <h3>Resultado por prueba</h3>
+              <div className={styles.containerResultado}>
+                {Object.keys(nivelPorArea).map((area, index) => (
+                  <div className={styles.nivel} key={index}>
+                    <div className={styles.areaimg}>
+                      <div className={styles.contenedorIcono}>
+                        {area === "Matemáticas" && (
+                          <img src={matematicasImg} className={styles.iconos} />
+                        )}
+                        {area === "Lectura Critica" && (
+                          <img src={lecturaImg} className={styles.iconos} />
+                        )}
+                        {area === "Sociales" && (
+                          <img src={socialesImg} className={styles.iconos} />
+                        )}
+                        {area === "Naturales" && (
+                          <img src={naturalesImg} className={styles.iconos} />
+                        )}
+                        {area === "Ingles" && (
+                          <img src={inglesImg} className={styles.iconos} />
+                        )}
+                      </div>
+                      <h3>{area}</h3>
+                    </div>
+                    <h4 className={styles.parrafoNivel}>Nivel de desempeño</h4>
+                    <div>
+                      {(nivelPorArea[area] === "Insuficiente" ||
+                        nivelPorArea[area] === "-A") && (
+                        <div className={styles.contenedorImagen}>
+                          <img src={nivelInsuficienteImg} />
+                          <p>{nivelPorArea[area]}</p>
+                        </div>
+                      )}
+                      {(nivelPorArea[area] === "Mínimo" ||
+                        nivelPorArea[area] === "A1") && (
+                        <div className={styles.contenedorImagen}>
+                          <img src={nivelMininimoImg} />
+                          <p>{nivelPorArea[area]}</p>
+                        </div>
+                      )}
+                      {(nivelPorArea[area] === "Satisfactorio" ||
+                        nivelPorArea[area] === "A2") && (
+                        <div className={styles.contenedorImagen}>
+                          <img src={nivelSatisfactorioImg} />
+                          <p>{nivelPorArea[area]}</p>
+                        </div>
+                      )}
+                      {(nivelPorArea[area] === "Avanzado" ||
+                        nivelPorArea[area] === "B1" ||
+                        nivelPorArea[area] === "B+") && (
+                        <div className={styles.contenedorImagen}>
+                          <img src={nivelAvanzadoImg} />
+                          <p>{nivelPorArea[area]}</p>
+                        </div>
+                      )}
+                    </div>
+                    <div className={styles.puntajeArea}>
+                      <h4>Puntaje:</h4>
+                      <h3 className={styles.resultadoArea}>
+                        {puntajePorArea[area]}/100
+                      </h3>
+                    </div>
+                    <p>Posición en esta prueba:</p>
+                    <h3 className={styles.posicion}>{posicionPorArea[area]}</h3>
+                    <div className={styles.boton}>
+                      <Boton
+                        text="Ver detalles"
+                        onClick={() =>
+                          handleResultadoArea({
+                            puntaje: puntajePorArea[area],
+                            nivel: nivelPorArea[area],
+                            puesto: posicionPorArea[area],
+                            area,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <hr />
+              <h3>Preguntas</h3>
+              {Object.keys(nivelPorArea).map((area, index) => (
+                <div className={styles.nivel2} key={index}>
+                  <div className={styles.areaimg2}>
+                    <div className={styles.contenedorIcono}>
+                      {/* Mostrar icono según el área */}
                       {area === "Matemáticas" && (
                         <img src={matematicasImg} className={styles.iconos} />
                       )}
@@ -228,104 +321,32 @@ const Resultados = () => {
                         <img src={inglesImg} className={styles.iconos} />
                       )}
                     </div>
-                    <h3>{area}</h3>
-                  </div>
-                  <h4 className={styles.parrafoNivel}>Nivel de desempeño</h4>
-                  <div>
-                    {(nivelPorArea[area] === "Insuficiente" ||
-                      nivelPorArea[area] === "-A") && (
-                      <div className={styles.contenedorImagen}>
-                        <img src={nivelInsuficienteImg} />
-                        <p>{nivelPorArea[area]}</p>
+                    <p className={styles.areaPregunta}>{area}</p>
+
+                    <Link
+                      className={styles.link}
+                      to={`/usuario/revision-preguntas/${simulacroFinalizado?.resultadoSimulacro?.id}/${area}`}
+                    >
+                      <div className={styles.boton2}>
+                        <Boton
+                          text="Ver preguntas"
+                          onClick={() =>
+                            filtrarPreguntasSimulacrosPorArea(area)
+                          }
+                        />
                       </div>
-                    )}
-                    {(nivelPorArea[area] === "Mínimo" ||
-                      nivelPorArea[area] === "A1") && (
-                      <div className={styles.contenedorImagen}>
-                        <img src={nivelMininimoImg} />
-                        <p>{nivelPorArea[area]}</p>
-                      </div>
-                    )}
-                    {(nivelPorArea[area] === "Satisfactorio" ||
-                      nivelPorArea[area] === "A2") && (
-                      <div className={styles.contenedorImagen}>
-                        <img src={nivelSatisfactorioImg} />
-                        <p>{nivelPorArea[area]}</p>
-                      </div>
-                    )}
-                    {(nivelPorArea[area] === "Avanzado" ||
-                      nivelPorArea[area] === "B1" ||
-                      nivelPorArea[area] === "B+") && (
-                      <div className={styles.contenedorImagen}>
-                        <img src={nivelAvanzadoImg} />
-                        <p>{nivelPorArea[area]}</p>
-                      </div>
-                    )}
-                  </div>
-                  <div className={styles.puntajeArea}>
-                    <h4>Puntaje:</h4>
-                    <h3 className={styles.resultadoArea}>
-                      {puntajePorArea[area]}/100
-                    </h3>
-                  </div>
-                  <p>Posición en esta prueba:</p>
-                  <h3 className={styles.posicion}>{posicionPorArea[area]}</h3>
-                  <div className={styles.boton}>
-                    <Boton
-                      text="Ver detalles"
-                      onClick={() =>
-                        handleResultadoArea({
-                          puntaje: puntajePorArea[area],
-                          nivel: nivelPorArea[area],
-                          puesto: posicionPorArea[area],
-                          area,
-                        })
-                      }
-                    />
+                    </Link>
                   </div>
                 </div>
               ))}
             </div>
-            <hr />
-            <h3>Preguntas</h3>
-            {Object.keys(nivelPorArea).map((area, index) => (
-              <div className={styles.nivel2} key={index}>
-                <div className={styles.areaimg2}>
-                  <div className={styles.contenedorIcono}>
-                    {/* Mostrar icono según el área */}
-                    {area === "Matemáticas" && (
-                      <img src={matematicasImg} className={styles.iconos} />
-                    )}
-                    {area === "Lectura Critica" && (
-                      <img src={lecturaImg} className={styles.iconos} />
-                    )}
-                    {area === "Sociales" && (
-                      <img src={socialesImg} className={styles.iconos} />
-                    )}
-                    {area === "Naturales" && (
-                      <img src={naturalesImg} className={styles.iconos} />
-                    )}
-                    {area === "Ingles" && (
-                      <img src={inglesImg} className={styles.iconos} />
-                    )}
-                  </div>
-                  <p className={styles.areaPregunta}>{area}</p>
-
-                  <Link
-                    className={styles.link}
-                    to={`/usuario/revision-preguntas/${simulacroFinalizado?.resultadoSimulacro?.id}/${area}`}
-                  >
-                    <div className={styles.boton2}>
-                      <Boton
-                        text="Ver preguntas"
-                        onClick={() => filtrarPreguntasSimulacrosPorArea(area)}
-                      />
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
+          ) : (
+            <NoResultado
+              text="El usuario no ha realizado ningún simulacro."
+              toLink="/usuario/pruebas"
+              textBoton="Realizar un simulacro"
+            />
+          )}
         </div>
         <ModalDetallesResultados />
       </div>

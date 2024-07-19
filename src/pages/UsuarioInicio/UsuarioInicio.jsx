@@ -124,8 +124,8 @@ const UsuarioInicio = () => {
   const { topPuntajeGlobal, topPuntajePorArea, simulacrosCompletados } =
     usePerfilUsuario();
 
-    console.log(simulacrosCompletados.length);
-    console.log(Object.keys(topPuntajePorArea).length);
+  console.log(topPuntajeGlobal);
+  console.log(topPuntajePorArea);
 
   simulacrosCompletados.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -190,14 +190,15 @@ const UsuarioInicio = () => {
               textBoton="Realizar un simulacro"
             />
           )}
-          {topPuntajeGlobal && (
+          {topPuntajeGlobal.mejoresPuntajesGlobales.length > 0 && (
             <h2 className={styles.h2MejorePuntajes}>Top mejores puntajes</h2>
           )}
           <div className={styles.contenedorTop}>
             <div className={styles.topEstudiantes}>
-              {topPuntajeGlobal && <h4>Según puntajes globales</h4>}
-              {topPuntajeGlobal &&
-              topPuntajeGlobal.mejoresPuntajesGlobales?.length > 0 ? (
+              {topPuntajeGlobal.mejoresPuntajesGlobales.length > 0 && (
+                <h4>Según puntajes globales</h4>
+              )}
+              {topPuntajeGlobal.mejoresPuntajesGlobales?.length > 0 ? (
                 <ol className={styles.listaPuntajes}>
                   {topPuntajeGlobal.mejoresPuntajesGlobales.map(
                     (puntaje, index) => (
@@ -268,9 +269,10 @@ const UsuarioInicio = () => {
               ) : null}
             </div>
             <div className={styles.contenedorPorArea}>
-              {topPuntajePorArea && <h4>Según puntajes por área</h4>}
-              {topPuntajePorArea &&
-              Object.keys(topPuntajePorArea).length > 0 ? (
+              {topPuntajePorArea["Matemáticas"].mejoresPuntajesPorArea.length >
+                0 && <h4>Según puntajes por área</h4>}
+              {topPuntajePorArea["Matemáticas"].mejoresPuntajesPorArea.length >
+              0 ? (
                 <div className={styles.areasContainer}>
                   {Object.keys(topPuntajePorArea).map((area, index) => (
                     <div key={index} className={styles.areaItem}>
