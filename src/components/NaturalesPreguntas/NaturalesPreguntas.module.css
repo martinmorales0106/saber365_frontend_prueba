@@ -52,6 +52,7 @@
 
 .containerPreguntas {
   display: flex;
+  justify-content: center;
 }
 
 .preguntas1 {
@@ -84,16 +85,31 @@
   padding: 1rem;
 }
 
-.imagenAmpliada {
-  width: 100%; /* O el ancho que desees */
-  height: auto; /* Mantiene la proporción original de la imagen */
-  cursor: zoom-out; /* Cambia el cursor al hacer clic para indicar que se puede reducir */
-  transition: width 0.3s, height 0.3s; /* Agrega una transición suave */
-  position: absolute;
+.imagenAmpliadaContainer {
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* Fondo semi-transparente para resaltar la imagen */
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
 }
+
+.imagenAmpliada {
+  max-width: 100%; /* Ajusta el tamaño máximo de la imagen */
+  max-height: 100%; /* Ajusta la altura máxima de la imagen */
+  cursor: zoom-out; /* Cambia el cursor al hacer clic para indicar que se puede reducir */
+  transition: transform 0.3s; /* Agrega una transición suave */
+}
+
 
 /* Estilo para la imagen normal */
 .imagen {
@@ -182,4 +198,66 @@
   align-items: center;
   font-size: medium;
   cursor: pointer;
+}
+
+
+.tituloTexto{
+  text-align: center;
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.subtitulo {
+  padding-bottom: 1rem;
+}
+
+.contexto p {
+  margin-bottom: 1em; /* Ajusta este valor según el espacio que desees entre párrafos */
+}
+
+.pieTexto {
+  text-align: right;
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 25px;
+  font-style: italic; 
+}
+
+.fuente1 {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fuente2 {
+  margin-bottom: 1rem;
+}
+
+.sinContextoOImagen {
+  width: 80%;
+  margin: 0.8rem;
+  padding: 0.5rem;
+}
+
+.respuestaFlex {
+  display: flex;
+  justify-content: space-around;
+}
+
+.respuestaPart {
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+.opcionesRespuestasContainer {
+  max-height: 42rem; /* Ajusta la altura según tus necesidades */
+  overflow-y: auto;
 }

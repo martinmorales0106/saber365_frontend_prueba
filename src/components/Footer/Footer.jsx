@@ -14,7 +14,7 @@ const Footer = () => {
       <footer className={styles.container}>
         <div className={styles.contacto}>
           <p>Contacto:</p>
-          <p>WhatsApp: +57 301 463 6000</p>
+          {/* <p>WhatsApp: +57 301 463 6000</p> */}
           <p>Email: pruebasaber365@gmail.com</p>
         </div>
         <div className={styles.contenedor_logo}>

@@ -7,42 +7,49 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const storedUser = localStorage.getItem("authUser");
-  const [auth, setAuth] = useState(JSON.parse(storedUser));
+  const [auth, setAuth] = useState(storedUser ? JSON.parse(storedUser) : {});
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
     const autenticarUsuario = async () => {
-      const token = localStorage.getItem("token");
-      if (!token) return;
-
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      };
-
       try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          // Establecer un tiempo fijo de carga de 2 segundos
+          const timer = setTimeout(() => {
+            setCargando(false);
+          }, 1000);
+
+          // Limpiar el temporizador cuando el componente se desmonte
+          return () => clearTimeout(timer);
+        }
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
         const { data } = await clienteAxios("/usuarios/perfil", config);
         setAuth(data);
-        
+        // Establecer un tiempo fijo de carga de 2 segundos
+        const timer = setTimeout(() => {
+          setCargando(false);
+        }, 1000);
+
+        // Limpiar el temporizador cuando el componente se desmonte
+        return () => clearTimeout(timer);
       } catch (error) {
         setAuth({});
       }
-      // Establecer un tiempo fijo de carga de 2 segundos
-      const timer = setTimeout(() => {
-        setCargando(false);
-      }, 1000);
-
-      // Limpiar el temporizador cuando el componente se desmonte
-      return () => clearTimeout(timer);
-      
     };
     autenticarUsuario();
   }, []);
 
   const cerrarSesionAuth = () => {
     setAuth({});
+    localStorage.setItem("authUser", JSON.stringify({}));
   };
 
   return (

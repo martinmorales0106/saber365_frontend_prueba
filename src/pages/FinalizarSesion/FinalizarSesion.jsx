@@ -17,7 +17,6 @@ const FinalizarSesion = () => {
   const { auth } = useAuth();
   const { id } = useParams();
 
-
   useEffect(() => {
     const fetchSimulacroRealizado = async () => {
       setSimulacroFinalizadoId(id);
@@ -30,6 +29,7 @@ const FinalizarSesion = () => {
     return <di>Cargando...</di>;
   }
 
+  localStorage.removeItem(`contadorSegundos${simulacroRealizado?.simulacro.titulo}`);
 
   // Combinar los arrays de estado_preguntas_sesion
   const estado_preguntas_combinado =
@@ -42,7 +42,7 @@ const FinalizarSesion = () => {
   // Sumar los tiempos de prueba de ambas sesiones
   const tiempo_prueba_combinado =
     simulacroRealizado.tiempo_prueba_sesion1 +
-    simulacroRealizado.tiempo_prueba_sesion2;
+    (simulacroRealizado.tiempo_prueba_sesion2 || 0);
 
   const handleSubmit = async () => {
     const conteoPorArea = {};
@@ -61,7 +61,14 @@ const FinalizarSesion = () => {
       }
     });
 
-    const porcentajePorArea = {};
+    const porcentajePorArea = {
+      Matemáticas: 0,
+      "Lectura Critica": 0,
+      Sociales: 0,
+      Naturales: 0,
+      Ingles: 0
+    };
+  
 
     Object.keys(conteoPorArea).forEach((area) => {
       const { correctas, totales } = conteoPorArea[area];
@@ -69,12 +76,12 @@ const FinalizarSesion = () => {
     });
 
     const puntajeGlobal = Math.round(
-      (3 * porcentajePorArea.Matemáticas +
-        3 * porcentajePorArea["Lectura Critica"] +
-        3 * porcentajePorArea.Sociales +
-        3 * porcentajePorArea.Naturales +
-        1 * porcentajePorArea.Ingles) *
-        (5 / 13)
+      (3 * (porcentajePorArea.Matemáticas || 0) +
+       3 * (porcentajePorArea["Lectura Critica"] || 0) +
+       3 * (porcentajePorArea.Sociales || 0) +
+       3 * (porcentajePorArea.Naturales || 0) +
+       1 * (porcentajePorArea.Ingles || 0)) *
+      (5 / 13)
     );
 
     const clasificarGlobal = (porcentaje) => {
@@ -183,7 +190,7 @@ const FinalizarSesion = () => {
       },
       tiempo_prueba: tiempo,
     });
-    // setOpcionesSeleccionadas("");
+
   };
 
   return (

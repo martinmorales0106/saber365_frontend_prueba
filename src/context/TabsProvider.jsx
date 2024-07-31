@@ -34,12 +34,34 @@ const TabsProvider = ({ children }) => {
   const [tiempoAgotado, setTiempoAgotado] = useState(false);
 
   const [segundos, setSegundos] = useState(() => {
-    // Recuperar el tiempo restante del localStorage al inicio
-    const tiempoRestante = localStorage.getItem("contadorSegundos");
-    return tiempoRestante === "0"
-      ? simulacroEncontrado?.tiempo
-      : parseInt(tiempoRestante);
+    // Inicializa el estado con el valor de localStorage si existe
+    const tiempoRestanteStr = localStorage.getItem(
+      `contadorSegundos${simulacroEncontrado?.titulo}`
+    );
+    const tiempoRestante =
+      tiempoRestanteStr !== null ? Number(tiempoRestanteStr) : NaN;
+
+    // Devuelve el tiempo restante o el tiempo por defecto del simulacro
+    return isNaN(tiempoRestante) || tiempoRestante <= 0
+      ? simulacroEncontrado?.tiempo || null
+      : tiempoRestante;
   });
+
+  useEffect(() => {
+    if (simulacroEncontrado) {
+      const tiempoRestanteStr = localStorage.getItem(
+        `contadorSegundos${simulacroEncontrado.titulo}`
+      );
+      const tiempoRestante =
+        tiempoRestanteStr !== null ? Number(tiempoRestanteStr) : NaN;
+
+      if (isNaN(tiempoRestante) || tiempoRestante <= 0) {
+        setSegundos(simulacroEncontrado.tiempo || null);
+      } else {
+        setSegundos(tiempoRestante);
+      }
+    }
+  }, [simulacroEncontrado]);
 
   useEffect(() => {
     if (segundos === 0 && !tiempoAgotado) {
@@ -50,13 +72,15 @@ const TabsProvider = ({ children }) => {
   const handleSubmit = async () => {
     const resultados = preguntasSimulacro.map((pregunta) => {
       const idPregunta = pregunta.id;
+      const numero = pregunta.numero;
       const area = pregunta.area;
       const sesion = pregunta.sesion;
       const respuestaCorrecta = pregunta.respuesta_correcta;
       const respuestaUsuario = opcionesSeleccionadas[idPregunta] || null;
-      const esRespuestaCorrecta = respuestaUsuario === respuestaCorrecta;
+      const esRespuestaCorrecta = respuestaUsuario?.opcion === respuestaCorrecta;
       return {
         idPregunta,
+        numero,
         area,
         sesion,
         respuestaCorrecta,
@@ -65,7 +89,9 @@ const TabsProvider = ({ children }) => {
       };
     });
 
-    const tiempo = Number(localStorage.getItem("contadorSegundos"));
+    const tiempo = Number(
+      localStorage.getItem(`contadorSegundos${simulacroEncontrado?.titulo}`)
+    );
 
     await submitPreguntas({
       id_usuario: auth.id,
@@ -74,11 +100,10 @@ const TabsProvider = ({ children }) => {
       estado_preguntas_sesion2: null,
       tiempo_prueba_sesion1: tiempo,
       tiempo_prueba_sesion2: null,
-      numero_sesion: simulacroEncontrado.numero_sesiones,
+      numero_sesion: simulacroEncontrado?.numero_sesiones,
     });
 
     setOpcionesSeleccionadas("");
-    setSegundos(simulacroEncontrado?.tiempo); // Reiniciar el temporizador
     setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
     setSelectedTab("Matemáticas");
     localStorage.setItem("inglesPregunta", "0");
@@ -86,6 +111,7 @@ const TabsProvider = ({ children }) => {
     localStorage.setItem("matemáticasPregunta", "0");
     localStorage.setItem("naturalesPregunta", "0");
     localStorage.setItem("socialesPregunta", "0");
+    localStorage.removeItem(`contadorSegundos${simulacroEncontrado?.titulo}`);
   };
 
   const guardarOpcionesEnLocalStorage = () => {
@@ -100,12 +126,16 @@ const TabsProvider = ({ children }) => {
     guardarOpcionesEnLocalStorage();
   }, [opcionesSeleccionadas]);
 
-  const handleSeleccionRespuesta = (opcion, id) => {
+  const handleSeleccionRespuesta = (opcion, id, numeroPregunta, area) => {
     // Copia del estado actual de opciones seleccionadas
     const nuevasOpcionesSeleccionadas = { ...opcionesSeleccionadas };
 
-    // Almacena la opción seleccionada para la pregunta actual
-    nuevasOpcionesSeleccionadas[id] = opcion;
+    // Almacena la opción seleccionada junto con los detalles adicionales
+    nuevasOpcionesSeleccionadas[id] = {
+      opcion,
+      numeroPregunta,
+      area,
+    };
 
     // Actualiza el estado
     setOpcionesSeleccionadas(nuevasOpcionesSeleccionadas);
@@ -128,6 +158,7 @@ const TabsProvider = ({ children }) => {
         setTiempoAgotado,
         setSegundos,
         segundos,
+        simulacroEncontrado,
       }}
     >
       {children}

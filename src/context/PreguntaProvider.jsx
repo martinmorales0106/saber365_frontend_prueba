@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import clienteAxios from "../config/clienteAxios";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 const PreguntaContext = createContext();
 
@@ -12,6 +13,8 @@ const PreguntaProvider = ({ children }) => {
   const [preguntasEliminadas, setPreguntasEliminadas] = useState([]);
   const [preguntap, setPreguntap] = useState({});
   const [cargando, setCargando] = useState(true);
+
+  const { auth } = useAuth();
 
   const mostrarAlerta = (alerta) => {
     setAlerta(alerta);
@@ -121,6 +124,8 @@ const PreguntaProvider = ({ children }) => {
   useEffect(() => {
     async function fetchPreguntas() {
       try {
+        if (!auth.admin) return; // Verificar si el usuario es admin
+
         const token = localStorage.getItem("token");
         if (!token) {
           mostrarAlerta({
@@ -148,7 +153,7 @@ const PreguntaProvider = ({ children }) => {
     }
 
     fetchPreguntas();
-  }, []);
+  }, [auth.admin]);
 
   const eliminarPregunta = async (id) => {
     try {
@@ -189,6 +194,7 @@ const PreguntaProvider = ({ children }) => {
   useEffect(() => {
     async function fetchPreguntasEliminadas() {
       try {
+        if (!auth.admin) return; // Verificar si el usuario es admin
         const token = localStorage.getItem("token");
         if (!token) {
           mostrarAlerta({
@@ -218,7 +224,7 @@ const PreguntaProvider = ({ children }) => {
     }
 
     fetchPreguntasEliminadas();
-  }, []);
+  }, [auth.admin]);
 
   const recuperarPregunta = async (id) => {
     try {

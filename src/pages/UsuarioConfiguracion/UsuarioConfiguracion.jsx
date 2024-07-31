@@ -12,7 +12,7 @@ import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 
-const GRADO = ["SÉPTIMO", "NOVENO", "UNDÉCIMO"];
+const GRADO = ["Tercero","Cuarto","Quinto","Sexto","Séptimo","Octavo", "Noveno","Décimo", "Undécimo"];
 
 const UsuarioConfiguracion = () => {
   const { auth, setAuth } = useAuth();

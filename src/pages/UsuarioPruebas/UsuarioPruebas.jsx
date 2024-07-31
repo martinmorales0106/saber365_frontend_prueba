@@ -16,9 +16,9 @@ const UsuarioPruebas = () => {
   const {auth} = useAuth();
 
   const simulacrosFiltrados = simulacrosUsuario.filter(
-    (simulacro) => simulacro.grado === auth.grado
+    (simulacro) => simulacro.grado === auth.grado && simulacro.activo
   );
-
+  
   const [puntajeSimulacroMap, setPuntajeSimulacroMap] = useState({});
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Boton from "../../components/Boton/Boton";
 import styles from "./AdminSimulacros.module.css";
 import pruebasimg from "../../assets/pruebasImg.png";
+import busquedaimg from "../../assets/ojo.png";
 import Swal from "sweetalert2";
 import useSimulacro from "../../hooks/useSimulacro";
 import ModalSimulacro from "../../components/ModalSimulacro/ModalSimulacro";
@@ -105,6 +106,7 @@ const AdminSimulacros = () => {
         <table className={styles.tabla}>
           <thead>
             <tr>
+              <th>Activo</th>
               <th>Imagen</th>
               <th>Titulo</th>
               <th>Grado</th>
@@ -115,24 +117,28 @@ const AdminSimulacros = () => {
               <th>Precio</th>
               <th>Creado</th>
               <th>Editado</th>
-              <th>Editar</th>
               <th>Eliminar</th>
+              <th>Ver</th>
             </tr>
           </thead>
           <tbody>
-            { simulacros.length === 0 ? (
+            {simulacros.length === 0 ? (
               <tr>
                 <td>No hay Simulacros disponibles</td>
               </tr>
             ) : (
-              simulacros && simulacros.map((simulacro) => (
+              simulacros &&
+              simulacros.map((simulacro) => (
                 <tr key={simulacro.id}>
+                  <td>{simulacro.activo.toString()}</td>
                   <td className={styles.contenedorImagen}>
-                    <img
-                      src={simulacro.imagen}
-                      alt={simulacro.titulo}
-                      className={styles.imagen}
-                    />
+                    {
+                      <img
+                        src={simulacro.imagen}
+                        alt={simulacro.titulo}
+                        className={styles.imagen}
+                      />
+                    }
                   </td>
                   <td>{simulacro.titulo}</td>
                   <td>{simulacro.grado}</td>
@@ -142,7 +148,6 @@ const AdminSimulacros = () => {
                   <td>{simulacro.puntaje_maximo}</td>
                   <td>{simulacro.precio}</td>
                   <td>{formatearFecha(simulacro.createdAt)}</td>
-                  <td>{formatearFecha(simulacro.updatedAt)}</td>
                   <td>
                     <div>
                       <button
@@ -163,6 +168,14 @@ const AdminSimulacros = () => {
                       onClick={() => confirmarEliminarSimulacro(simulacro.id)}
                     >
                       <img src={del} alt="Eliminar" className={styles.icono2} />
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      className={styles.boton}
+                      
+                    >
+                      <img src={busquedaimg} alt="busqueda" className={styles.icono2} />
                     </button>
                   </td>
                 </tr>

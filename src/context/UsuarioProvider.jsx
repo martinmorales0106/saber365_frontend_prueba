@@ -7,7 +7,7 @@ import useAuth from "../hooks/useAuth";
 const UsuarioContext = createContext();
 
 const UsuarioProvider = ({ children }) => {
-  const { setAuth } = useAuth();
+  const { setAuth, auth } = useAuth();
 
   const [usuarios, setUsuarios] = useState([]);
   const [alerta, setAlerta] = useState({});
@@ -26,6 +26,8 @@ const UsuarioProvider = ({ children }) => {
   useEffect(() => {
     async function fetchUsuarios() {
       try {
+        if (!auth.admin) return; // Verificar si el usuario es admin
+
         const token = localStorage.getItem("token");
         if (!token) return;
 
@@ -43,7 +45,7 @@ const UsuarioProvider = ({ children }) => {
     }
 
     fetchUsuarios();
-  }, []);
+  }, [auth.admin]);
 
   const eliminarUsuario = async (id) => {
     try {
@@ -84,6 +86,8 @@ const UsuarioProvider = ({ children }) => {
   useEffect(() => {
     async function fetchUsuariosEliminados() {
       try {
+        if (!auth.admin) return; // Verificar si el usuario es admin
+
         const token = localStorage.getItem("token");
         if (!token) return;
 
@@ -104,7 +108,7 @@ const UsuarioProvider = ({ children }) => {
     }
 
     fetchUsuariosEliminados();
-  }, []);
+  }, [auth.admin]);
 
   const recuperarUsuario = async (id) => {
     try {

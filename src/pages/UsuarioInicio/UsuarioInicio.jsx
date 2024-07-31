@@ -124,9 +124,6 @@ const UsuarioInicio = () => {
   const { topPuntajeGlobal, topPuntajePorArea, simulacrosCompletados } =
     usePerfilUsuario();
 
-  console.log(topPuntajeGlobal);
-  console.log(topPuntajePorArea);
-
   simulacrosCompletados.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
@@ -218,7 +215,7 @@ const UsuarioInicio = () => {
                         </div>
                         <div className={styles.usuarioInfo}>
                           <span className={styles.puntajeGlobal}>
-                            {puntaje.puntaje_global}
+                            {Math.ceil(puntaje.puntaje_global)}
                           </span>
                           <span className={styles.tiempoPrueba}>
                             {FormatearTiempo(
@@ -252,7 +249,7 @@ const UsuarioInicio = () => {
                   </div>
                   <div className={styles.usuarioInfo}>
                     <span className={styles.puntajeGlobal}>
-                      {miPuntaje.puntaje_global}
+                      {Math.ceil(miPuntaje.puntaje_global)}
                     </span>
                     <span className={styles.tiempoPrueba}>
                       {FormatearTiempo(
@@ -301,12 +298,12 @@ const UsuarioInicio = () => {
                                     {puntaje.nombreUsuario}
                                   </span>
                                   <span className={styles.grado}>
-                                    {puntaje.grado}
+                                    {(puntaje.grado)}
                                   </span>
                                 </div>
                                 <div className={styles.usuarioInfo}>
                                   <span className={styles.puntajeArea}>
-                                    {puntaje.puntaje_area}
+                                    {Math.ceil(puntaje.puntaje_area)}
                                   </span>
                                 </div>
                                 <div>
@@ -354,7 +351,7 @@ const UsuarioInicio = () => {
                       <p>
                         Puntaje Global:{" "}
                         <span className={styles.span}>
-                          {simulacro.puntaje_global}
+                          {Math.ceil(simulacro.puntaje_global)}
                         </span>
                       </p>
                       <p>

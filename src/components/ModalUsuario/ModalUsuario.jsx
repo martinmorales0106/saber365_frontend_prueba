@@ -4,9 +4,22 @@ import styles from "./ModalUsuario.module.css";
 import useUsuario from "../../hooks/useUsuario";
 import Alerta from "../Alerta/Alerta";
 import cerrarImg from "../../assets/cerrarImg.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ADMIN = ["TRUE", "FALSE"];
-const GRADO = ["SÉPTIMO", "NOVENO", "UNDÉCIMO"];
+const AFILIADO = ["TRUE", "FALSE"];
+const GRADO = [
+  "Tercero",
+  "Cuarto",
+  "Quinto",
+  "Sexto",
+  "Séptimo",
+  "Octavo",
+  "Noveno",
+  "Décimo",
+  "Undécimo",
+  "Admin",
+];
 
 const ModalUsuario = () => {
   const {
@@ -25,7 +38,15 @@ const ModalUsuario = () => {
   const [grado, setGrado] = useState("");
   const [password, setPassword] = useState("");
   const [admin, setAdmin] = useState("");
+  const [nombres, setNombres] = useState("");
+  const [apellidos, setApellidos] = useState("");
+  const [afiliado, setAfiliado] = useState("");
   const [repetirPassword, setRepetirPassword] = useState("");
+
+  const [mostrarPassword, setMostrarPassword] = useState(false);
+  const [mostrarRepetirPassword, setMostrarRepetirPassword] = useState(false);
+
+  console.log(afiliado);
 
   useEffect(() => {
     if (usuariop?.id) {
@@ -36,6 +57,9 @@ const ModalUsuario = () => {
       setPassword(usuariop.password);
       setGrado(usuariop.grado);
       setAdmin(`${usuariop.admin}`.toUpperCase());
+      setNombres(usuariop.nombres);
+      setApellidos(usuariop.apellidos);
+      setAfiliado(usuariop.afiliado);
       return;
     }
     setId("");
@@ -45,6 +69,9 @@ const ModalUsuario = () => {
     setGrado("");
     setPassword("");
     setAdmin("");
+    setAfiliado("");
+    setNombres("");
+    setApellidos("");
   }, [usuariop]);
 
   const handleSubmit = async (e) => {
@@ -57,6 +84,8 @@ const ModalUsuario = () => {
         colegio,
         email,
         password,
+        nombres,
+        apellidos,
         id ? null : repetirPassword,
       ].includes("")
     ) {
@@ -95,6 +124,9 @@ const ModalUsuario = () => {
         email,
         admin,
         password,
+        nombres,
+        apellidos,
+        afiliado,
       });
     } else {
       await submitUsuario({
@@ -104,6 +136,9 @@ const ModalUsuario = () => {
         email,
         password,
         admin,
+        nombres,
+        apellidos,
+        afiliado,
       });
     }
   };
@@ -141,6 +176,26 @@ const ModalUsuario = () => {
                 {id ? "Editar Usuario" : "Crear Usuario"}
               </div>
               <form onSubmit={handleSubmit}>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Nombres:</label>
+                  <input
+                    type="text"
+                    value={nombres}
+                    onChange={(e) => setNombres(e.target.value)}
+                    className={styles.input}
+                    autoComplete="off"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Apellidos:</label>
+                  <input
+                    type="text"
+                    value={apellidos}
+                    onChange={(e) => setApellidos(e.target.value)}
+                    className={styles.input}
+                    autoComplete="off"
+                  />
+                </div>
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Nombre de usuario:</label>
                   <input
@@ -189,25 +244,43 @@ const ModalUsuario = () => {
 
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Contraseña:</label>
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className={styles.input}
-                    autoComplete="off"
-                  />
+                  <div className={styles.container}>
+                    <input
+                      type={mostrarPassword ? "text" : "password"}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className={styles.input3}
+                      autoComplete="off"
+                    />
+                    <span
+                      onClick={() => setMostrarPassword(!mostrarPassword)}
+                      className={styles.iconoMostrar}
+                    >
+                      {mostrarPassword ? <FaEyeSlash /> : <FaEye />}
+                    </span>
+                  </div>
                 </div>
 
                 {id ? null : (
                   <div className={styles.inputContainer}>
                     <label className={styles.label}>Repetir Contraseña:</label>
-                    <input
-                      type="password"
-                      value={repetirPassword}
-                      onChange={(e) => setRepetirPassword(e.target.value)}
-                      className={styles.input}
-                      autoComplete="off"
-                    />
+                    <div className={styles.container}>
+                      <input
+                        type={mostrarRepetirPassword ? "text" : "password"}
+                        value={repetirPassword}
+                        onChange={(e) => setRepetirPassword(e.target.value)}
+                        className={styles.input3}
+                        autoComplete="off"
+                      />
+                      <span
+                        onClick={() =>
+                          setMostrarRepetirPassword(!mostrarRepetirPassword)
+                        }
+                        className={styles.iconoMostrar}
+                      >
+                        {mostrarRepetirPassword ? <FaEyeSlash /> : <FaEye />}
+                      </span>
+                    </div>
                   </div>
                 )}
                 <div className={styles.inputContainer}>
@@ -227,6 +300,24 @@ const ModalUsuario = () => {
                     ))}
                   </select>
                 </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Es Afiliado?</label>
+                  <select
+                    value={afiliado}
+                    onChange={(e) => setAfiliado(e.target.value)}
+                    className={styles.select}
+                  >
+                    <option className={styles.input2} value="">
+                      -- Selecciona un Afiliado --
+                    </option>
+                    {AFILIADO.map((opcion, index) => (
+                      <option key={index} value={opcion}>
+                        {opcion}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                
                 {msg && <Alerta alerta={alerta} />}
                 <input
                   type="submit"

@@ -2,18 +2,20 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from "prop-types"; // Importa PropTypes
 import clienteAxios from "../config/clienteAxios";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 const SimulacroContext = createContext();
 
 const SimulacroProvider = ({ children }) => {
-
   const [simulacros, setSimulacros] = useState([]);
   const [alerta, setAlerta] = useState({});
   const [modalSimulacro, setModalSimulacro] = useState(false);
   const [simulacrop, setSimulacrop] = useState({});
+  const [simulacroEdit, setSimulacroEdit] = useState("");
   const [simulacrosEliminados, setSimulacrosEliminados] = useState([]);
   const [cargando, setCargando] = useState(true);
-  
+
+  const { auth } = useAuth();
 
   const mostrarAlerta = (alerta) => {
     setAlerta(alerta);
@@ -21,7 +23,6 @@ const SimulacroProvider = ({ children }) => {
       setAlerta({});
     }, 5000);
   };
-
 
   const handleModalSimulacro = () => {
     setModalSimulacro(!modalSimulacro);
@@ -95,11 +96,13 @@ const SimulacroProvider = ({ children }) => {
       );
 
       const simulacroActualizado = simulacros.map((simulacroState) =>
-        simulacroState.id === data.simulacro.id ? data.simulacro : simulacroState
+        simulacroState.id === data.simulacro.id
+          ? data.simulacro
+          : simulacroState
       );
 
       setSimulacros(simulacroActualizado);
-    
+      setSimulacroEdit(data.simulacro.activo);
 
       mostrarAlerta({
         msg: data.msg,
@@ -107,7 +110,7 @@ const SimulacroProvider = ({ children }) => {
       });
 
       setModalSimulacro(false);
-      
+
       Swal.fire(
         "Editado!",
         "El simulacro se modificó correctamente.",
@@ -126,11 +129,12 @@ const SimulacroProvider = ({ children }) => {
     setModalSimulacro(true);
   };
 
-   // Cargar 
-   
-   useEffect(() => {
+  // Cargar
+
+  useEffect(() => {
     async function fetchSimulacros() {
       try {
+        if (!auth.admin) return; // Verificar si el usuario es admin
         const token = localStorage.getItem("token");
         if (!token) {
           mostrarAlerta({
@@ -146,15 +150,18 @@ const SimulacroProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
           },
         };
-        const response = await clienteAxios(`/admin/obtener-simulacros`, config);
+        const response = await clienteAxios(
+          `/admin/obtener-simulacros`,
+          config
+        );
         // Ordenar los simulacros por el título
-      const simulacrosOrdenados = response.data.sort((a, b) => {
-        if (a.titulo < b.titulo) return -1;
-        if (a.titulo > b.titulo) return 1;
-        return 0;
-      });
+        const simulacrosOrdenados = response.data.sort((a, b) => {
+          if (a.titulo < b.titulo) return -1;
+          if (a.titulo > b.titulo) return 1;
+          return 0;
+        });
 
-      setSimulacros(simulacrosOrdenados);
+        setSimulacros(simulacrosOrdenados);
       } catch (error) {
         mostrarAlerta({
           msg: error.response.data.msg,
@@ -164,7 +171,7 @@ const SimulacroProvider = ({ children }) => {
     }
 
     fetchSimulacros();
-  }, []);
+  }, [auth.admin]);
 
   const eliminarSimulacro = async (id) => {
     try {
@@ -205,6 +212,8 @@ const SimulacroProvider = ({ children }) => {
   useEffect(() => {
     async function fetchSimulacrosEliminados() {
       try {
+        if (!auth.admin) return; // Verificar si el usuario es admin
+
         const token = localStorage.getItem("token");
         if (!token) {
           mostrarAlerta({
@@ -231,7 +240,7 @@ const SimulacroProvider = ({ children }) => {
     }
 
     fetchSimulacrosEliminados();
-  }, []);
+  }, [auth.admin]);
 
   const recuperarSimulacro = async (id) => {
     try {
@@ -282,12 +291,12 @@ const SimulacroProvider = ({ children }) => {
         simulacrosEliminados,
         setCargando,
         cargando,
+        simulacroEdit,
       }}
     >
       {children}
     </SimulacroContext.Provider>
   );
-
 };
 
 SimulacroProvider.propTypes = {

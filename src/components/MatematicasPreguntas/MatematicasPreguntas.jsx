@@ -6,7 +6,6 @@ import useTabs from "../../hooks/useTabs";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 
 const MatematicasPreguntas = () => {
- 
   const { preguntasFiltradas } = usePerfilUsuario();
   const {
     selectedTab,
@@ -15,10 +14,8 @@ const MatematicasPreguntas = () => {
     opcionesSeleccionadas,
   } = useTabs();
 
-
-
   const [imagenAmpliada, setImagenAmpliada] = useState(false);
-  
+
   const preguntaActualGuardada = localStorage.getItem("matemáticasPregunta");
   const preguntaInicial = preguntaActualGuardada
     ? parseInt(preguntaActualGuardada, 10)
@@ -61,8 +58,13 @@ const MatematicasPreguntas = () => {
     preguntaLocal > paginasEspacios ? preguntaLocal - paginasEspacios : 0;
   const fin = inicio + numerosPorPagina;
   const numerosPreguntas = preguntasFiltradas
+    .sort((a, b) => a.numero - b.numero)
     .slice(inicio, fin)
-    .map((pregunta, index) => inicio + index + 1);
+    .map((pregunta) =>  pregunta.numero);
+
+  const isImageUrl = (url) => {
+    return /\.(jpg|jpeg|png|gif)$/.test(url);
+  };
 
   return (
     <div>
@@ -99,7 +101,9 @@ const MatematicasPreguntas = () => {
             className={styles.boton}
             style={{
               display:
-                preguntaLocal + 1 >= preguntasFiltradas.length ? "none" : "block",
+                preguntaLocal + 1 >= preguntasFiltradas.length
+                  ? "none"
+                  : "block",
             }}
           >
             <img
@@ -114,97 +118,213 @@ const MatematicasPreguntas = () => {
         .slice(preguntaLocal, preguntaLocal + 1)
         .map((pregunta, index) => (
           <div key={index} className={styles.containerPreguntas}>
-            <div className={styles.preguntas1}>
-              <h1>Contexto</h1>
-              {pregunta.contexto ? (
-                <p className={styles.contexto}>{pregunta.contexto}</p>
+            {(pregunta.contexto || pregunta.imagen) && (
+              <div className={styles.preguntas1}>
+                <h1 className={styles.subtitulo}>Contexto</h1>
+                {pregunta.titulo_texto ? (
+                  <p className={styles.tituloTexto}>{pregunta.titulo_texto}</p>
+                ) : null}
+
+                {pregunta.contexto ? (
+                  <div className={styles.contexto}>
+                    {pregunta.contexto.split("\n").map((sentence, index) => (
+                      <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                    ))}
+                  </div>
+                ) : null}
+
+                {pregunta.pie_texto ? (
+                  <p className={styles.pieTexto}>{pregunta.pie_texto}</p>
+                ) : null}
+
+                {pregunta.imagen &&
+                  Object.keys(pregunta.imagen).length > 0 && (
+                    <div
+                      className={styles.containerImg}
+                      onClick={() => setImagenAmpliada(!imagenAmpliada)}
+                    >
+                      {imagenAmpliada ? (
+                        <div className={styles.imagenAmpliadaContainer}>
+                          <img
+                            src={pregunta.imagen}
+                            className={styles.imagenAmpliada}
+                            alt="Imagen Ampliada"
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={pregunta.imagen}
+                          className={styles.imagen}
+                          alt="Imagen Normal"
+                        />
+                      )}
+                    </div>
+                  )}
+
+                {isImageUrl(pregunta.opcionA) && (
+                  <h1 className={styles.fuente1}>Pregunta</h1>
+                )}
+
+                {pregunta.pregunta && isImageUrl(pregunta.opcionA) ? (
+                  <div className={styles.contexto}>
+                    {pregunta.pregunta.split("\n").map((sentence, index) => (
+                      <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            )}
+
+            <div
+              className={`${
+                pregunta.contexto || pregunta.imagen
+                  ? styles.preguntas2
+                  : styles.sinContextoOImagen
+              }`}
+            >
+              {!isImageUrl(pregunta.opcionA) && (
+                <h1 className={styles.fuente2}>Pregunta</h1>
+              )}
+
+              {pregunta.pregunta && !isImageUrl(pregunta.opcionA) ? (
+                <div className={styles.contexto}>
+                  {pregunta.pregunta.split("\n").map((sentence, index) => (
+                    <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                  ))}
+                </div>
               ) : null}
 
-              {Object.keys(pregunta.imagen).length > 0 && (
-                <div
-                  className={styles.containerImg}
-                  onClick={() => setImagenAmpliada(!imagenAmpliada)}
-                >
-                  {imagenAmpliada ? (
-                    <img
-                      src={pregunta.imagen}
-                      className={styles.imagenAmpliada}
-                      alt="Imagen Ampliada"
-                    />
-                  ) : (
-                    <img
-                      src={pregunta.imagen}
-                      className={styles.imagen}
-                      alt="Imagen Normal"
-                    />
-                  )}
+              {pregunta.pregunta &&
+                !pregunta.contexto &&
+                !pregunta.imagen &&
+                isImageUrl(pregunta.opcionA) && (
+                  <h1 className={styles.fuente2}>Pregunta</h1>
+                )}
+
+              {pregunta.pregunta &&
+              !pregunta.contexto &&
+              !pregunta.imagen &&
+              isImageUrl(pregunta.opcionA) ? (
+                <div className={styles.contexto}>
+                  {pregunta.pregunta.split("\n").map((sentence, index) => (
+                    <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                  ))}
                 </div>
-              )}
-            </div>
-            <div className={styles.preguntas2}>
-              <h1>Pregunta</h1>
-              <p className={styles.pregunta}>{pregunta.pregunta}</p>
+              ) : null}
+
               <h1>Respuestas</h1>
               <form>
-                <div className={styles.opcionesRespuestas}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="opciones"
-                      value="A"
-                      onChange={() =>
-                        handleSeleccionRespuesta("A", pregunta.id)
-                      }
-                      checked={opcionesSeleccionadas[pregunta.id] === "A"}
-                    />
-                    <span className={styles.letra}>A.</span>
-                    <p className={styles.opcion}>{pregunta.opcionA}</p>
-                  </label>
-                </div>
-                <div className={styles.opcionesRespuestas}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="opciones"
-                      value="B"
-                      onChange={() =>
-                        handleSeleccionRespuesta("B", pregunta.id)
-                      }
-                      checked={opcionesSeleccionadas[pregunta.id] === "B"}
-                    />
-                    <span className={styles.letra}>B.</span>
-                    <p className={styles.opcion}>{pregunta.opcionB}</p>
-                  </label>
-                </div>
-                <div className={styles.opcionesRespuestas}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="opciones"
-                      value="C"
-                      onChange={() =>
-                        handleSeleccionRespuesta("C", pregunta.id)
-                      }
-                      checked={opcionesSeleccionadas[pregunta.id] === "C"}
-                    />
-                    <span className={styles.letra}>C.</span>
-                    <p className={styles.opcion}>{pregunta.opcionC}</p>
-                  </label>
-                </div>
-                <div className={styles.opcionesRespuestas}>
-                  <label>
-                    <input
-                      type="radio"
-                      name="opciones"
-                      value="D"
-                      onChange={() =>
-                        handleSeleccionRespuesta("D", pregunta.id)
-                      }
-                      checked={opcionesSeleccionadas[pregunta.id] === "D"}
-                    />
-                    <span className={styles.letra}>D.</span>
-                    <p className={styles.opcion}>{pregunta.opcionD}</p>
-                  </label>
+                <div className={styles.opcionesRespuestasContainer}>
+                  <div
+                    className={`${
+                      pregunta.contexto || pregunta.imagen
+                        ? null
+                        : styles.respuestaFlex
+                    }`}
+                  >
+                    <div
+                      className={`${
+                        pregunta.contexto || pregunta.imagen
+                          ? null
+                          : styles.respuestaPart
+                      }`}
+                    >
+                      <div className={styles.opcionesRespuestas}>
+                        <label>
+                          <input
+                            type="radio"
+                            name="opciones"
+                            value="A"
+                            onChange={(e) =>
+                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                            }
+                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "A"}
+                          />
+                          <span className={styles.letra}>A.</span>
+                          {isImageUrl(pregunta.opcionA) ? (
+                            <img
+                              src={pregunta.opcionA}
+                              alt="Opción A"
+                              className={styles.imagenOpcion}
+                            />
+                          ) : (
+                            <p className={styles.opcion}>{pregunta.opcionA}</p>
+                          )}
+                        </label>
+                      </div>
+                      <div className={styles.opcionesRespuestas}>
+                        <label>
+                          <input
+                            type="radio"
+                            name="opciones"
+                            value="B"
+                            onChange={(e) =>
+                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                            }
+                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "B"}
+                          />
+                          <span className={styles.letra}>B.</span>
+                          {isImageUrl(pregunta.opcionB) ? (
+                            <img
+                              src={pregunta.opcionB}
+                              alt="Opción B"
+                              className={styles.imagenOpcion}
+                            />
+                          ) : (
+                            <p className={styles.opcion}>{pregunta.opcionB}</p>
+                          )}
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <div className={styles.opcionesRespuestas}>
+                        <label>
+                          <input
+                            type="radio"
+                            name="opciones"
+                            value="C"
+                            onChange={(e) =>
+                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                            }
+                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "C"}
+                          />
+                          <span className={styles.letra}>C.</span>
+                          {isImageUrl(pregunta.opcionC) ? (
+                            <img
+                              src={pregunta.opcionC}
+                              alt="Opción C"
+                              className={styles.imagenOpcion}
+                            />
+                          ) : (
+                            <p className={styles.opcion}>{pregunta.opcionC}</p>
+                          )}
+                        </label>
+                      </div>
+                      <div className={styles.opcionesRespuestas}>
+                        <label>
+                          <input
+                            type="radio"
+                            name="opciones"
+                            value="D"
+                            onChange={(e) =>
+                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                            }
+                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "D"}
+                          />
+                          <span className={styles.letra}>D.</span>
+                          {isImageUrl(pregunta.opcionD) ? (
+                            <img
+                              src={pregunta.opcionD}
+                              alt="Opción D"
+                              className={styles.imagenOpcion}
+                            />
+                          ) : (
+                            <p className={styles.opcion}>{pregunta.opcionD}</p>
+                          )}
+                        </label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className={styles.botonPregunta}>
                   <input

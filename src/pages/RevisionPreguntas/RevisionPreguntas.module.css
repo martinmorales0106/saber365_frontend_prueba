@@ -34,14 +34,14 @@
   display: flex;
 }
 .preguntas {
-  width: 45%;
+  width: 50%;
   background-color: #c9f3f57a;
   padding: 1rem;
   border-radius: 25px;
   margin: 0.5rem;
 }
 .prueba {
-  width: 55%;
+  width: 50%;
   background-color: #c9f3f57a;
   padding: 1rem;
   border-radius: 25px;
@@ -50,16 +50,17 @@
 
 .numeros {
   display: flex;
-  align-items: center; 
+  align-items: center;
   flex-wrap: wrap;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .indice {
   padding: 0.5rem;
   font-size: 1rem;
   font-weight: 500;
-  display:contents;
+  display: contents;
   align-items: center;
   justify-content: center; /* Centra el contenido dentro del elemento */
 }
@@ -199,4 +200,97 @@
   display: flex;
   text-align: center;
   justify-content: center;
+}
+
+.imagen2 {
+  width: 30rem;
+}
+
+.containerImg {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 25px;
+  background-color: white;
+  padding: 1rem;
+}
+
+.imagenAmpliadaContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* Fondo semi-transparente para resaltar la imagen */
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.imagenAmpliada {
+  max-width: 90%; /* Ajusta el tamaño máximo de la imagen */
+  max-height: 90%; /* Ajusta la altura máxima de la imagen */
+  cursor: zoom-out; /* Cambia el cursor al hacer clic para indicar que se puede reducir */
+  transition: transform 0.3s; /* Agrega una transición suave */
+}
+
+/* Estilo para la imagen normal */
+.imagen {
+  width: 25rem; /* Establece el ancho al 100% del contenedor */
+  object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo la relación de aspecto y cubriendo el contenedor */
+  cursor: pointer; /* Cambia el cursor al hacer clic para indicar que se puede ampliar */
+  transition: transform 0.3s; /* Agrega una transición suave */
+  cursor: zoom-in;
+}
+
+.opcion {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  text-align: justify;
+}
+
+.tituloTexto {
+  text-align: center;
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.subtitulo {
+  padding-bottom: 1rem;
+}
+
+.contexto {
+  text-align: justify;
+  font-size: 18px;
+  color: black;
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.contexto p {
+  margin-bottom: 1em; /* Ajusta este valor según el espacio que desees entre párrafos */
+}
+
+.pieTexto {
+  text-align: right;
+  font-size: 14px;
+  color: black;
+  font-weight: bold;
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 25px;
+  font-style: italic;
 }

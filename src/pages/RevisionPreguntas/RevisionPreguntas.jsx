@@ -19,9 +19,11 @@ const RevisionPreguntas = () => {
     setSimulacroId,
   } = usePerfilUsuario();
 
-  console.log(preguntasSimulacroArea);
   const [estadoPreguntas, setEstadoPreguntas] = useState([]);
-  const [preguntaLocal, setPreguntaLocal] = useState(0);
+  const [preguntaLocal, setPreguntaLocal] = useState(1);
+  const [imagenAmpliada, setImagenAmpliada] = useState(false);
+  const [imagenAmpliada2, setImagenAmpliada2] = useState(false);
+  const [imagenAmpliada3, setImagenAmpliada3] = useState(false);
 
   useEffect(() => {
     const fetchSimulacroFinalizado = async () => {
@@ -41,7 +43,11 @@ const RevisionPreguntas = () => {
       if (simulacroFinalizado && simulacroFinalizado.resultadoSimulacro) {
         await filtrarPreguntasSimulacrosPorArea(area);
         const preguntas = await obtenerPreguntasPorArea(area);
-        setEstadoPreguntas(preguntas);
+        // Filtrar y ordenar por el número de la pregunta
+        const preguntasFiltradasYOrdenadas = preguntas
+          .filter((pregunta) => pregunta.area === area) // Asegúrate de que sean del área correcta
+          .sort((a, b) => a.numero - b.numero); // Ordena por número de pregunta
+        setEstadoPreguntas(preguntasFiltradasYOrdenadas);
       }
     };
     fetchSimulacroArea();
@@ -49,7 +55,7 @@ const RevisionPreguntas = () => {
 
   useEffect(() => {
     // Recuperar la pregunta seleccionada de sessionStorage
-    const preguntaSeleccionada = sessionStorage.getItem('preguntaSeleccionada');
+    const preguntaSeleccionada = sessionStorage.getItem("preguntaSeleccionada");
     if (preguntaSeleccionada) {
       setPreguntaLocal(parseInt(preguntaSeleccionada));
     }
@@ -57,13 +63,13 @@ const RevisionPreguntas = () => {
 
   useEffect(() => {
     // Guardar la pregunta seleccionada en sessionStorage
-    sessionStorage.setItem('preguntaSeleccionada', preguntaLocal);
+    sessionStorage.setItem("preguntaSeleccionada", preguntaLocal);
   }, [preguntaLocal]);
 
   useEffect(() => {
     return () => {
       // Limpiar sessionStorage cuando el componente se desmonte
-      sessionStorage.removeItem('preguntaSeleccionada');
+      sessionStorage.removeItem("preguntaSeleccionada");
     };
   }, []);
 
@@ -77,24 +83,31 @@ const RevisionPreguntas = () => {
     return preguntasFiltradas;
   };
 
-  const numerosPreguntas = estadoPreguntas?.map((pregunta, index) => index + 1);
+  const numerosPreguntas = estadoPreguntas
+    ?.map((pregunta) => pregunta.numero)
+    .sort((a, b) => a - b);
 
   const seleccionarPregunta = (numeroPregunta) => {
-    setPreguntaLocal(numeroPregunta - 1);
+    setPreguntaLocal(numeroPregunta);
   };
 
-const submitBoton = ()=>{
-  Swal.fire({
-    icon: "info",
-    title: "Oops...",
-    text: "Estamos trabajando para brindarte mas información!",
-    didOpen: () => {
-      const confirmButton = Swal.getConfirmButton();
-      confirmButton.style.backgroundColor = '#0f3861';
-      confirmButton.style.color = '#ffffff';
-    }
-  });
-}
+  const submitBoton = () => {
+    Swal.fire({
+      icon: "info",
+      title: "Oops...",
+      text: "Estamos trabajando para brindarte mas información!",
+      didOpen: () => {
+        const confirmButton = Swal.getConfirmButton();
+        confirmButton.style.backgroundColor = "#0f3861";
+        confirmButton.style.color = "#ffffff";
+      },
+    });
+  };
+
+  const isImageUrl = (url) => {
+    return /\.(jpg|jpeg|png|gif)$/.test(url);
+  };
+
   return (
     <div className={styles.fondo}>
       <div className={styles.contenedor}>
@@ -116,13 +129,14 @@ const submitBoton = ()=>{
                   key={index}
                   onClick={() => seleccionarPregunta(numero)}
                   className={`${styles.contenedorNumeros} ${
-                    numero === preguntaLocal + 1 &&
-                    estadoPreguntas[numero - 1]?.esCorrecta
+                    numero === preguntaLocal &&
+                    estadoPreguntas.find((e) => e.numero === numero)?.esCorrecta
                       ? styles.numeroSeleccionado
                       : ""
                   } ${
-                    numero === preguntaLocal + 1 &&
-                    !estadoPreguntas[numero - 1]?.esCorrecta
+                    numero === preguntaLocal &&
+                    !estadoPreguntas.find((e) => e.numero === numero)
+                      ?.esCorrecta
                       ? styles.numeroSeleccionadoPerdido
                       : ""
                   }`}
@@ -136,7 +150,8 @@ const submitBoton = ()=>{
                     <div>
                       <img
                         src={
-                          estadoPreguntas[numero - 1]?.esCorrecta
+                          estadoPreguntas.find((e) => e.numero === numero)
+                            ?.esCorrecta
                             ? ganadaImg
                             : perdidaImg
                         }
@@ -147,30 +162,101 @@ const submitBoton = ()=>{
                 </div>
               ))}
             </div>
+            <hr />
             <div>
-  
               {preguntasSimulacroArea
-                .slice(preguntaLocal, preguntaLocal + 1)
+                .filter((p) => p.numero === preguntaLocal)
                 .map((pregunta, index) => (
                   <div key={index} className={styles.containerPreguntas}>
                     <div className={styles.preguntas1}>
-                    <h2>Objetivo de Aprendizaje</h2>
+                      {pregunta.evidencia && <h3>Objetivo de Aprendizaje</h3>}
                       {pregunta.evidencia ? (
                         <p className={styles.contexto}>{pregunta.evidencia}</p>
                       ) : null}
 
-                      <h2>Justificación</h2>
+                      {pregunta.tema && <h3>Tema evaluado</h3>}
+                      {pregunta.tema ? (
+                        <p className={styles.contexto}>{pregunta.tema}</p>
+                      ) : null}
+
+                      {pregunta.justificacion && <h3>Justificación</h3>}
+
                       {pregunta.justificacion ? (
-                        <p className={styles.contexto}>{pregunta.justificacion}</p>
+                        <div className={styles.contexto}>
+                          {pregunta.justificacion
+                            .split("\n")
+                            .map((sentence, index) => (
+                              <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                            ))}
+                        </div>
                       ) : null}
-                      {pregunta.img_Justificacion ? (
-                        <p className={styles.contexto}>{pregunta.img_Justificacion}</p>
+
+                      {pregunta.img_Justificacion &&
+                        Object.keys(pregunta.img_Justificacion).length > 0 && (
+                          <div
+                            className={styles.containerImg}
+                            onClick={() => setImagenAmpliada(!imagenAmpliada)}
+                          >
+                            {imagenAmpliada ? (
+                              <div className={styles.imagenAmpliadaContainer}>
+                                <img
+                                  src={pregunta.img_Justificacion}
+                                  className={styles.imagenAmpliada}
+                                  alt="Imagen Ampliada"
+                                />
+                              </div>
+                            ) : (
+                              <img
+                                src={pregunta.img_Justificacion}
+                                className={styles.imagen}
+                                alt="Imagen Normal"
+                              />
+                            )}
+                          </div>
+                        )}
+
+                      {pregunta.opcion_invalida && <h3>Opciones Invalidas</h3>}
+
+                      {pregunta.opcion_invalida ? (
+                        <div className={styles.contexto}>
+                          {pregunta.opcion_invalida
+                            .split("\n")
+                            .map((sentence, index) => (
+                              <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                            ))}
+                        </div>
                       ) : null}
+
+                      {pregunta.img_opcion_invalida &&
+                        Object.keys(pregunta.img_opcion_invalida).length >
+                          0 && (
+                          <div
+                            className={styles.containerImg}
+                            onClick={() => setImagenAmpliada3(!imagenAmpliada3)}
+                          >
+                            {imagenAmpliada3 ? (
+                              <div className={styles.imagenAmpliadaContainer}>
+                                <img
+                                  src={pregunta.img_opcion_invalida}
+                                  className={styles.imagenAmpliada}
+                                  alt="Imagen Ampliada"
+                                />
+                              </div>
+                            ) : (
+                              <img
+                                src={pregunta.img_opcion_invalida}
+                                className={styles.imagen}
+                                alt="Imagen Normal"
+                              />
+                            )}
+                          </div>
+                        )}
                     </div>
                   </div>
                 ))}
             </div>
-            {estadoPreguntas[preguntaLocal]?.esCorrecta ? (
+            {estadoPreguntas.find((e) => e.numero === preguntaLocal)
+              ?.esCorrecta ? (
               <div className={styles.mensaje}>
                 <h3 className={styles.mensajeTitulo}>
                   🌟 ¡Maravilloso! <br />
@@ -192,7 +278,7 @@ const submitBoton = ()=>{
                   />
                 </div>
                 <div className={styles.boton}>
-                  <Boton text="Ver más" onClick={submitBoton}/>
+                  <Boton text="Ver más" onClick={submitBoton} />
                 </div>
               </div>
             ) : (
@@ -216,7 +302,7 @@ const submitBoton = ()=>{
                   />
                 </div>
                 <div className={styles.boton}>
-                  <Boton text="Ver más" onClick={submitBoton}/>
+                  <Boton text="Ver más" onClick={submitBoton} />
                 </div>
               </div>
             )}
@@ -227,102 +313,319 @@ const submitBoton = ()=>{
             <hr />
             <div>
               {preguntasSimulacroArea
-                .slice(preguntaLocal, preguntaLocal + 1)
+                .filter((p) => p.numero === preguntaLocal)
                 .map((pregunta, index) => (
                   <div key={index} className={styles.containerPreguntas}>
                     <div className={styles.preguntas1}>
-                      <h2>Contexto</h2>
-                      {pregunta.contexto ? (
-                        <p className={styles.contexto}>{pregunta.contexto}</p>
+                      {pregunta.contexto && <h3>Contexto</h3>}
+
+                      {pregunta.titulo_texto ? (
+                        <p className={styles.tituloTexto}>
+                          {pregunta.titulo_texto}
+                        </p>
                       ) : null}
 
-                      {Object.keys(pregunta.imagen).length > 0 && (
-                        <div className={styles.containerImg}>
-                          <img
-                            src={pregunta.imagen}
-                            className={styles.imagen}
-                            alt="Imagen Normal"
-                          />
+                      {pregunta.contexto ? (
+                        <div className={styles.contexto}>
+                          {pregunta.contexto
+                            .split("\n")
+                            .map((sentence, index) => (
+                              <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                            ))}
                         </div>
-                      )}
+                      ) : null}
+
+                      {pregunta.pie_texto ? (
+                        <p className={styles.pieTexto}>{pregunta.pie_texto}</p>
+                      ) : null}
+
+                      {pregunta.imagen &&
+                        Object.keys(pregunta.imagen).length > 0 && (
+                          <div
+                            className={styles.containerImg}
+                            onClick={() => setImagenAmpliada2(!imagenAmpliada2)}
+                          >
+                            {imagenAmpliada2 ? (
+                              <div className={styles.imagenAmpliadaContainer}>
+                                <img
+                                  src={pregunta.imagen}
+                                  className={styles.imagenAmpliada}
+                                  alt="Imagen Ampliada"
+                                />
+                              </div>
+                            ) : (
+                              <img
+                                src={pregunta.imagen}
+                                className={styles.imagen}
+                                alt="Imagen Normal"
+                              />
+                            )}
+                          </div>
+                        )}
                     </div>
                     <div className={styles.preguntas2}>
-                      <h2>Pregunta</h2>
-                      <p className={styles.pregunta}>{pregunta.pregunta}</p>
-                      <h2>Respuestas</h2>
-                      <form>
+                      {pregunta.pregunta && <h3>Pregunta</h3>}
+                      {pregunta.pregunta ? (
+                        <div className={styles.contexto}>
+                          {pregunta.pregunta
+                            .split("\n")
+                            .map((sentence, index) => (
+                              <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                            ))}
+                        </div>
+                      ) : null}
+                      <h3>Respuestas</h3>
+                      <form className={styles.formScroll}>
                         <div className={styles.opcionesRespuestas}>
                           <label
                             className={`${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaUsuario === "A"
+                              estadoPreguntas.find(
+                                (e) => e.numero === preguntaLocal
+                              )?.respuestaUsuario?.opcion === "A"
                                 ? styles.opcionSeleccionada
                                 : ""
                             } ${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaCorrecta === "A"
+                              estadoPreguntas.find(
+                                (e) => e.numero === preguntaLocal
+                              )?.respuestaCorrecta === "A"
                                 ? styles.respuestaCorrecta
                                 : ""
                             }`}
                           >
                             <span className={styles.letra}>A.</span>
-                            <p className={styles.opcion}>{pregunta.opcionA}</p>
+                            {isImageUrl(pregunta.opcionA) ? (
+                              <img
+                                src={pregunta.opcionA}
+                                alt="Opción A"
+                                className={styles.imagenOpcion}
+                              />
+                            ) : (
+                              <p className={styles.opcion}>
+                                {pregunta.opcionA}
+                              </p>
+                            )}
                           </label>
                         </div>
                         <div className={styles.opcionesRespuestas}>
                           <label
                             className={`${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaUsuario === "B"
+                              estadoPreguntas.find(
+                                (e) => e.numero === preguntaLocal
+                              )?.respuestaUsuario?.opcion === "B"
                                 ? styles.opcionSeleccionada
                                 : ""
                             } ${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaCorrecta === "B"
+                              estadoPreguntas.find(
+                                (e) => e.numero === preguntaLocal
+                              )?.respuestaCorrecta === "B"
                                 ? styles.respuestaCorrecta
                                 : ""
                             }`}
                           >
                             <span className={styles.letra}>B.</span>
-                            <p className={styles.opcion}>{pregunta.opcionB}</p>
+                            {isImageUrl(pregunta.opcionB) ? (
+                              <img
+                                src={pregunta.opcionB}
+                                alt="Opción B"
+                                className={styles.imagenOpcion}
+                              />
+                            ) : (
+                              <p className={styles.opcion}>
+                                {pregunta.opcionB}
+                              </p>
+                            )}
                           </label>
                         </div>
                         <div className={styles.opcionesRespuestas}>
                           <label
                             className={`${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaUsuario === "C"
+                              estadoPreguntas.find(
+                                (e) => e.numero === preguntaLocal
+                              )?.respuestaUsuario?.opcion === "C"
                                 ? styles.opcionSeleccionada
                                 : ""
                             } ${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaCorrecta === "C"
+                              estadoPreguntas.find(
+                                (e) => e.numero === preguntaLocal
+                              )?.respuestaCorrecta === "C"
                                 ? styles.respuestaCorrecta
                                 : ""
                             }`}
                           >
                             <span className={styles.letra}>C.</span>
-                            <p className={styles.opcion}>{pregunta.opcionC}</p>
+                            {isImageUrl(pregunta.opcionC) ? (
+                              <img
+                                src={pregunta.opcionC}
+                                alt="Opción C"
+                                className={styles.imagenOpcion}
+                              />
+                            ) : (
+                              <p className={styles.opcion}>
+                                {pregunta.opcionC}
+                              </p>
+                            )}
                           </label>
                         </div>
-                        <div className={styles.opcionesRespuestas}>
-                          <label
-                            className={`${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaUsuario === "D"
-                                ? styles.opcionSeleccionada
-                                : ""
-                            } ${
-                              estadoPreguntas[preguntaLocal]
-                                ?.respuestaCorrecta === "D"
-                                ? styles.respuestaCorrecta
-                                : ""
-                            }`}
-                          >
-                            <span className={styles.letra}>D.</span>
-                            <p className={styles.opcion}>{pregunta.opcionD}</p>
-                          </label>
-                        </div>
+                        {pregunta.opcionD && (
+                          <div className={styles.opcionesRespuestas}>
+                            <label
+                              className={`${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaUsuario?.opcion === "D"
+                                  ? styles.opcionSeleccionada
+                                  : ""
+                              } ${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaCorrecta === "D"
+                                  ? styles.respuestaCorrecta
+                                  : ""
+                              }`}
+                            >
+                              <span className={styles.letra}>D.</span>
+                              {isImageUrl(pregunta.opcionD) ? (
+                                <img
+                                  src={pregunta.opcionD}
+                                  alt="Opción D"
+                                  className={styles.imagenOpcion}
+                                />
+                              ) : (
+                                <p className={styles.opcion}>
+                                  {pregunta.opcionD}
+                                </p>
+                              )}
+                            </label>
+                          </div>
+                        )}
+                        {pregunta.opcionE && (
+                          <div className={styles.opcionesRespuestas}>
+                            <label
+                              className={`${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaUsuario?.opcion === "E"
+                                  ? styles.opcionSeleccionada
+                                  : ""
+                              } ${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaCorrecta === "E"
+                                  ? styles.respuestaCorrecta
+                                  : ""
+                              }`}
+                            >
+                              <span className={styles.letra}>E.</span>
+                              {isImageUrl(pregunta.opcionE) ? (
+                                <img
+                                  src={pregunta.opcionE}
+                                  alt="Opción E"
+                                  className={styles.imagenOpcion}
+                                />
+                              ) : (
+                                <p className={styles.opcion}>
+                                  {pregunta.opcionE}
+                                </p>
+                              )}
+                            </label>
+                          </div>
+                        )}
+                        {pregunta.opcionF && (
+                          <div className={styles.opcionesRespuestas}>
+                            <label
+                              className={`${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaUsuario?.opcion === "F"
+                                  ? styles.opcionSeleccionada
+                                  : ""
+                              } ${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaCorrecta === "F"
+                                  ? styles.respuestaCorrecta
+                                  : ""
+                              }`}
+                            >
+                              <span className={styles.letra}>F.</span>
+                              {isImageUrl(pregunta.opcionF) ? (
+                                <img
+                                  src={pregunta.opcionF}
+                                  alt="Opción F"
+                                  className={styles.imagenOpcion}
+                                />
+                              ) : (
+                                <p className={styles.opcion}>
+                                  {pregunta.opcionF}
+                                </p>
+                              )}
+                            </label>
+                          </div>
+                        )}
+                        {pregunta.opcionG && (
+                          <div className={styles.opcionesRespuestas}>
+                            <label
+                              className={`${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaUsuario?.opcion === "G"
+                                  ? styles.opcionSeleccionada
+                                  : ""
+                              } ${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaCorrecta === "G"
+                                  ? styles.respuestaCorrecta
+                                  : ""
+                              }`}
+                            >
+                              <span className={styles.letra}>G.</span>
+                              {isImageUrl(pregunta.opcionD) ? (
+                                <img
+                                  src={pregunta.opcionG}
+                                  alt="Opción G"
+                                  className={styles.imagenOpcion}
+                                />
+                              ) : (
+                                <p className={styles.opcion}>
+                                  {pregunta.opcionG}
+                                </p>
+                              )}
+                            </label>
+                          </div>
+                        )}
+                        {pregunta.opcionH && (
+                          <div className={styles.opcionesRespuestas}>
+                            <label
+                              className={`${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaUsuario?.opcion === "H"
+                                  ? styles.opcionSeleccionada
+                                  : ""
+                              } ${
+                                estadoPreguntas.find(
+                                  (e) => e.numero === preguntaLocal
+                                )?.respuestaCorrecta === "H"
+                                  ? styles.respuestaCorrecta
+                                  : ""
+                              }`}
+                            >
+                              <span className={styles.letra}>H.</span>
+                              {isImageUrl(pregunta.opcionH) ? (
+                                <img
+                                  src={pregunta.opcionH}
+                                  alt="Opción D"
+                                  className={styles.imagenOpcion}
+                                />
+                              ) : (
+                                <p className={styles.opcion}>
+                                  {pregunta.opcionH}
+                                </p>
+                              )}
+                            </label>
+                          </div>
+                        )}
                       </form>
                     </div>
                     <div className={styles.botonRegreso}>

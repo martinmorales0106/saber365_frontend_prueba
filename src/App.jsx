@@ -122,6 +122,10 @@ function App() {
                         path="preguntas/preguntas-eliminadas"
                         element={<PreguntasEliminadas />}
                       />
+                      <Route
+                        path="perfil"
+                        element={<UsuarioConfiguracion />}
+                      />
                     </Route>
                   </Routes>
                 </TabsProvider>

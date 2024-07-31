@@ -5,7 +5,8 @@ import styles from "./ModalSimulacro.module.css";
 import Alerta from "../Alerta/Alerta";
 import cerrarImg from "../../assets/cerrarImg.png";
 
-const GRADO = ["SÉPTIMO", "NOVENO", "UNDÉCIMO"];
+const GRADO = ["Tercero","Cuarto","Quinto","Sexto","Séptimo","Octavo", "Noveno","Décimo", "Undécimo"];
+const ACTIVO = ["TRUE", "FALSE"];
 
 const ModalSimulacro = () => {
   const {
@@ -23,7 +24,9 @@ const ModalSimulacro = () => {
   const [grado, setGrado] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [cantidad_preguntas, setCantidad_preguntas] = useState("");
+  const [cantidad_preguntas2, setCantidad_preguntas2] = useState("");
   const [tiempo, setTiempo] = useState("");
+  const [tiempo2, setTiempo2] = useState("");
   const [numero_sesiones, setNumero_sesiones] = useState("");
   const [puntaje_maximo, setPuntaje_maximo] = useState("");
   const [precio, setPrecio] = useState(0);
@@ -42,7 +45,9 @@ const ModalSimulacro = () => {
       setNumero_sesiones(simulacrop.numero_sesiones);
       setPuntaje_maximo(simulacrop.puntaje_maximo);
       setPrecio(simulacrop.precio);
-      setActivo(simulacrop.activo);
+      setActivo(simulacrop.activo.toString());
+      setTiempo2(simulacrop.tiempo2);
+      setCantidad_preguntas2(simulacrop.cantidad_preguntas2)
 
       return;
     }
@@ -52,7 +57,9 @@ const ModalSimulacro = () => {
     setGrado("");
     setDescripcion("");
     setCantidad_preguntas("");
+    setCantidad_preguntas2("");
     setTiempo("");
+    setTiempo2("");
     setNumero_sesiones("");
     setPuntaje_maximo("");
     setPrecio("");
@@ -112,10 +119,13 @@ const ModalSimulacro = () => {
         grado,
         descripcion,
         cantidad_preguntas,
+        cantidad_preguntas2,
         tiempo,
+        tiempo2,
         numero_sesiones,
         puntaje_maximo,
         precio,
+        activo,
       });
     } else {
       await submitSimulacro({
@@ -124,11 +134,12 @@ const ModalSimulacro = () => {
         grado,
         descripcion,
         cantidad_preguntas,
+        cantidad_preguntas2,
         tiempo,
+        tiempo2,
         numero_sesiones,
         puntaje_maximo,
         precio,
-        activo,
       });
     }
   };
@@ -237,6 +248,16 @@ const ModalSimulacro = () => {
                     autoComplete="off"
                   />
                 </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Cantidad de preguntas sesión 2:</label>
+                  <input
+                    type="number"
+                    value={cantidad_preguntas2}
+                    onChange={(e) => setCantidad_preguntas2(e.target.value)}
+                    className={styles.input}
+                    autoComplete="off"
+                  />
+                </div>
 
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Tiempo:</label>
@@ -244,6 +265,16 @@ const ModalSimulacro = () => {
                     type="text"
                     value={tiempo}
                     onChange={(e) => setTiempo(e.target.value)}
+                    className={styles.input}
+                    autoComplete="off"
+                  />
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Tiempo sesión 2:</label>
+                  <input
+                    type="text"
+                    value={tiempo2}
+                    onChange={(e) => setTiempo2(e.target.value)}
                     className={styles.input}
                     autoComplete="off"
                   />
@@ -280,6 +311,23 @@ const ModalSimulacro = () => {
                     className={styles.input}
                     autoComplete="off"
                   />
+                </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Activo</label>
+                  <select
+                    value={activo}
+                    onChange={(e) => setActivo(e.target.value)}
+                    className={styles.select}
+                  >
+                    <option className={styles.input2} value="">
+                      -- Selecciona un Estado --
+                    </option>
+                    {ACTIVO.map((opcion, index) => (
+                      <option key={index} value={opcion}>
+                        {opcion}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 {msg && <Alerta alerta={alerta} />}
                 <input

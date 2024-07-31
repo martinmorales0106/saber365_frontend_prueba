@@ -12,9 +12,20 @@ import usuarioLogin from "../../assets/Usuario-login.png";
 import gradoImg from "../../assets/Grado.png";
 import contraseña from "../../assets/login-contraseña.png";
 import imgColegio from "../../assets/colegio.png";
+import nombreRegistro from "../../assets/Nombre-registro.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const GRADO = ["UNDÉCIMO"];
+const GRADO = [
+  "Tercero",
+  "Cuarto",
+  "Quinto",
+  "Sexto",
+  "Séptimo",
+  "Octavo",
+  "Noveno",
+  "Décimo",
+  "Undécimo",
+];
 
 const Registrar = () => {
   const navigate = useNavigate();
@@ -23,6 +34,8 @@ const Registrar = () => {
   const [email, setEmail] = useState("");
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [grado, setGrado] = useState("");
+  const [nombres, setNombres] = useState("");
+  const [apellidos, setApellidos] = useState("");
 
   const [password, setPassword] = useState("");
   const [repetirPassword, setRepetirPassword] = useState("");
@@ -71,6 +84,8 @@ const Registrar = () => {
 
     if (
       [
+        nombres,
+        apellidos,
         nombreUsuario,
         email,
         grado,
@@ -118,6 +133,8 @@ const Registrar = () => {
         grado,
         password,
         colegio,
+        nombres,
+        apellidos,
       });
 
       setAlerta({
@@ -131,6 +148,8 @@ const Registrar = () => {
       setPassword("");
       setRepetirPassword("");
       setColegio("");
+      setNombres("");
+      setApellidos("");
 
       setTimeout(() => {
         setAlerta({});
@@ -158,6 +177,32 @@ const Registrar = () => {
     <>
       <h1 className={styles.titulo}>Crear Cuenta</h1>
       <form onSubmit={handleSubmit} className={styles.formulario}>
+        <div className={styles.container}>
+          <label htmlFor="nombres">
+            <img className={styles.icono} src={nombreRegistro} />
+          </label>
+          <input
+            id="nombres"
+            type="text"
+            placeholder="Nombres"
+            className={styles.input}
+            value={nombres}
+            onChange={(e) => setNombres(e.target.value)}
+          />
+        </div>
+        <div className={styles.container}>
+          <label htmlFor="apellido">
+            <img className={styles.icono} src={nombreRegistro} />
+          </label>
+          <input
+            id="apellido"
+            type="text"
+            placeholder="Apellidos"
+            className={styles.input}
+            value={apellidos}
+            onChange={(e) => setApellidos(e.target.value)}
+          />
+        </div>
         <div className={styles.container}>
           <label htmlFor="usuario">
             <img className={styles.icono} src={usuarioLogin} />

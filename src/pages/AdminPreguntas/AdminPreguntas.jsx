@@ -57,8 +57,8 @@ const AdminPreguntas = () => {
     });
   };
 
-   // Confirmar si desea editarlo
-   const confirmarEditarPregunta = (pregunta) => {
+  // Confirmar si desea editarlo
+  const confirmarEditarPregunta = (pregunta) => {
     // preguntar al usuario
     Swal.fire({
       title: "¿Estas seguro?",
@@ -104,13 +104,9 @@ const AdminPreguntas = () => {
           <table className={styles.tabla}>
             <thead>
               <tr>
-                <th>Contexto</th>
-                <th>Imagen</th>
+                <th>Id</th>
+                <th>Número</th>
                 <th>Pregunta</th>
-                <th>Opción A</th>
-                <th>Opción B</th>
-                <th>Opción C</th>
-                <th>Opción D</th>
                 <th>Respuesta Correcta</th>
                 <th>Área</th>
                 <th>Grado</th>
@@ -118,7 +114,6 @@ const AdminPreguntas = () => {
                 <th>Simulacro</th>
                 <th>Sesión</th>
                 <th>Creado</th>
-                <th>Editado</th>
                 <th>Editar</th>
                 <th>Eliminar</th>
               </tr>
@@ -129,53 +124,48 @@ const AdminPreguntas = () => {
                   <td>No hay preguntas disponibles</td>
                 </tr>
               ) : (
-                preguntas.map((pregunta) => (
-                  <tr key={pregunta.id}>
-                    <td>{pregunta.contexto}</td>
-                    <td className={styles.contenedorImagen}>
-                      <img
-                        src={pregunta.imagen}
-                        className={styles.imagen}
-                      />
-                    </td>
-                    <td>{pregunta.pregunta}</td>
-                    <td>{pregunta.opcionA}</td>
-                    <td>{pregunta.opcionB}</td>
-                    <td>{pregunta.opcionC}</td>
-                    <td>{pregunta.opcionD}</td>
-                    <td>{pregunta.respuesta_correcta}</td>
-                    <td>{pregunta.area}</td>
-                    <td>{pregunta.grado}</td>
-                    <td>{pregunta.competencia}</td>
-                    <td>{pregunta.titulo_simulacro}</td>
-                    <td>{pregunta.sesion}</td>
-                    <td>{formatearFecha(pregunta.createdAt)}</td>
-                    <td>{formatearFecha(pregunta.updatedAt)}</td>
-                    <td>
-                      <div>
-                        <button className={styles.boton} onClick={() => confirmarEditarPregunta(pregunta)}>
+                preguntas
+                  .sort((a, b) => a.id - b.id)
+                  .map((pregunta) => (
+                    <tr key={pregunta.id}>
+                      <td>{pregunta.id}</td>
+                      <td>{pregunta.numero}</td>
+                      <td>{pregunta.pregunta}</td>
+                      <td>{pregunta.respuesta_correcta}</td>
+                      <td>{pregunta.area}</td>
+                      <td>{pregunta.grado}</td>
+                      <td>{pregunta.competencia}</td>
+                      <td>{pregunta.titulo_simulacro}</td>
+                      <td>{pregunta.sesion}</td>
+                      <td>{formatearFecha(pregunta.createdAt)}</td>
+                      <td>
+                        <div>
+                          <button
+                            className={styles.boton}
+                            onClick={() => confirmarEditarPregunta(pregunta)}
+                          >
+                            <img
+                              src={modify}
+                              alt="Modificar"
+                              className={styles.icono2}
+                            />
+                          </button>
+                        </div>
+                      </td>
+                      <td>
+                        <button
+                          className={styles.boton}
+                          onClick={() => confirmarEliminarPregunta(pregunta.id)}
+                        >
                           <img
-                            src={modify}
-                            alt="Modificar"
+                            src={del}
+                            alt="Eliminar"
                             className={styles.icono2}
                           />
                         </button>
-                      </div>
-                    </td>
-                    <td>
-                      <button
-                        className={styles.boton}
-                        onClick={() => confirmarEliminarPregunta(pregunta.id)}
-                      >
-                        <img
-                          src={del}
-                          alt="Eliminar"
-                          className={styles.icono2}
-                        />
-                      </button>
-                    </td>
-                  </tr>
-                ))
+                      </td>
+                    </tr>
+                  ))
               )}
             </tbody>
           </table>

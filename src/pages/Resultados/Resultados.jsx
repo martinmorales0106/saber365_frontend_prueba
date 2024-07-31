@@ -171,7 +171,7 @@ const Resultados = () => {
                   </div>
                   <div className={styles.informacionDatos}>
                     <h1>
-                      {simulacroFinalizado?.resultadoSimulacro?.puntaje_global}
+                      {Math.ceil(simulacroFinalizado?.resultadoSimulacro?.puntaje_global)}
                       <span className={styles.puntajeGlobal}>/500</span>
                     </h1>
                   </div>
@@ -277,7 +277,7 @@ const Resultados = () => {
                     <div className={styles.puntajeArea}>
                       <h4>Puntaje:</h4>
                       <h3 className={styles.resultadoArea}>
-                        {puntajePorArea[area]}/100
+                        {Math.ceil(puntajePorArea[area])}/100
                       </h3>
                     </div>
                     <p>Posición en esta prueba:</p>
@@ -287,7 +287,7 @@ const Resultados = () => {
                         text="Ver detalles"
                         onClick={() =>
                           handleResultadoArea({
-                            puntaje: puntajePorArea[area],
+                            puntaje: Math.ceil(puntajePorArea[area]),
                             nivel: nivelPorArea[area],
                             puesto: posicionPorArea[area],
                             area,

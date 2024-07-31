@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 
 const Inicio = () => {
   const { auth } = useAuth();
+
   return (
     <div>
       <div className={styles.fondo1}>
@@ -18,15 +19,27 @@ const Inicio = () => {
             avanza hacia tus metas académicas.
             <br /> ¡Tu camino hacia el conocimiento comienza aquí!
           </p>
-          {auth ? (<div className={styles.boton1}>
-            <Link to="/" className={styles.link}>
-              <Boton text="🚀 Ir a mi Cuenta" />
-            </Link>
-          </div>):(<div className={styles.boton1}>
-            <Link to="/autenticar" className={styles.link}>
-              <Boton text="🚀 Comienza Ahora" />
-            </Link>
-          </div>)}
+          {auth.id ? (
+            auth.admin ? (
+              <div className={styles.boton1}>
+                <Link to="/admin" className={styles.link}>
+                  <Boton text="🚀 Ir a mi Admin" />
+                </Link>
+              </div>
+            ) : (
+              <div className={styles.boton1}>
+                <Link to="/usuario" className={styles.link}>
+                  <Boton text="🚀 Ir a mi Cuenta" />
+                </Link>
+              </div>
+            )
+          ) : (
+            <div className={styles.boton1}>
+              <Link to="/autenticar" className={styles.link}>
+                <Boton text="🚀 Comienza Ahora" />
+              </Link>
+            </div>
+          )}
         </div>
         <div>
           <div className={styles.container_imagen1}>

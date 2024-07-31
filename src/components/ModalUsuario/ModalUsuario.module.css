@@ -105,3 +105,28 @@
     margin-top: 1rem;
   }
   
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    width: 94%;
+  }
+
+  .input3 {
+    width: 85%;
+    padding: 0.5rem;
+    border: none; /* Esto quitará el borde */
+    outline: none;
+    background-color: #ffffff;
+    font-size: medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .input3::placeholder {
+    color: rgb(97, 96, 96);
+  }

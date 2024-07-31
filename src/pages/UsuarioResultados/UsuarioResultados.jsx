@@ -16,6 +16,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  Filler, //
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import annotationPlugin from "chartjs-plugin-annotation";
@@ -30,7 +31,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  annotationPlugin
+  annotationPlugin,
+  Filler, //
 );
 
 const barChart = (simulacrosCompletados) => {
@@ -132,7 +134,6 @@ const BarChart2 = (simulacrosCompletados) => {
         data: datos,
         borderColor: "rgba(75, 192, 192)",
         backgroundColor: "rgba(75, 192, 192)",
-        fill: true,
       },
     ],
   };
@@ -264,8 +265,6 @@ const UsuarioResultados = () => {
     obtenerPosicionPorArea,
   } = usePerfilUsuario();
 
-  console.log(simulacrosCompletados);
-
   return (
     <div className={styles.fondo}>
       <div className={styles.container}>
@@ -304,7 +303,7 @@ const UsuarioResultados = () => {
                   {simulacrosCompletados.map((simulacro) => (
                     <tr key={simulacro.id}>
                       <td>{simulacro.simulacro.titulo}</td>
-                      <td>{simulacro.puntaje_global}</td>
+                      <td>{Math.ceil(simulacro.puntaje_global)}</td>
                       <td>{simulacro.simulacro.cantidad_preguntas}</td>
                       <td>
                         {FormatearTiempo(
@@ -348,20 +347,16 @@ const UsuarioResultados = () => {
           </div>
           <div>
             {simulacrosCompletados.length > 0 && (
-              <h2 className={styles.desempeño}>
-                Desempeño por área
-              </h2>
+              <h3 className={styles.desempeño}>Desempeño por puntaje global</h3>
             )}
             {simulacrosCompletados.length > 0 && (
               <div className={styles.grafico}>
-                {barChart(simulacrosCompletados)}
+                {BarChart2(simulacrosCompletados)}
               </div>
             )}
           </div>
           {simulacrosCompletados.length > 0 && (
-            <h2 className={styles.subtitulo}>
-              Resultado general
-            </h2>
+            <h2 className={styles.subtitulo}>Resultado general</h2>
           )}
 
           {simulacrosCompletados.length > 0 && (
@@ -381,34 +376,37 @@ const UsuarioResultados = () => {
                 {simulacrosCompletados.map((simulacro) => (
                   <tr key={simulacro.id}>
                     <td>{simulacro.simulacro.titulo}</td>
-                    <td>{simulacro.puntaje_global}</td>
-                    <td>{simulacro.puntaje_por_area["Lectura Critica"]}</td>
-                    <td>{simulacro.puntaje_por_area["Matemáticas"]}</td>
-                    <td>{simulacro.puntaje_por_area["Sociales"]}</td>
-                    <td>{simulacro.puntaje_por_area["Naturales"]}</td>
-                    <td>{simulacro.puntaje_por_area["Ingles"]}</td>
+                    <td>{Math.ceil(simulacro.puntaje_global)}</td>
+                    <td>
+                      {Math.ceil(simulacro.puntaje_por_area["Lectura Critica"])}
+                    </td>
+                    <td>
+                      {Math.ceil(simulacro.puntaje_por_area["Matemáticas"])}
+                    </td>
+                    <td>{Math.ceil(simulacro.puntaje_por_area["Sociales"])}</td>
+                    <td>
+                      {Math.ceil(simulacro.puntaje_por_area["Naturales"])}
+                    </td>
+                    <td>{Math.ceil(simulacro.puntaje_por_area["Ingles"])}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           )}
-
+          
           <div>
             {simulacrosCompletados.length > 0 && (
-              <h2 className={styles.desempeño}>
-                Desempeño por puntaje global
-              </h2>
+              <h3 className={styles.desempeño}>Desempeño por área</h3>
             )}
             {simulacrosCompletados.length > 0 && (
               <div className={styles.grafico}>
-                {BarChart2(simulacrosCompletados)}
+                {barChart(simulacrosCompletados)}
               </div>
             )}
           </div>
+         
           {simulacrosCompletados.length > 0 && (
-            <h2 className={styles.subtitulo}>
-              Nivel de desempeño
-            </h2>
+            <h2 className={styles.subtitulo}>Nivel de desempeño</h2>
           )}
 
           {simulacrosCompletados.length > 0 && (

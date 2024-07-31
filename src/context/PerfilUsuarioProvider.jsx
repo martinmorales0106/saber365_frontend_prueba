@@ -199,7 +199,7 @@ const PerfilUsuarioProvider = ({ children }) => {
     localStorage.setItem("naturalesPregunta", "0");
     localStorage.setItem("socialesPregunta", "0");
     localStorage.setItem("selectedTab", "Matemáticas");
-
+    
     navigate(`/usuario/finalizar-sesion/${data.id}`);
   };
 
