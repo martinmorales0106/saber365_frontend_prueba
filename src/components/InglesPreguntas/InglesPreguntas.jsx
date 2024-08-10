@@ -662,7 +662,7 @@ const InglesPreguntas = () => {
               style={{
                 display:
                   preguntaLocal + 1 >= numerosPreguntas.length &&
-                  selectedTab === "Ingles"
+                  selectedTab === "Inglés"
                     ? "block"
                     : "none",
               }}

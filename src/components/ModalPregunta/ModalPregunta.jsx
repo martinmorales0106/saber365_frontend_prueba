@@ -24,12 +24,12 @@ const SESION = ["1", "2"];
 
 const AREA = [
   "Matemáticas",
-  "Lectura Critica",
+  "Lectura Crítica",
   "Sociales",
   "Naturales",
-  "Ingles",
+  "Inglés",
   "Lenguaje",
-  "C. Ciudadana",
+  "C. Ciudadanas",
 ];
 
 const ModalPregunta = () => {

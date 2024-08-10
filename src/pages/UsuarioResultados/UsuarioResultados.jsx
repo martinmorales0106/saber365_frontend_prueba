@@ -32,18 +32,60 @@ ChartJS.register(
   Tooltip,
   Legend,
   annotationPlugin,
-  Filler, //
+  Filler //
 );
+
+const groupByGrade = (simulacros) => {
+  return simulacros.reduce((acc, simulacro) => {
+    const grade = simulacro.simulacro.grado;
+    if (!acc[grade]) {
+      acc[grade] = [];
+    }
+    acc[grade].push(simulacro);
+    return acc;
+  }, {});
+};
 
 const barChart = (simulacrosCompletados) => {
   // Preparar los datos para Chart.js
-  const etiquetas = [
-    "Ingles",
-    "Lectura Critica",
-    "Matemáticas",
-    "Naturales",
-    "Sociales",
-  ];
+  // Prepare labels based on the grade
+  let etiquetas = [];
+  const grado = simulacrosCompletados?.[0]?.simulacro?.grado;
+
+  switch (grado) {
+    case "Undécimo":
+    case "Décimo":
+      etiquetas = [
+        "Inglés",
+        "Lectura Crítica",
+        "Matemáticas",
+        "Naturales",
+        "Sociales",
+      ];
+      break;
+    case "Noveno":
+      etiquetas = [
+        "Inglés",
+        "Lenguaje",
+        "Matemáticas",
+        "Naturales",
+        "C. Ciudadanas",
+      ];
+      break;
+    case "Octavo":
+    case "Séptimo":
+    case "Sexto":
+    case "Quinto":
+      etiquetas = ["Lenguaje", "Matemáticas", "Naturales", "C. Ciudadanas"];
+      break;
+    case "Cuarto":
+    case "Tercero":
+      etiquetas = ["Lenguaje", "Matemáticas"];
+      break;
+    default:
+      etiquetas = [];
+  }
+
   const datasets = simulacrosCompletados.map((simulacro, index) => {
     return {
       label: `${simulacro.simulacro.titulo}`,
@@ -265,6 +307,8 @@ const UsuarioResultados = () => {
     obtenerPosicionPorArea,
   } = usePerfilUsuario();
 
+  const groupedSimulacros = groupByGrade(simulacrosCompletados);
+
   return (
     <div className={styles.fondo}>
       <div className={styles.container}>
@@ -284,7 +328,7 @@ const UsuarioResultados = () => {
           </div>
           <div className={styles.tableContainer}>
             {simulacrosCompletados.length > 0 && (
-              <h2 className={styles.subtitulo}>Simulacros Realizados</h2>
+              <h3 className={styles.subtitulo}>Simulacros Realizados</h3>
             )}
 
             {simulacrosCompletados.length > 0 ? (
@@ -292,6 +336,7 @@ const UsuarioResultados = () => {
                 <thead>
                   <tr>
                     <th>Simulacro</th>
+                    <th>Grado</th>
                     <th>Puntaje Global</th>
                     <th>Número de Preguntas</th>
                     <th>Tiempo</th>
@@ -303,6 +348,7 @@ const UsuarioResultados = () => {
                   {simulacrosCompletados.map((simulacro) => (
                     <tr key={simulacro.id}>
                       <td>{simulacro.simulacro.titulo}</td>
+                      <td>{simulacro.simulacro.grado}</td>
                       <td>{Math.ceil(simulacro.puntaje_global)}</td>
                       <td>{simulacro.simulacro.cantidad_preguntas}</td>
                       <td>
@@ -349,94 +395,227 @@ const UsuarioResultados = () => {
             {simulacrosCompletados.length > 0 && (
               <h3 className={styles.desempeño}>Desempeño por puntaje global</h3>
             )}
-            {simulacrosCompletados.length > 0 && (
-              <div className={styles.grafico}>
-                {BarChart2(simulacrosCompletados)}
+            {Object.keys(groupedSimulacros).map((grade) => (
+              <div key={grade} className={styles.grafico}>
+                <h4>Grado: {grade}</h4>
+                {BarChart2(groupedSimulacros[grade])}
               </div>
-            )}
+            ))}
           </div>
           {simulacrosCompletados.length > 0 && (
-            <h2 className={styles.subtitulo}>Resultado general</h2>
+            <h3 className={styles.subtitulo}>Resultado general</h3>
           )}
 
-          {simulacrosCompletados.length > 0 && (
-            <table className={styles.tablaEncabezado}>
-              <thead>
-                <tr>
-                  <th>Simulacro</th>
-                  <th>Puntaje Global</th>
-                  <th>Lectura Critica</th>
-                  <th>Matemáticas</th>
-                  <th>Sociales</th>
-                  <th>Naturales</th>
-                  <th>Ingles</th>
-                </tr>
-              </thead>
-              <tbody>
-                {simulacrosCompletados.map((simulacro) => (
-                  <tr key={simulacro.id}>
-                    <td>{simulacro.simulacro.titulo}</td>
-                    <td>{Math.ceil(simulacro.puntaje_global)}</td>
-                    <td>
-                      {Math.ceil(simulacro.puntaje_por_area["Lectura Critica"])}
-                    </td>
-                    <td>
-                      {Math.ceil(simulacro.puntaje_por_area["Matemáticas"])}
-                    </td>
-                    <td>{Math.ceil(simulacro.puntaje_por_area["Sociales"])}</td>
-                    <td>
-                      {Math.ceil(simulacro.puntaje_por_area["Naturales"])}
-                    </td>
-                    <td>{Math.ceil(simulacro.puntaje_por_area["Ingles"])}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-          
+          {Object.keys(groupedSimulacros).map((grade) => (
+            <div key={grade} className={styles.grafico}>
+              <h4>Grado: {grade}</h4>
+              {groupedSimulacros[grade] && (
+                <table className={styles.tablaEncabezado}>
+                  <thead>
+                    <tr>
+                      <th>Simulacro</th>
+                      <th>Puntaje Global</th>
+                      {(grade === "Undécimo" || grade === "Décimo") && (
+                        <th>Lectura Crítica</th>
+                      )}
+
+                      {grade != "Undécimo" && grade != "Décimo" && (
+                        <th>Lenguaje</th>
+                      )}
+
+                      <th>Matemáticas</th>
+
+                      {(grade === "Undécimo" || grade === "Décimo") && (
+                        <th>Sociales</th>
+                      )}
+
+                      {(grade === "Noveno" ||
+                        grade === "Octavo" ||
+                        grade === "Séptimo" ||
+                        grade === "Sexto" ||
+                        grade === "Quinto") && <th>C. Ciudadanas</th>}
+
+                      {grade != "Cuarto" && grade != "Tercero" && (
+                        <th>Naturales</th>
+                      )}
+
+                      {(grade === "Undécimo" ||
+                        grade === "Décimo" ||
+                        grade === "Noveno") && <th>Inglés</th>}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {groupedSimulacros[grade].map((simulacro) => (
+                      <tr key={simulacro.id}>
+                        <td>{simulacro.simulacro.titulo}</td>
+                        <td>{Math.ceil(simulacro.puntaje_global)}</td>
+                        {(grade === "Undécimo" || grade === "Décimo") && (
+                          <td>
+                            {Math.ceil(
+                              simulacro.puntaje_por_area["Lectura Crítica"]
+                            )}
+                          </td>
+                        )}
+
+                        {grade != "Undécimo" && grade != "Décimo" && (
+                          <td>
+                            {Math.ceil(simulacro.puntaje_por_area["Lenguaje"])}
+                          </td>
+                        )}
+
+                        <td>
+                          {Math.ceil(simulacro.puntaje_por_area["Matemáticas"])}
+                        </td>
+
+                        {(grade === "Undécimo" || grade === "Décimo") && (
+                          <td>
+                            {Math.ceil(simulacro.puntaje_por_area["Sociales"])}
+                          </td>
+                        )}
+
+                        {(grade === "Noveno" ||
+                          grade === "Octavo" ||
+                          grade === "Séptimo" ||
+                          grade === "Sexto" ||
+                          grade === "Quinto") && (
+                          <td>
+                            {Math.ceil(
+                              simulacro.puntaje_por_area["C. Ciudadanas"]
+                            )}
+                          </td>
+                        )}
+
+                        {grade != "Cuarto" && grade != "Tercero" && (
+                          <td>
+                            {Math.ceil(simulacro.puntaje_por_area["Naturales"])}
+                          </td>
+                        )}
+
+                        {(grade === "Undécimo" ||
+                          grade === "Décimo" ||
+                          grade === "Noveno") && (
+                          <td>
+                            {Math.ceil(simulacro.puntaje_por_area["Inglés"])}
+                          </td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          ))}
+
           <div>
             {simulacrosCompletados.length > 0 && (
               <h3 className={styles.desempeño}>Desempeño por área</h3>
             )}
-            {simulacrosCompletados.length > 0 && (
-              <div className={styles.grafico}>
-                {barChart(simulacrosCompletados)}
+            {Object.keys(groupedSimulacros).map((grade) => (
+              <div key={grade} className={styles.grafico}>
+                <h4>Grado: {grade}</h4>
+                {barChart(groupedSimulacros[grade])}
               </div>
-            )}
+            ))}
           </div>
-         
-          {simulacrosCompletados.length > 0 && (
-            <h2 className={styles.subtitulo}>Nivel de desempeño</h2>
-          )}
 
           {simulacrosCompletados.length > 0 && (
-            <table className={styles.tablaEncabezado}>
-              <thead>
-                <tr>
-                  <th>Simulacro</th>
-                  <th>Puntaje Global</th>
-                  <th>Lectura Critica</th>
-                  <th>Matemáticas</th>
-                  <th>Sociales</th>
-                  <th>Naturales</th>
-                  <th>Ingles</th>
-                </tr>
-              </thead>
-              <tbody>
-                {simulacrosCompletados.map((simulacro) => (
-                  <tr key={simulacro.id}>
-                    <td>{simulacro.simulacro.titulo}</td>
-                    <td>{simulacro.nivel_alcanzado}</td>
-                    <td>{simulacro.nivel_por_area["Lectura Critica"]}</td>
-                    <td>{simulacro.nivel_por_area["Matemáticas"]}</td>
-                    <td>{simulacro.nivel_por_area["Sociales"]}</td>
-                    <td>{simulacro.nivel_por_area["Naturales"]}</td>
-                    <td>{simulacro.nivel_por_area["Ingles"]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <h3 className={styles.subtitulo}>Nivel de desempeño</h3>
           )}
+
+          {Object.keys(groupedSimulacros).map((grade) => (
+            <div key={grade} className={styles.grafico}>
+              <h4>Grado: {grade}</h4>
+              {groupedSimulacros[grade]?.length > 0 && (
+                <table className={styles.tablaEncabezado}>
+                  <thead>
+                    <tr>
+                      <th>Simulacro</th>
+                      <th>Puntaje Global</th>
+                      {(grade === "Undécimo" || grade === "Décimo") && (
+                        <th>Lectura Crítica</th>
+                      )}
+
+                      {grade != "Undécimo" && grade != "Décimo" && (
+                        <th>Lenguaje</th>
+                      )}
+
+                      <th>Matemáticas</th>
+
+                      {(grade === "Undécimo" || grade === "Décimo") && (
+                        <th>Sociales</th>
+                      )}
+
+                      {(grade === "Noveno" ||
+                        grade === "Octavo" ||
+                        grade === "Séptimo" ||
+                        grade === "Sexto" ||
+                        grade === "Quinto") && <th>C. Ciudadanas</th>}
+
+                      {grade != "Cuarto" && grade != "Tercero" && (
+                        <th>Naturales</th>
+                      )}
+
+                      {(grade === "Undécimo" ||
+                        grade === "Décimo" ||
+                        grade === "Noveno") && <th>Inglés</th>}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {groupedSimulacros[grade].map((simulacro) => (
+                      <tr key={simulacro.id}>
+                        <td>{simulacro.simulacro.titulo}</td>
+                        <td>{simulacro.nivel_alcanzado}</td>
+
+                        {(grade === "Undécimo" || grade === "Décimo") && (
+                          <td>
+                            {simulacro.nivel_por_area["Lectura Crítica"] ||
+                              "N/A"}
+                          </td>
+                        )}
+
+                        {grade != "Undécimo" && grade != "Décimo" && (
+                          <td>
+                            {simulacro.nivel_por_area["Lenguaje"] || "N/A"}
+                          </td>
+                        )}
+
+                        <td>
+                          {simulacro.nivel_por_area["Matemáticas"] || "N/A"}
+                        </td>
+
+                        {(grade === "Undécimo" || grade === "Décimo") && (
+                          <td>
+                            {simulacro.nivel_por_area["Sociales"] || "N/A"}
+                          </td>
+                        )}
+                        {(grade === "Noveno" ||
+                          grade === "Octavo" ||
+                          grade === "Séptimo" ||
+                          grade === "Sexto" ||
+                          grade === "Quinto") && (
+                          <td>
+                            {simulacro.nivel_por_area["C. Ciudadanas"] || "N/A"}
+                          </td>
+                        )}
+
+                        {grade != "Cuarto" && grade != "Tercero" && (
+                          <td>
+                            {simulacro.nivel_por_area["Naturales"] || "N/A"}
+                          </td>
+                        )}
+
+                        {(grade === "Undécimo" ||
+                          grade === "Décimo" ||
+                          grade === "Noveno") && (
+                          <td>{simulacro.nivel_por_area["Inglés"] || "N/A"}</td>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

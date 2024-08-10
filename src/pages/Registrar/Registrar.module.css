@@ -9,6 +9,7 @@
 }
 
 .container {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -121,3 +122,47 @@
   color: #000;
 }
 
+.sugerencias {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.sugerencias li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.sugerencias li:hover {
+  background-color: #eee;
+}
+
+.checkboxContainer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkboxContainer input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.checkboxContainer label {
+  font-size: 0.8rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.checkboxContainer label:hover {
+  color: #007bff; /* Cambia el color del texto al pasar el mouse */
+
+}

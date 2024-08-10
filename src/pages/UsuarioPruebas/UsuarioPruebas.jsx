@@ -10,15 +10,22 @@ import NoResultado from "../../components/NoResultado/NoResultado";
 import useAuth from "../../hooks/useAuth";
 
 const UsuarioPruebas = () => {
-  const { simulacrosUsuario, simulacrosCompletados, puntajePorSimulacro } =
-    usePerfilUsuario();
-  
-  const {auth} = useAuth();
+  const {
+    simulacrosUsuario,
+    simulacrosCompletados,
+    puntajePorSimulacro,
+    obtenerSimulacroFinalizado,
+    setSimulacroId,
+    obtenerPosicionSimulacro,
+    obtenerPosicionPorArea,
+  } = usePerfilUsuario();
+
+  const { auth } = useAuth();
 
   const simulacrosFiltrados = simulacrosUsuario.filter(
     (simulacro) => simulacro.grado === auth.grado && simulacro.activo
   );
-  
+
   const [puntajeSimulacroMap, setPuntajeSimulacroMap] = useState({});
 
   useEffect(() => {
@@ -72,11 +79,29 @@ const UsuarioPruebas = () => {
                     <div className={styles.boton}>
                       {simulacroCompletado ? (
                         <Link
-                          to={`/usuario/resultados`}
+                          to={`/usuario/resultados/resultado/${simulacroCompletado.id}`}
                           className={styles.link}
                         >
                           <div className={styles.preguntas}>
-                            <Boton text="Ir a mis resultados" />
+                            <Boton
+                              text="Ver mi resultado"
+                              onClick={() => {
+                                obtenerSimulacroFinalizado(
+                                  simulacroCompletado.id
+                                );
+                                setSimulacroId(
+                                  simulacroCompletado.simulacro.id
+                                );
+                                obtenerPosicionSimulacro(
+                                  simulacroCompletado.id_simulacro,
+                                  simulacroCompletado.id_usuario
+                                );
+                                obtenerPosicionPorArea(
+                                  simulacroCompletado.id_simulacro,
+                                  simulacroCompletado.id_usuario
+                                );
+                              }}
+                            />
                           </div>
                         </Link>
                       ) : (

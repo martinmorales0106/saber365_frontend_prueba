@@ -1,4 +1,4 @@
-import styles from "./UsuarioConfiguracion.module.css";
+import styles from "./AdminConfiguracion.module.css";
 import configuracionImg from "../../assets/configuraciones.png";
 import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
@@ -6,14 +6,15 @@ import Alerta from "../../components/Alerta/Alerta";
 import usuarioLogin from "../../assets/Usuario-login.png";
 import emailImg from "../../assets/email.png";
 import gradoImg from "../../assets/Grado.png";
+import afiliadoImg from "../../assets/afiliadoImg.png";
 import contraseña from "../../assets/login-contraseña.png";
 import imgColegio from "../../assets/colegio.png";
 import ubicacion from "../../assets/ubicacion.png";
-import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Loading from "../../components/Loading/Loading";
 import nombreRegistro from "../../assets/Nombre-registro.png";
+import useUsuario from "../../hooks/useUsuario";
 
 const GRADO = [
   "Tercero",
@@ -25,14 +26,21 @@ const GRADO = [
   "Noveno",
   "Décimo",
   "Undécimo",
+  "Admin",
+  "Afiliado",
 ];
 
-const UsuarioConfiguracion = () => {
-  const { auth, colegios } = useAuth();
-  const { updateUsuario, mostrarAlerta, alerta, updateUsuarioContraseña } =
-    usePerfilUsuario();
+const ESTADO = ["true", "false"]
 
-  const [id, setId] = useState("");
+const AdminConfiguracion = () => {
+  const { auth, colegios } = useAuth();
+  const {
+    updateUsuarioAdmin,
+    mostrarAlerta,
+    alerta,
+    updateUsuarioContraseñaAdmin,
+  } = useUsuario();
+
   const [nombres, setNombres] = useState("");
   const [apellidos, setApellidos] = useState("");
   const [nombreUsuario, setNombreUsuario] = useState("");
@@ -51,21 +59,24 @@ const UsuarioConfiguracion = () => {
   const [departamento, setDepartamento] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [isNewSchool, setIsNewSchool] = useState(false);
-  
+  const[id, setId] = useState("");
+  const [afiliado, setAfiliado] = useState("")
+
   useEffect(() => {
     if (auth?.id) {
-      setId(auth.id);
-      setNombres(auth.nombres);
-      setApellidos(auth.apellidos);
-      setNombreUsuario(auth.nombreUsuario);
-      setEmail(auth.email);
-      setColegio(auth.colegio);
-      setGrado(auth.grado);
-      setDepartamento(auth.departamento);
-      setMunicipio(auth.municipio);
+      setId(auth?.id);
+      setNombres(auth?.nombres);
+      setApellidos(auth?.apellidos);
+      setNombreUsuario(auth?.nombreUsuario);
+      setEmail(auth?.email);
+      setColegio(auth?.colegio);
+      setGrado(auth?.grado);
+      setDepartamento(auth?.departamento);
+      setMunicipio(auth?.municipio);
+      setAfiliado(auth?.afiliado)
       return;
     }
-    setId("");
+    setId("")
     setNombres("");
     setApellidos("");
     setNombreUsuario("");
@@ -74,6 +85,7 @@ const UsuarioConfiguracion = () => {
     setGrado("");
     setDepartamento("");
     setMunicipio("");
+    setAfiliado("")
   }, [auth]);
 
   if (!colegios) {
@@ -108,9 +120,9 @@ const UsuarioConfiguracion = () => {
 
   // Actualizar un campo específico del formulario
 
-  const submitEditarUsuario = (e) => {
-    e.preventDefault();
+  const submitEditarUsuario = async (e) => {
     // Aquí puedes enviar los cambios o realizar cualquier otra lógica
+    e.preventDefault();
 
     if ([nombreUsuario, grado, colegio, email].includes("")) {
       setAlertaUsuario(true);
@@ -125,17 +137,18 @@ const UsuarioConfiguracion = () => {
 
     const editado = {
       id,
-      nombres,
-      apellidos,
       nombreUsuario,
-      departamento,
-      municipio,
+      email,
       colegio,
       grado,
-      email,
+      nombres,
+      apellidos,
+      departamento,
+      municipio,
+      afiliado,
     };
 
-    updateUsuario(editado);
+    await updateUsuarioAdmin(editado);
     
     setAlertaUsuario(true);
     setAlertaContraseña(false);
@@ -161,7 +174,7 @@ const UsuarioConfiguracion = () => {
     });
   };
 
-  const handleEditarUsuario = (e) => {
+  const handleEditarUsuario = async (e) => {
     e.preventDefault();
 
     if ([password, nuevoPassword, repetirPassword].includes("")) {
@@ -210,7 +223,7 @@ const UsuarioConfiguracion = () => {
       password,
       nuevoPassword,
     };
-    updateUsuarioContraseña(editado);
+    await updateUsuarioContraseñaAdmin(editado);
     setAlertaContraseña(true);
     setAlertaUsuario(false);
   };
@@ -404,6 +417,22 @@ const UsuarioConfiguracion = () => {
                 ))}
               </select>
             </div>
+
+            <div className={styles.container}>
+              <img className={styles.icono} src={afiliadoImg} />
+              <select
+                value={afiliado}
+                onChange={(e) => setAfiliado(e.target.value)}
+                className={styles.input2}
+              >
+                <option className={styles.input2} value="">
+                  -- Selecciona un estado de Afiliado --
+                </option>
+                {ESTADO.map((opcion) => (
+                  <option key={opcion}>{opcion}</option>
+                ))}
+              </select>
+            </div>
             {msg && alertaUsuario && error === true && (
               <Alerta alerta={alerta} />
             )}
@@ -436,6 +465,7 @@ const UsuarioConfiguracion = () => {
                 className={styles.input}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                autoComplete="off"
               />
               <span
                 onClick={() => setMostrarPassword(!mostrarPassword)}
@@ -455,6 +485,7 @@ const UsuarioConfiguracion = () => {
                 className={styles.input}
                 value={nuevoPassword}
                 onChange={(e) => setNuevoPassword(e.target.value)}
+                autoComplete="off"
               />
               <span
                 onClick={() => setMostrarNuevoPassword(!mostrarNuevoPassword)}
@@ -474,6 +505,7 @@ const UsuarioConfiguracion = () => {
                 className={styles.input}
                 value={repetirPassword}
                 onChange={(e) => setRepetirPassword(e.target.value)}
+                autoComplete="off"
               />
               <span
                 onClick={() =>
@@ -501,4 +533,4 @@ const UsuarioConfiguracion = () => {
   );
 };
 
-export default UsuarioConfiguracion;
+export default AdminConfiguracion;

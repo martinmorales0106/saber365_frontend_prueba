@@ -12,6 +12,7 @@ import lecturaImg from "../../assets/lecturaImg.png";
 import socialesImg from "../../assets/socialesImg.png";
 import naturalesImg from "../../assets/naturalesImg.png";
 import inglesImg from "../../assets/inglesImg.png";
+import ciudadanaImg from "../../assets/ciudadanaImg.png";
 import nivelInsuficienteImg from "../../assets/nivelInsuficienteImg.png";
 import nivelMininimoImg from "../../assets/nivelMininimoImg.png";
 import nivelSatisfactorioImg from "../../assets/nivelSatisfactorioImg.png";
@@ -47,18 +48,22 @@ const Resultados = () => {
 
   useEffect(() => {
     const fetchSimulacroFinalizado2 = async () => {
-      await obtenerPosicionSimulacro(
-        simulacroFinalizado?.resultadoSimulacro?.id_simulacro,
+      if (
+        simulacroFinalizado?.resultadoSimulacro?.id_simulacro &&
         simulacroFinalizado?.resultadoSimulacro?.id_usuario
-      );
-      await obtenerPosicionPorArea(
-        simulacroFinalizado?.resultadoSimulacro?.id_simulacro,
-        simulacroFinalizado?.resultadoSimulacro?.id_usuario
-      );
+      ) {
+        await obtenerPosicionSimulacro(
+          simulacroFinalizado.resultadoSimulacro.id_simulacro,
+          simulacroFinalizado.resultadoSimulacro.id_usuario
+        );
+        await obtenerPosicionPorArea(
+          simulacroFinalizado.resultadoSimulacro.id_simulacro,
+          simulacroFinalizado.resultadoSimulacro.id_usuario
+        );
+      }
     };
     fetchSimulacroFinalizado2();
   }, [simulacroFinalizado]);
-
 
   const totalSegundos =
     simulacroFinalizado?.resultadoSimulacro?.simulacro.tiempo -
@@ -119,19 +124,19 @@ const Resultados = () => {
                   <div className={styles.informacionDatos}>
                     <p>
                       Grado:{" "}
-                      {simulacroFinalizado?.resultadoSimulacro?.usuario.grado}
+                      {simulacroFinalizado?.resultadoSimulacro?.simulacro.grado}
                     </p>
                   </div>
                 </div>
-                <div className={styles.datosUsuario}>
-                  <div className={styles.contenedorDatos}>
+                <div className={styles.datosUsuario2}>
+                  <div className={styles.contenedorDatos2}>
                     <div className={styles.contenedorIcono}>
                       <img
                         src={colegioResultadoImg}
                         className={styles.iconos}
                       />
                     </div>
-                    <h3>
+                    <h3 className={styles.tituloColegio}>
                       {simulacroFinalizado?.resultadoSimulacro?.usuario.colegio}
                     </h3>
                   </div>
@@ -171,7 +176,9 @@ const Resultados = () => {
                   </div>
                   <div className={styles.informacionDatos}>
                     <h1>
-                      {Math.ceil(simulacroFinalizado?.resultadoSimulacro?.puntaje_global)}
+                      {Math.ceil(
+                        simulacroFinalizado?.resultadoSimulacro?.puntaje_global
+                      )}
                       <span className={styles.puntajeGlobal}>/500</span>
                     </h1>
                   </div>
@@ -227,16 +234,22 @@ const Resultados = () => {
                         {area === "Matemáticas" && (
                           <img src={matematicasImg} className={styles.iconos} />
                         )}
-                        {area === "Lectura Critica" && (
+                        {area === "Lectura Crítica" && (
+                          <img src={lecturaImg} className={styles.iconos} />
+                        )}
+                        {area === "Lenguaje" && (
                           <img src={lecturaImg} className={styles.iconos} />
                         )}
                         {area === "Sociales" && (
                           <img src={socialesImg} className={styles.iconos} />
                         )}
+                        {area === "C. Ciudadanas" && (
+                          <img src={ciudadanaImg} className={styles.iconos} />
+                        )}
                         {area === "Naturales" && (
                           <img src={naturalesImg} className={styles.iconos} />
                         )}
-                        {area === "Ingles" && (
+                        {area === "Inglés" && (
                           <img src={inglesImg} className={styles.iconos} />
                         )}
                       </div>
@@ -291,6 +304,7 @@ const Resultados = () => {
                             nivel: nivelPorArea[area],
                             puesto: posicionPorArea[area],
                             area,
+                            grado: simulacroFinalizado?.resultadoSimulacro?.simulacro.grado
                           })
                         }
                       />
@@ -308,16 +322,23 @@ const Resultados = () => {
                       {area === "Matemáticas" && (
                         <img src={matematicasImg} className={styles.iconos} />
                       )}
-                      {area === "Lectura Critica" && (
+                      {area === "Lectura Crítica" && (
+                        <img src={lecturaImg} className={styles.iconos} />
+                      )}
+                      {area === "Lenguaje" && (
                         <img src={lecturaImg} className={styles.iconos} />
                       )}
                       {area === "Sociales" && (
                         <img src={socialesImg} className={styles.iconos} />
                       )}
+                      {area === "C. Ciudadanas" && (
+                        <img src={ciudadanaImg} className={styles.iconos} />
+                      )}
+
                       {area === "Naturales" && (
                         <img src={naturalesImg} className={styles.iconos} />
                       )}
-                      {area === "Ingles" && (
+                      {area === "Inglés" && (
                         <img src={inglesImg} className={styles.iconos} />
                       )}
                     </div>

@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react";
 
 import clienteAxios from "../config/clienteAxios";
 import PropTypes from "prop-types"; // Importa PropTypes
+import axios from 'axios'
 
 const AuthContext = createContext();
 
@@ -9,6 +10,37 @@ const AuthProvider = ({ children }) => {
   const storedUser = localStorage.getItem("authUser");
   const [auth, setAuth] = useState(storedUser ? JSON.parse(storedUser) : {});
   const [cargando, setCargando] = useState(true);
+  const [cargandoCol, setCargandoCol] = useState(true);
+  const [colegios, setColegios] = useState({});
+
+  console.log(auth);
+  
+  useEffect(() => {
+    const apiUrl = "https://www.datos.gov.co/resource/ea56-rtcx.json";
+    const appToken = "0mOA5CbJo9E2GsZwIAMYiqDA0";
+
+    const fetchColegios = async () => {
+      try {
+        const response = await axios.get(apiUrl, {
+          params: {
+            $$app_token: appToken,
+            $limit: 575403,
+          },
+        });
+        setColegios(response.data);
+        const timer = setTimeout(() => {
+          setCargandoCol(false);
+        }, 1000);
+
+        // Limpiar el temporizador cuando el componente se desmonte
+        return () => clearTimeout(timer);
+      } catch (error) {
+        console.log();(error);
+      }
+    };
+
+    fetchColegios();
+  }, []);
 
   useEffect(() => {
     const autenticarUsuario = async () => {
@@ -45,7 +77,7 @@ const AuthProvider = ({ children }) => {
       }
     };
     autenticarUsuario();
-  }, []);
+  }, [auth?.id]);
 
   const cerrarSesionAuth = () => {
     setAuth({});
@@ -59,6 +91,8 @@ const AuthProvider = ({ children }) => {
         setAuth,
         cargando,
         cerrarSesionAuth,
+        colegios,
+        cargandoCol,
       }}
     >
       {children}

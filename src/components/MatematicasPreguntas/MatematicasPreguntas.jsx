@@ -4,6 +4,7 @@ import adelanteImg from "../../assets/adelanteImg.png";
 import styles from "./MatematicasPreguntas.module.css";
 import useTabs from "../../hooks/useTabs";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
+import useAuth from "../../hooks/useAuth";
 
 const MatematicasPreguntas = () => {
   const { preguntasFiltradas } = usePerfilUsuario();
@@ -13,6 +14,8 @@ const MatematicasPreguntas = () => {
     handleSeleccionRespuesta,
     opcionesSeleccionadas,
   } = useTabs();
+
+  const { auth } = useAuth();
 
   const [imagenAmpliada, setImagenAmpliada] = useState(false);
 
@@ -37,8 +40,12 @@ const MatematicasPreguntas = () => {
 
   const pruebasiguiente = () => {
     if (preguntaLocal + 1 >= preguntasFiltradas.length) {
-      if (selectedTab === "Matemáticas") {
-        handleTabChange("Lectura Critica");
+      if (selectedTab === "Matemáticas" && (auth.grado === "Undécimo" || auth.grado === "Décimo")) {
+        handleTabChange("Lectura Crítica");
+      }
+
+      if (selectedTab === "Matemáticas" && auth.grado != "Undécimo" & auth.grado != "Décimo") {
+        handleTabChange("Lenguaje");
       }
     }
   };
@@ -49,7 +56,7 @@ const MatematicasPreguntas = () => {
   };
 
   const seleccionarPregunta = (numeroPregunta) => {
-    setPreguntaLocal(numeroPregunta - 1);
+    setPreguntaLocal(numeroPregunta);
     setImagenAmpliada(false);
   };
 
@@ -60,11 +67,11 @@ const MatematicasPreguntas = () => {
   const numerosPreguntas = preguntasFiltradas
     .sort((a, b) => a.numero - b.numero)
     .slice(inicio, fin)
-    .map((pregunta) =>  pregunta.numero);
+    .map((pregunta) => pregunta.numero);
 
   const isImageUrl = (url) => {
     return /\.(jpg|jpeg|png|gif)$/.test(url);
-  };
+  };  
 
   return (
     <div>
@@ -84,12 +91,12 @@ const MatematicasPreguntas = () => {
 
           <div className={styles.numeracion}>
             {/* Barra de navegación de preguntas */}
-            {numerosPreguntas.map((numero) => (
+            {numerosPreguntas.map((numero, index) => (
               <span
                 key={numero}
-                onClick={() => seleccionarPregunta(numero)}
+                onClick={() => seleccionarPregunta(index)}
                 className={`${styles.numero} ${
-                  preguntaLocal + 1 === numero ? styles.seleccionado : ""
+                  preguntaLocal  === index ? styles.seleccionado : ""
                 }`}
               >
                 {numero}{" "}
@@ -137,29 +144,28 @@ const MatematicasPreguntas = () => {
                   <p className={styles.pieTexto}>{pregunta.pie_texto}</p>
                 ) : null}
 
-                {pregunta.imagen &&
-                  Object.keys(pregunta.imagen).length > 0 && (
-                    <div
-                      className={styles.containerImg}
-                      onClick={() => setImagenAmpliada(!imagenAmpliada)}
-                    >
-                      {imagenAmpliada ? (
-                        <div className={styles.imagenAmpliadaContainer}>
-                          <img
-                            src={pregunta.imagen}
-                            className={styles.imagenAmpliada}
-                            alt="Imagen Ampliada"
-                          />
-                        </div>
-                      ) : (
+                {pregunta.imagen && Object.keys(pregunta.imagen).length > 0 && (
+                  <div
+                    className={styles.containerImg}
+                    onClick={() => setImagenAmpliada(!imagenAmpliada)}
+                  >
+                    {imagenAmpliada ? (
+                      <div className={styles.imagenAmpliadaContainer}>
                         <img
                           src={pregunta.imagen}
-                          className={styles.imagen}
-                          alt="Imagen Normal"
+                          className={styles.imagenAmpliada}
+                          alt="Imagen Ampliada"
                         />
-                      )}
-                    </div>
-                  )}
+                      </div>
+                    ) : (
+                      <img
+                        src={pregunta.imagen}
+                        className={styles.imagen}
+                        alt="Imagen Normal"
+                      />
+                    )}
+                  </div>
+                )}
 
                 {isImageUrl(pregunta.opcionA) && (
                   <h1 className={styles.fuente1}>Pregunta</h1>
@@ -236,9 +242,16 @@ const MatematicasPreguntas = () => {
                             name="opciones"
                             value="A"
                             onChange={(e) =>
-                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                              handleSeleccionRespuesta(
+                                e.target.value,
+                                pregunta.id,
+                                pregunta.numero,
+                                pregunta.area
+                              )
                             }
-                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "A"}
+                            checked={
+                              opcionesSeleccionadas[pregunta.id]?.opcion === "A"
+                            }
                           />
                           <span className={styles.letra}>A.</span>
                           {isImageUrl(pregunta.opcionA) ? (
@@ -259,9 +272,16 @@ const MatematicasPreguntas = () => {
                             name="opciones"
                             value="B"
                             onChange={(e) =>
-                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                              handleSeleccionRespuesta(
+                                e.target.value,
+                                pregunta.id,
+                                pregunta.numero,
+                                pregunta.area
+                              )
                             }
-                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "B"}
+                            checked={
+                              opcionesSeleccionadas[pregunta.id]?.opcion === "B"
+                            }
                           />
                           <span className={styles.letra}>B.</span>
                           {isImageUrl(pregunta.opcionB) ? (
@@ -284,9 +304,16 @@ const MatematicasPreguntas = () => {
                             name="opciones"
                             value="C"
                             onChange={(e) =>
-                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                              handleSeleccionRespuesta(
+                                e.target.value,
+                                pregunta.id,
+                                pregunta.numero,
+                                pregunta.area
+                              )
                             }
-                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "C"}
+                            checked={
+                              opcionesSeleccionadas[pregunta.id]?.opcion === "C"
+                            }
                           />
                           <span className={styles.letra}>C.</span>
                           {isImageUrl(pregunta.opcionC) ? (
@@ -307,9 +334,16 @@ const MatematicasPreguntas = () => {
                             name="opciones"
                             value="D"
                             onChange={(e) =>
-                              handleSeleccionRespuesta(e.target.value, pregunta.id, pregunta.numero, pregunta.area)
+                              handleSeleccionRespuesta(
+                                e.target.value,
+                                pregunta.id,
+                                pregunta.numero,
+                                pregunta.area
+                              )
                             }
-                            checked={opcionesSeleccionadas[pregunta.id]?.opcion === "D"}
+                            checked={
+                              opcionesSeleccionadas[pregunta.id]?.opcion === "D"
+                            }
                           />
                           <span className={styles.letra}>D.</span>
                           {isImageUrl(pregunta.opcionD) ? (
@@ -347,7 +381,7 @@ const MatematicasPreguntas = () => {
                     style={{
                       display:
                         preguntaLocal + 1 >= preguntasFiltradas.length &&
-                        selectedTab !== "Ingles"
+                        selectedTab !== "Inglés"
                           ? "block"
                           : "none",
                     }}

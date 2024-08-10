@@ -106,3 +106,7 @@
 .listaHabilidades{
   font-weight: 400;
 }
+
+.listaHabilidades li{
+  margin-bottom: 0.5rem;
+}

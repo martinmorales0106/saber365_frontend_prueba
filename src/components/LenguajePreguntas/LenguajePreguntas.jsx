@@ -1,22 +1,39 @@
 import { useEffect, useState } from "react";
 import atrasImg from "../../assets/atrasImg.png";
 import adelanteImg from "../../assets/adelanteImg.png";
+import styles from "./LenguajePreguntas.module.css";
 import useTabs from "../../hooks/useTabs";
-import styles from "./SocialesPreguntas.module.css";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
-const SocialesPreguntas = () => {
-  const { preguntasFiltradas } = usePerfilUsuario();
+const LenguajePreguntas = () => {
+  const {
+    preguntasFiltradas,
+    preguntasSimulacro,
+    submitPreguntas,
+    simulacroId,
+    simulacrosUsuario,
+  } = usePerfilUsuario();
+
+  const simulacroEncontrado = simulacrosUsuario.find(
+    (simulacro) => simulacro.id === parseInt(simulacroId, 10)
+  );
+
   const {
     selectedTab,
     handleTabChange,
     handleSeleccionRespuesta,
     opcionesSeleccionadas,
+    setOpcionesSeleccionadas,
+    setTiempoAgotado,
   } = useTabs();
+
+  const { auth } = useAuth();
 
   const [imagenAmpliada, setImagenAmpliada] = useState(false);
 
-  const preguntaActualGuardada = localStorage.getItem("socialesPregunta");
+  const preguntaActualGuardada = localStorage.getItem("lenguajePregunta");
   const preguntaInicial = preguntaActualGuardada
     ? parseInt(preguntaActualGuardada, 10)
     : 0;
@@ -25,7 +42,7 @@ const SocialesPreguntas = () => {
 
   useEffect(() => {
     // Guardar la pregunta actual en el localStorage
-    localStorage.setItem("socialesPregunta", preguntaLocal.toString());
+    localStorage.setItem("lenguajePregunta", preguntaLocal.toString());
   }, [preguntaLocal]);
 
   const numerosPorPagina = 10;
@@ -35,10 +52,93 @@ const SocialesPreguntas = () => {
     setImagenAmpliada(false);
   };
 
+  const handleSubmit2 = async (e) => {
+    e.preventDefault();
+    // Verificar que todas las preguntas estén marcadas
+    const preguntasSinMarcar = preguntasSimulacro.filter(
+      (pregunta) => !opcionesSeleccionadas[pregunta.id]
+    );
+
+    if (preguntasSinMarcar.length > 0) {
+      // Al menos una pregunta no está marcada
+      Swal.fire({
+        title: "Preguntas sin marcar",
+        html: `
+            <div style="text-align: left;">
+              <p>Las siguientes preguntas no están marcadas:</p>
+              <ul>
+                ${preguntasSinMarcar
+                  .map(
+                    (pregunta) =>
+                      `<li>Pregunta: ${pregunta.numero}, Área: ${pregunta.area}</li>`
+                  )
+                  .join("")}
+              </ul>
+              <p style="margin-top: 20px; font-weight: bold;">Para enviar las respuestas, todas las preguntas deben estar marcadas.</p>
+            </div>
+          `,
+        icon: "warning",
+        confirmButtonText: "Aceptar",
+        didOpen: () => {
+          const confirmButton = Swal.getConfirmButton();
+          confirmButton.style.backgroundColor = "#0f3861";
+          confirmButton.style.color = "#ffffff";
+        },
+      });
+    } else {
+      const resultados = preguntasSimulacro.map((pregunta) => {
+        const idPregunta = pregunta.id;
+        const numero = pregunta.numero;
+        const area = pregunta.area;
+        const sesion = pregunta.sesion;
+        const respuestaCorrecta = pregunta.respuesta_correcta;
+        const respuestaUsuario = opcionesSeleccionadas[idPregunta];
+        const esRespuestaCorrecta =
+          respuestaUsuario?.opcion === respuestaCorrecta;
+        return {
+          idPregunta,
+          numero,
+          area,
+          sesion,
+          respuestaCorrecta,
+          respuestaUsuario,
+          esCorrecta: esRespuestaCorrecta,
+        };
+      });
+
+      const tiempo = Number(
+        localStorage.getItem(`contadorSegundos${simulacroEncontrado.titulo}`)
+      );
+
+      await submitPreguntas({
+        id_usuario: auth.id,
+        id_simulacro: preguntasSimulacro[0].id_simulacro,
+        estado_preguntas_sesion1: resultados,
+        estado_preguntas_sesion2: null,
+        tiempo_prueba_sesion1: tiempo,
+        tiempo_prueba_sesion2: null,
+        numero_sesion: simulacroEncontrado.numero_sesiones,
+      });
+
+      setOpcionesSeleccionadas("");
+      setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
+      handleTabChange("Matemáticas");
+      localStorage.setItem("inglesPregunta", "0");
+      localStorage.setItem("lecturaPregunta", "0");
+      localStorage.setItem("matemáticasPregunta", "0");
+      localStorage.setItem("naturalesPregunta", "0");
+      localStorage.setItem("socialesPregunta", "0");
+      localStorage.setItem("lenguajePregunta", "0");
+      localStorage.setItem("ciudadanasPregunta", "0");
+      localStorage.removeItem(`contadorSegundos${simulacroEncontrado.titulo}`);
+    }
+    setTiempoAgotado(true);
+  };
+
   const pruebasiguiente = () => {
     if (preguntaLocal + 1 >= preguntasFiltradas.length) {
-      if (selectedTab === "Sociales") {
-        handleTabChange("Naturales");
+      if (selectedTab === "Lenguaje") {
+        handleTabChange("C. Ciudadanas");
       }
     }
   };
@@ -209,7 +309,7 @@ const SocialesPreguntas = () => {
                 </div>
               ) : null}
               <h1>Respuestas</h1>
-              <form>
+              <form onSubmit={handleSubmit2}>
                 <div className={styles.opcionesRespuestasContainer}>
                   <div
                     className={`${
@@ -362,19 +462,38 @@ const SocialesPreguntas = () => {
                             : "block",
                       }}
                     />
-                    <input
-                      type="button"
-                      value="Siguiente Prueba"
-                      className={styles.boton3}
-                      onClick={pruebasiguiente}
-                      style={{
-                        display:
-                          preguntaLocal + 1 >= preguntasFiltradas.length &&
-                          selectedTab !== "Inglés"
-                            ? "block"
-                            : "none",
-                      }}
-                    />
+                    {auth.grado === "Tercero" || auth.grado === "Cuarto" ? (
+                      <>
+                        <input
+                          type="submit"
+                          value="Finalizar Prueba"
+                          className={styles.boton3}
+                          style={{
+                            display:
+                              preguntaLocal + 1 >= numerosPreguntas.length &&
+                              selectedTab === "Lenguaje"
+                                ? "block"
+                                : "none",
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="button"
+                          value="Siguiente Prueba"
+                          className={styles.boton3}
+                          onClick={pruebasiguiente}
+                          style={{
+                            display:
+                              preguntaLocal + 1 >= preguntasFiltradas.length &&
+                              selectedTab !== "Inglés"
+                                ? "block"
+                                : "none",
+                          }}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </form>
@@ -385,4 +504,4 @@ const SocialesPreguntas = () => {
   );
 };
 
-export default SocialesPreguntas;
+export default LenguajePreguntas;

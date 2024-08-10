@@ -31,16 +31,35 @@
 .contenedorDatosUsuarios {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  
 }
 
 .datosUsuario {
   padding: 1rem;
+
+}
+
+.datosUsuario2 {
+  padding: 1rem;
+  width: 40%;
+  align-items: flex-start;
+  
 }
 
 .contenedorDatos {
   display: flex;
+  justify-content: space-around;
+}
+.contenedorDatos2 {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
+.tituloColegio {
+  width: 70%;
+}
 .contenedorIcono {
   display: flex;
   align-items: center;

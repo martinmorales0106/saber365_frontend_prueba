@@ -37,7 +37,7 @@ const LecturaCriticaPreguntas = () => {
 
   const pruebasiguiente = () => {
     if (preguntaLocal + 1 >= preguntasFiltradas.length) {
-      if (selectedTab === "Lectura Critica") {
+      if (selectedTab === "Lectura Crítica") {
         handleTabChange("Sociales");
       }
     }
@@ -49,7 +49,7 @@ const LecturaCriticaPreguntas = () => {
   };
 
   const seleccionarPregunta = (numeroPregunta) => {
-    setPreguntaLocal(numeroPregunta - 1);
+    setPreguntaLocal(numeroPregunta);
     setImagenAmpliada(false);
   };
 
@@ -60,7 +60,7 @@ const LecturaCriticaPreguntas = () => {
   const numerosPreguntas = preguntasFiltradas
     .sort((a, b) => a.numero - b.numero)
     .slice(inicio, fin)
-    .map((pregunta) =>  pregunta.numero);
+    .map((pregunta) => pregunta.numero);
 
   const isImageUrl = (url) => {
     return /\.(jpg|jpeg|png|gif)$/.test(url);
@@ -84,12 +84,12 @@ const LecturaCriticaPreguntas = () => {
 
           <div className={styles.numeracion}>
             {/* Barra de navegación de preguntas */}
-            {numerosPreguntas.map((numero) => (
+            {numerosPreguntas.map((numero, index) => (
               <span
                 key={numero}
-                onClick={() => seleccionarPregunta(numero)}
+                onClick={() => seleccionarPregunta(index)}
                 className={`${styles.numero} ${
-                  preguntaLocal + 1 === numero ? styles.seleccionado : ""
+                  preguntaLocal === index ? styles.seleccionado : ""
                 }`}
               >
                 {numero}{" "}
@@ -370,7 +370,7 @@ const LecturaCriticaPreguntas = () => {
                       style={{
                         display:
                           preguntaLocal + 1 >= preguntasFiltradas.length &&
-                          selectedTab !== "Ingles"
+                          selectedTab !== "Inglés"
                             ? "block"
                             : "none",
                       }}

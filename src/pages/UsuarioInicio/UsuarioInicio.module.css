@@ -277,16 +277,39 @@
 
 .desempeño {
   margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  padding: 1rem;
+}
+.areaItem {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .grafico {
   width: 100%;
-  background-color: #eef1f1;
+  background-color: #ffffff;
   margin-bottom: 2rem;
   border-radius: 5rem;
 }
 
 .h2MejorePuntajes {
   margin-top: 1rem;
+}
+
+.chartContainer {
+  width: 100%;
+  height: 400px; /* Ajusta la altura según tus necesidades */
+}
+
+@media (max-width: 768px) {
+  .chartContainer {
+    height: 300px; /* Ajusta la altura para pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .chartContainer {
+    height: 200px; /* Ajusta la altura para pantallas aún más pequeñas */
+  }
 }

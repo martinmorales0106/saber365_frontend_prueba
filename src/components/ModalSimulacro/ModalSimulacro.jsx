@@ -6,7 +6,7 @@ import Alerta from "../Alerta/Alerta";
 import cerrarImg from "../../assets/cerrarImg.png";
 
 const GRADO = ["Tercero","Cuarto","Quinto","Sexto","Séptimo","Octavo", "Noveno","Décimo", "Undécimo"];
-const ACTIVO = ["TRUE", "FALSE"];
+const ACTIVO = ["true", "false"];
 
 const ModalSimulacro = () => {
   const {
@@ -33,6 +33,7 @@ const ModalSimulacro = () => {
   const [activo, setActivo] = useState("");
   const [loading, setLoading] = useState(false);
 
+  console.log(simulacrop.activo);
   useEffect(() => {
     if (simulacrop?.id) {
       setId(simulacrop.id);
@@ -45,7 +46,7 @@ const ModalSimulacro = () => {
       setNumero_sesiones(simulacrop.numero_sesiones);
       setPuntaje_maximo(simulacrop.puntaje_maximo);
       setPrecio(simulacrop.precio);
-      setActivo(simulacrop.activo.toString());
+      setActivo(simulacrop.activo);
       setTiempo2(simulacrop.tiempo2);
       setCantidad_preguntas2(simulacrop.cantidad_preguntas2)
 

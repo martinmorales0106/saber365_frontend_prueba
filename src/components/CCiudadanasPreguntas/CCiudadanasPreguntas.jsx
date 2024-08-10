@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import atrasImg from "../../assets/atrasImg.png";
 import adelanteImg from "../../assets/adelanteImg.png";
 import useTabs from "../../hooks/useTabs";
-import styles from "./SocialesPreguntas.module.css";
+import styles from "./CCiudadanasPreguntas.module.css";
 import usePerfilUsuario from "../../hooks/usePerfiUsuario";
 
-const SocialesPreguntas = () => {
+const CCiudadanasPreguntas = () => {
   const { preguntasFiltradas } = usePerfilUsuario();
   const {
     selectedTab,
@@ -16,7 +16,7 @@ const SocialesPreguntas = () => {
 
   const [imagenAmpliada, setImagenAmpliada] = useState(false);
 
-  const preguntaActualGuardada = localStorage.getItem("socialesPregunta");
+  const preguntaActualGuardada = localStorage.getItem("ciudadanasPregunta");
   const preguntaInicial = preguntaActualGuardada
     ? parseInt(preguntaActualGuardada, 10)
     : 0;
@@ -25,7 +25,7 @@ const SocialesPreguntas = () => {
 
   useEffect(() => {
     // Guardar la pregunta actual en el localStorage
-    localStorage.setItem("socialesPregunta", preguntaLocal.toString());
+    localStorage.setItem("ciudadanasPregunta", preguntaLocal.toString());
   }, [preguntaLocal]);
 
   const numerosPorPagina = 10;
@@ -37,7 +37,7 @@ const SocialesPreguntas = () => {
 
   const pruebasiguiente = () => {
     if (preguntaLocal + 1 >= preguntasFiltradas.length) {
-      if (selectedTab === "Sociales") {
+      if (selectedTab === "C. Ciudadanas") {
         handleTabChange("Naturales");
       }
     }
@@ -385,4 +385,4 @@ const SocialesPreguntas = () => {
   );
 };
 
-export default SocialesPreguntas;
+export default CCiudadanasPreguntas;

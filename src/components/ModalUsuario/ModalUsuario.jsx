@@ -5,6 +5,8 @@ import useUsuario from "../../hooks/useUsuario";
 import Alerta from "../Alerta/Alerta";
 import cerrarImg from "../../assets/cerrarImg.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import Loading from "../Loading/Loading";
 
 const ADMIN = ["TRUE", "FALSE"];
 const AFILIADO = ["TRUE", "FALSE"];
@@ -22,6 +24,7 @@ const GRADO = [
 ];
 
 const ModalUsuario = () => {
+  const { colegios } = useAuth();
   const {
     modalUsuario,
     handleModalUsuario,
@@ -35,6 +38,8 @@ const ModalUsuario = () => {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [email, setEmail] = useState("");
   const [colegio, setColegio] = useState("");
+  const [departamento, setDepartamento] = useState("");
+  const [municipio, setMunicipio] = useState("");
   const [grado, setGrado] = useState("");
   const [password, setPassword] = useState("");
   const [admin, setAdmin] = useState("");
@@ -45,8 +50,7 @@ const ModalUsuario = () => {
 
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [mostrarRepetirPassword, setMostrarRepetirPassword] = useState(false);
-
-  console.log(afiliado);
+  const [isNewSchool, setIsNewSchool] = useState(false);
 
   useEffect(() => {
     if (usuariop?.id) {
@@ -60,6 +64,8 @@ const ModalUsuario = () => {
       setNombres(usuariop.nombres);
       setApellidos(usuariop.apellidos);
       setAfiliado(usuariop.afiliado);
+      setDepartamento(usuariop.departamento);
+      setMunicipio(usuariop.municipio);
       return;
     }
     setId("");
@@ -72,7 +78,39 @@ const ModalUsuario = () => {
     setAfiliado("");
     setNombres("");
     setApellidos("");
+    setDepartamento("");
+    setMunicipio("");
   }, [usuariop]);
+
+  if (!colegios) {
+    return <Loading />;
+  }
+
+  const nombresDepartamentos = Array.from(
+    new Set(
+      Object.keys(colegios).map((key) => colegios[key].nombredepartamento)
+    )
+  ).sort();
+
+  const nombresMunicipios = Array.from(
+    new Set(
+      Object.keys(colegios)
+        .filter((key) => colegios[key].nombredepartamento === departamento)
+        .map((key) => colegios[key].nombremunicipio)
+    )
+  ).sort();
+
+  const nombresColegios = Array.from(
+    new Set(
+      Object.keys(colegios)
+        .filter(
+          (key) =>
+            colegios[key].nombredepartamento === departamento &&
+            colegios[key].nombremunicipio === municipio
+        )
+        .map((key) => colegios[key].nombreestablecimiento)
+    )
+  ).sort();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -127,6 +165,8 @@ const ModalUsuario = () => {
         nombres,
         apellidos,
         afiliado,
+        departamento,
+        municipio,
       });
     } else {
       await submitUsuario({
@@ -139,8 +179,14 @@ const ModalUsuario = () => {
         nombres,
         apellidos,
         afiliado,
+        departamento,
+        municipio,
       });
     }
+  };
+
+  const handleCheckboxChange = () => {
+    setIsNewSchool(!isNewSchool);
   };
 
   const { msg } = alerta;
@@ -217,15 +263,76 @@ const ModalUsuario = () => {
                   />
                 </div>
                 <div className={styles.inputContainer}>
-                  <label className={styles.label}>Colegio:</label>
-                  <input
-                    type="text"
-                    value={colegio}
-                    onChange={(e) => setColegio(e.target.value)}
-                    className={styles.input}
-                    autoComplete="off"
-                  />
+                  <label className={styles.label}>Departamento</label>
+                  <select
+                    value={departamento}
+                    onChange={(e) => setDepartamento(e.target.value)}
+                    className={styles.select}
+                  >
+                    <option value="">-- Selecciona un departamento --</option>
+                    {nombresDepartamentos.map((dep, index) => (
+                      <option key={index} value={dep}>
+                        {dep}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+                <div className={styles.inputContainer}>
+                  <label className={styles.label}>Municipio</label>
+                  <select
+                    value={municipio}
+                    onChange={(e) => setMunicipio(e.target.value)}
+                    className={styles.select}
+                  >
+                    <option value="">-- Selecciona un municipio --</option>
+                    {nombresMunicipios.map((mun, index) => (
+                      <option key={index} value={mun}>
+                        {mun}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {!isNewSchool && (
+                  <div className={styles.inputContainer}>
+                    <label className={styles.label}>Colegio</label>
+                    <select
+                      value={colegio}
+                      onChange={(e) => setColegio(e.target.value)}
+                      className={styles.select}
+                    >
+                      <option value="">-- Selecciona un colegio --</option>
+                      {nombresColegios.map((col, index) => (
+                        <option key={index} value={col}>
+                          {col}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
+                <div className={styles.checkboxContainer}>
+                  <input
+                    type="checkbox"
+                    id="addNewSchool"
+                    checked={isNewSchool}
+                    onChange={handleCheckboxChange}
+                  />
+                  <label htmlFor="addNewSchool">
+                    El colegio no está en la lista
+                  </label>
+                </div>
+                {isNewSchool && (
+                  <div className={styles.inputContainer}>
+                  <label className={styles.label}>Colegio</label>
+                    <input
+                      type="text"
+                      value={colegio}
+                      onChange={(e) => setColegio(e.target.value)}
+                      placeholder="Nombre del colegio"
+                      className={styles.input}
+                    />
+                  </div>
+                )}
                 <div className={styles.inputContainer}>
                   <label className={styles.label}>Grado</label>
                   <select
@@ -317,7 +424,7 @@ const ModalUsuario = () => {
                     ))}
                   </select>
                 </div>
-                
+
                 {msg && <Alerta alerta={alerta} />}
                 <input
                   type="submit"

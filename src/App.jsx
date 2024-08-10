@@ -32,6 +32,8 @@ import PreguntasLayout from "./layouts/PreguntasLayout/PreguntasLayout";
 import UsuarioConfiguracion from "./pages/UsuarioConfiguracion/UsuarioConfiguracion";
 import OlvidePassword from "./pages/OlvidePassword/OlvidePassword";
 import NuevoPassword from "./pages/NuevoPassword/NuevoPassword";
+import AdminConfiguracion from "./pages/AdminConfiguracion/AdminConfiguracion";
+import AdminInicio from "./pages/AdminInicio/AdminInicio";
 
 function App() {
   return (
@@ -106,7 +108,7 @@ function App() {
                     </Route>
 
                     <Route path="/admin" element={<PerfilAdmin />}>
-                      <Route index element={<UsuarioInicio />} />
+                      <Route index element={<AdminInicio />} />
                       <Route path="usuarios" element={<AdminUsuarios />} />
                       <Route
                         path="usuarios/usuarios-eliminados"
@@ -124,7 +126,7 @@ function App() {
                       />
                       <Route
                         path="perfil"
-                        element={<UsuarioConfiguracion />}
+                        element={<AdminConfiguracion />}
                       />
                     </Route>
                   </Routes>

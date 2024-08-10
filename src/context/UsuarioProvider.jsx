@@ -244,6 +244,77 @@ const UsuarioProvider = ({ children }) => {
     setModalUsuario(true);
   };
 
+  const updateUsuarioAdmin = async (usuario) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      
+      const { data } = await clienteAxios.put(
+        `/admin/editar-usuario-configuracion/${usuario.id}`,
+        usuario,
+        config
+      );
+      
+      setAuth(data.usuario);
+      localStorage.setItem("authUser", JSON.stringify(data.usuario));
+
+      mostrarAlerta({
+        msg: data.msg,
+        error: false,
+      });
+
+      Swal.fire("Editado!", "El usuario se modificó correctamente.", "success");
+    } catch (error) {
+      mostrarAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
+  };
+
+  const updateUsuarioContraseñaAdmin = async (usuario) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.put(
+        `/admin/editar-usuario-contrasena/${usuario.id}`,
+        usuario,
+        config
+      );
+
+      console.log(data);
+      mostrarAlerta({
+        msg: data.msg,
+        error: false,
+      });
+
+      Swal.fire(
+        "Editado!",
+        "La Contraseña se modificó correctamente.",
+        "success"
+      );
+    } catch (error) {
+      mostrarAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
+  };
   return (
     <UsuarioContext.Provider
       value={{
@@ -260,6 +331,8 @@ const UsuarioProvider = ({ children }) => {
         eliminarUsuario,
         recuperarUsuario,
         editarUsuario,
+        updateUsuarioAdmin,
+        updateUsuarioContraseñaAdmin,
       }}
     >
       {children}

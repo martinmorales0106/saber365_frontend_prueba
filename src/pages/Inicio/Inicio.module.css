@@ -1,46 +1,81 @@
 .fondo1 {
-    background-color: #0f3861;
-    padding: 1%;
-    padding-top: 2rem;
-    display: flex;
-    justify-content:space-around;
+  background-color: #0f3861;
+  padding: 1%;
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-around;
 }
 
 .encabezado {
-    width: 50%;
-    text-align: center;
+  width: 50%;
+  text-align: center;
 }
 
 .titulo {
-    padding: 1rem;
-    color: white;
-    font-family:'Roboto', sans-serif;
-    font-size: 2rem;
+  padding: 1rem;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 2rem;
 }
 
 .parrafos {
-    color: white;
-    padding: 2rem;
-    font-size: 1.3rem;
-    font-family:'Roboto', sans-serif;
+  color: white;
+  padding: 2rem;
+  font-size: 1.3rem;
+  font-family: "Roboto", sans-serif;
 }
 
 .boton1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 2rem;
 }
 
-.container_imagen1 {
-    width: 40%;
-    text-align: center;
-}
 
 .imagen1 {
-    width: 30rem;
+  width: 30rem;
 }
 
 .link {
-    text-decoration: none;
-  }
+  text-decoration: none;
+}
+
+.titulo2 {
+  padding: 2rem;
+  color: #001f3f;
+  text-align: center;
+}
+
+.container_imagen1 {
+  width: 100%;
+  text-align: center;
+}
+
+.parrafos {
+  color: white;
+  padding: 2rem;
+  font-size: 1.3rem;
+}
+
+
+.container2 {
+  display: flex;
+}
+
+.info {
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  color: #001f3f;
+}
+
+.parrafos2 {
+  padding-top: 0.5rem;
+  line-height: 1.5;
+}
+.icono {
+  width: 8rem;
+  height: 7rem;
+}
+

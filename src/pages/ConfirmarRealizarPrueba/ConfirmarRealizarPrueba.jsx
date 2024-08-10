@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import styles from "./ConfirmarRealizarPrueba.module.css";
 import sesionGratis from "../../assets/sesionGratis.png";
 import sesionGratis10 from "../../assets/sesionGratis10.png";
@@ -21,6 +21,7 @@ import { FormatearTiempo } from "../../helpers/FormatearTiempo";
 const ConfirmarRealizarPrueba = () => {
   const { id } = useParams();
   const { simulacrosUsuario, setSimulacroId } = usePerfilUsuario();
+  const navigate = useNavigate(); // Hook de redirección
 
   useEffect(() => {
     setSimulacroId(id); // Ahora se actualiza después del renderizado
@@ -33,6 +34,12 @@ const ConfirmarRealizarPrueba = () => {
   // Si el simulacro no se ha encontrado, mostrar un mensaje adecuado
   if (!simulacroEncontrado) {
     return <Loading />;
+  }
+
+  // Verificar si el simulacro está activo, si no, redirigir
+  if (!simulacroEncontrado.activo) {
+    navigate("/usuario/pruebas");
+    return null;
   }
   
   return (

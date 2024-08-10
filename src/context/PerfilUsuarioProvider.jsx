@@ -198,8 +198,10 @@ const PerfilUsuarioProvider = ({ children }) => {
     localStorage.setItem("matemáticasPregunta", "0");
     localStorage.setItem("naturalesPregunta", "0");
     localStorage.setItem("socialesPregunta", "0");
+    localStorage.setItem("lenguajePregunta", "0");
+    localStorage.setItem("ciudadanasPregunta", "0");
     localStorage.setItem("selectedTab", "Matemáticas");
-    
+
     navigate(`/usuario/finalizar-sesion/${data.id}`);
   };
 
@@ -505,6 +507,7 @@ const PerfilUsuarioProvider = ({ children }) => {
       );
 
       setAuth(data.usuario);
+      localStorage.setItem("authUser", JSON.stringify(data.usuario));
 
       mostrarAlerta({
         msg: data.msg,
@@ -538,7 +541,6 @@ const PerfilUsuarioProvider = ({ children }) => {
         config
       );
 
-      console.log(data);
       mostrarAlerta({
         msg: data.msg,
         error: false,

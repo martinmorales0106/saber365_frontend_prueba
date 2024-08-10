@@ -23,6 +23,7 @@ import lecturaImg from "../../assets/lecturaImg.png";
 import socialesImg from "../../assets/socialesImg.png";
 import naturalesImg from "../../assets/naturalesImg.png";
 import inglesImg from "../../assets/inglesImg.png";
+import ciudadanaImg from "../../assets/ciudadanaImg.png";
 import NoResultado from "../../components/NoResultado/NoResultado";
 
 // Registrar los componentes de Chart.js
@@ -37,15 +38,56 @@ ChartJS.register(
   Legend
 );
 
+const groupByGrade = (simulacros) => {
+  return simulacros.reduce((acc, simulacro) => {
+    const grade = simulacro.simulacro.grado;
+    if (!acc[grade]) {
+      acc[grade] = [];
+    }
+    acc[grade].push(simulacro);
+    return acc;
+  }, {});
+};
+
 const barChart = (simulacrosCompletados) => {
   // Preparar los datos para Chart.js
-  const etiquetas = [
-    "Ingles",
-    "Lectura Critica",
-    "Matemáticas",
-    "Naturales",
-    "Sociales",
-  ];
+  let etiquetas = [];
+  const grado = simulacrosCompletados?.[0]?.simulacro?.grado;
+
+  switch (grado) {
+    case "Undécimo":
+    case "Décimo":
+      etiquetas = [
+        "Inglés",
+        "Lectura Crítica",
+        "Matemáticas",
+        "Naturales",
+        "Sociales",
+      ];
+      break;
+    case "Noveno":
+      etiquetas = [
+        "Inglés",
+        "Lenguaje",
+        "Matemáticas",
+        "Naturales",
+        "C. Ciudadanas",
+      ];
+      break;
+    case "Octavo":
+    case "Séptimo":
+    case "Sexto":
+    case "Quinto":
+      etiquetas = ["Lenguaje", "Matemáticas", "Naturales", "C. Ciudadanas"];
+      break;
+    case "Cuarto":
+    case "Tercero":
+      etiquetas = ["Lenguaje", "Matemáticas"];
+      break;
+    default:
+      etiquetas = [];
+  }
+
   const datasets = simulacrosCompletados.map((simulacro, index) => {
     return {
       label: `${simulacro.simulacro.titulo}`,
@@ -124,6 +166,8 @@ const UsuarioInicio = () => {
   const { topPuntajeGlobal, topPuntajePorArea, simulacrosCompletados } =
     usePerfilUsuario();
 
+  const groupedSimulacros = groupByGrade(simulacrosCompletados);
+
   simulacrosCompletados.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
@@ -142,19 +186,24 @@ const UsuarioInicio = () => {
     switch (area) {
       case "Matemáticas":
         return matematicasImg;
-      case "Lectura Critica":
+      case "Lectura Crítica":
+        return lecturaImg;
+      case "Lenguaje":
         return lecturaImg;
       case "Sociales":
         return socialesImg;
+      case "C. Ciudadanas":
+        return ciudadanaImg;
       case "Naturales":
         return naturalesImg;
-      case "Ingles":
+      case "Inglés":
         return inglesImg;
       default:
         return null;
     }
   };
 
+  console.log(topPuntajePorArea);
   return (
     <div className={styles.fondo}>
       <div className={styles.container}>
@@ -174,12 +223,17 @@ const UsuarioInicio = () => {
             <img src={bannerUsuarioImg} />
           </div>
           {simulacrosCompletados.length > 0 && (
-            <h2 className={styles.desempeño}>Desempeño por Simulacro</h2>
+            <h3 className={styles.desempeño}>Desempeño por Simulacro</h3>
           )}
           {simulacrosCompletados.length > 0 ? (
-            <div className={styles.grafico}>
-              {barChart(simulacrosCompletados)}
-            </div>
+            <>
+              {Object.keys(groupedSimulacros).map((grade) => (
+                <div key={grade} className={styles.grafico}>
+                  <h4>Grado: {grade}</h4>
+                  {barChart(groupedSimulacros[grade])}
+                </div>
+              ))}
+            </>
           ) : (
             <NoResultado
               text="El usuario no ha realizado ningún simulacro."
@@ -188,7 +242,7 @@ const UsuarioInicio = () => {
             />
           )}
           {topPuntajeGlobal.mejoresPuntajesGlobales.length > 0 && (
-            <h2 className={styles.h2MejorePuntajes}>Top mejores puntajes</h2>
+            <h3 className={styles.h2MejorePuntajes}>Top mejores puntajes</h3>
           )}
           <div className={styles.contenedorTop}>
             <div className={styles.topEstudiantes}>
@@ -271,20 +325,29 @@ const UsuarioInicio = () => {
               {topPuntajePorArea["Matemáticas"].mejoresPuntajesPorArea.length >
               0 ? (
                 <div className={styles.areasContainer}>
-                  {Object.keys(topPuntajePorArea).map((area, index) => (
-                    <div key={index} className={styles.areaItem}>
-                      <div className={styles.contenedorlogo}>
-                        <img
-                          src={getAreaImage(area)}
-                          alt={`${area} logo`}
-                          className={styles.areaImg}
-                        />
-                        <h4 className={styles.area}>{area}</h4>
-                      </div>
-                      <div className={styles.areaPuntajes}>
-                        <ul className={styles.listaMejoresPuntajes}>
-                          {topPuntajePorArea[area]?.mejoresPuntajesPorArea?.map(
-                            (puntaje, index) => (
+                  {Object.keys(topPuntajePorArea).map((area, index) => {
+                    const areaData = topPuntajePorArea[area];
+                    if (
+                      !areaData.mayorPuntajeUsuario &&
+                      areaData.mejoresPuntajesPorArea.length === 0
+                    ) {
+                      return null;
+                    }
+                    return (
+                      <div key={index} className={styles.areaItem}>
+                        <div className={styles.contenedorlogo}>
+                          <img
+                            src={getAreaImage(area)}
+                            alt={`${area} logo`}
+                            className={styles.areaImg}
+                          />
+                          <h4 className={styles.area}>{area}</h4>
+                        </div>
+                        <div className={styles.areaPuntajes}>
+                          <ul className={styles.listaMejoresPuntajes}>
+                            {topPuntajePorArea[
+                              area
+                            ]?.mejoresPuntajesPorArea?.map((puntaje, index) => (
                               <li
                                 key={index}
                                 className={`${styles.itemPuntaje} ${
@@ -298,7 +361,7 @@ const UsuarioInicio = () => {
                                     {puntaje.nombreUsuario}
                                   </span>
                                   <span className={styles.grado}>
-                                    {(puntaje.grado)}
+                                    {puntaje.grado}
                                   </span>
                                 </div>
                                 <div className={styles.usuarioInfo}>
@@ -312,18 +375,18 @@ const UsuarioInicio = () => {
                                   </span>
                                 </div>
                               </li>
-                            )
-                          )}
-                        </ul>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : null}
             </div>
           </div>
           {simulacrosMasRecientes.length > 0 && (
-            <h2>Últimos simulacros realizados</h2>
+            <h3>Últimos simulacros realizados</h3>
           )}
           <div className={styles.containerPruebas}>
             {simulacrosMasRecientes.length > 0

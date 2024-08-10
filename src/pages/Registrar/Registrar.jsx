@@ -6,7 +6,7 @@ import clienteAxios from "../../config/clienteAxios";
 import Alerta from "../../components/Alerta/Alerta";
 
 // Iconos
-
+import ubicacion from "../../assets/ubicacion.png";
 import emailImg from "../../assets/email.png";
 import usuarioLogin from "../../assets/Usuario-login.png";
 import gradoImg from "../../assets/Grado.png";
@@ -14,6 +14,8 @@ import contraseña from "../../assets/login-contraseña.png";
 import imgColegio from "../../assets/colegio.png";
 import nombreRegistro from "../../assets/Nombre-registro.png";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import Loading from "../../components/Loading/Loading";
 
 const GRADO = [
   "Tercero",
@@ -30,7 +32,12 @@ const GRADO = [
 const Registrar = () => {
   const navigate = useNavigate();
 
+  const { colegios } = useAuth();
+
   const [colegio, setColegio] = useState("");
+  const [departamento, setDepartamento] = useState("");
+  const [municipio, setMunicipio] = useState("");
+
   const [email, setEmail] = useState("");
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [grado, setGrado] = useState("");
@@ -43,41 +50,37 @@ const Registrar = () => {
   const [mostrarPassword, setMostrarPassword] = useState(false);
   const [mostrarRepetirPassword, setMostrarRepetirPassword] = useState(false);
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const { data } = await clienteAxios("/usuarios/obtener-colegios");
-  //       setColegiosData(data);
-  //     } catch (error) {
-  //       console.error("Error al obtener los colegios: " + error);
-  //     }
-  //   }
+  const [isNewSchool, setIsNewSchool] = useState(false);
 
-  //   fetchData();
-  // }, []);
+  if (!colegios) {
+    return <Loading />;
+  }
 
-  // const departamentos = [
-  //   ...new Set(colegiosData.map((colegio) => colegio.departamento)),
-  // ];
+  const nombresDepartamentos = Array.from(
+    new Set(
+      Object.keys(colegios).map((key) => colegios[key].nombredepartamento)
+    )
+  ).sort();
 
-  // const municipios = [
-  //   ...new Set(
-  //     colegiosData
-  //       .filter((colegio) => colegio.departamento === departamento)
-  //       .map((colegio) => colegio.municipio)
-  //   ),
-  // ];
+  const nombresMunicipios = Array.from(
+    new Set(
+      Object.keys(colegios)
+        .filter((key) => colegios[key].nombredepartamento === departamento)
+        .map((key) => colegios[key].nombremunicipio)
+    )
+  ).sort();
 
-  // const colegios = [
-  //   ...new Set(
-  //     colegiosData
-  //       .filter(
-  //         (col) =>
-  //           col.departamento === departamento && col.municipio === municipio
-  //       )
-  //       .map((colegio) => colegio.nombre_establecimiento)
-  //   ),
-  // ];
+  const nombresColegios = Array.from(
+    new Set(
+      Object.keys(colegios)
+        .filter(
+          (key) =>
+            colegios[key].nombredepartamento === departamento &&
+            colegios[key].nombremunicipio === municipio
+        )
+        .map((key) => colegios[key].nombreestablecimiento)
+    )
+  ).sort();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -171,6 +174,10 @@ const Registrar = () => {
     navigate(-1);
   };
 
+  const handleCheckboxChange = () => {
+    setIsNewSchool(!isNewSchool);
+  };
+
   const { msg } = alerta;
 
   return (
@@ -229,20 +236,75 @@ const Registrar = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
         <div className={styles.container}>
-          <label htmlFor="colegio">
-            <img className={styles.icono} src={imgColegio} />
-          </label>
-          <input
-            id="colegio"
-            type="text"
-            placeholder="Colegio"
-            className={styles.input}
-            value={colegio}
-            onChange={(e) => setColegio(e.target.value)}
-          />
+          <img className={styles.icono} src={ubicacion} />
+          <select
+            value={departamento}
+            onChange={(e) => setDepartamento(e.target.value)}
+            className={styles.input2}
+          >
+            <option value="">-- Selecciona un departamento --</option>
+            {nombresDepartamentos.map((dep, index) => (
+              <option key={index} value={dep}>
+                {dep}
+              </option>
+            ))}
+          </select>
         </div>
+        <div className={styles.container}>
+          <img className={styles.icono} src={ubicacion} />
+          <select
+            value={municipio}
+            onChange={(e) => setMunicipio(e.target.value)}
+            className={styles.input2}
+          >
+            <option value="">-- Selecciona un municipio --</option>
+            {nombresMunicipios.map((mun, index) => (
+              <option key={index} value={mun}>
+                {mun}
+              </option>
+            ))}
+          </select>
+        </div>
+        {!isNewSchool && (
+          <div className={styles.container}>
+            <img className={styles.icono} src={imgColegio} />
+            <select
+              value={colegio}
+              onChange={(e) => setColegio(e.target.value)}
+              className={styles.input2}
+            >
+              <option value="">-- Selecciona un colegio --</option>
+              {nombresColegios.map((col, index) => (
+                <option key={index} value={col}>
+                  {col}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        <div className={styles.checkboxContainer}>
+          <input
+            type="checkbox"
+            id="addNewSchool"
+            checked={isNewSchool}
+            onChange={handleCheckboxChange}
+          />
+          <label htmlFor="addNewSchool">El colegio no está en la lista</label>
+        </div>
+        {isNewSchool && (
+          <div className={styles.container}>
+            <img className={styles.icono} src={imgColegio} />
+            <input
+              type="text"
+              value={colegio}
+              onChange={(e) => setColegio(e.target.value)}
+              placeholder="Nombre del colegio"
+              className={styles.input}
+            />
+          </div>
+        )}
 
         <div className={styles.container}>
           <img className={styles.icono} src={gradoImg} />

@@ -1,0 +1,54 @@
+.fondo {
+    background-color: #001f3f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    background-color: rgba(52, 152, 219, 0.2);
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+  }
+  
+  .contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Alinea los elementos internos en columna */
+    background-color: white;
+    padding: 2rem;
+    border-radius: 25px;
+  }
+  
+  .banner {
+    display: flex;
+    background-color: #2ecc71;
+    padding: 1rem;
+    border-radius: 25px;
+    margin-bottom: 1rem;
+    /* Espacio opcional para separar del contenido siguiente */
+  }
+  
+  .bannerParrafo {
+    color: white;
+    width: 65%; /* Ajusta el ancho del párrafo según tus necesidades */
+    text-align: center; /* Centra el texto dentro del banner */
+  }
+  
+  .bannerTitulo {
+    text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+  }
+  
+  .bannerContenido {
+    padding-right: 2rem;
+    padding-left: 2rem;
+    text-align: center;
+    font-size: large;
+    font-weight: 400;
+  }

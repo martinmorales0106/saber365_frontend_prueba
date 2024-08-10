@@ -137,3 +137,27 @@
 .iconoMostrar:hover {
   color: #000;
 }
+
+.checkboxContainer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkboxContainer input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.checkboxContainer label {
+  font-size: 0.8rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.checkboxContainer label:hover {
+  color: #007bff; /* Cambia el color del texto al pasar el mouse */
+
+}

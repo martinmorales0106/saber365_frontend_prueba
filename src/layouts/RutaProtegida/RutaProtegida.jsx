@@ -5,9 +5,9 @@ import HeaderAuth from "../../components/HeaderAuth/HeaderAuth";
 import Loading from "../../components/Loading/Loading";
 
 const RutaProtegida = () => {
-  const { auth, cargando } = useAuth();
+  const { auth, cargando, cargandoCol } = useAuth();
   
-  if (cargando) {
+  if (cargando && cargandoCol) {
     return <Loading />;
   }
 
