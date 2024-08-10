@@ -93,6 +93,8 @@ const Registrar = () => {
         email,
         grado,
         colegio,
+        departamento,
+        municipio,
         password,
         repetirPassword,
       ].includes("")
@@ -138,6 +140,8 @@ const Registrar = () => {
         colegio,
         nombres,
         apellidos,
+        departamento,
+        municipio,
       });
 
       setAlerta({
@@ -153,6 +157,8 @@ const Registrar = () => {
       setColegio("");
       setNombres("");
       setApellidos("");
+      setDepartamento("");
+      setMunicipio("");
 
       setTimeout(() => {
         setAlerta({});
