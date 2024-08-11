@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import clienteAxios from "../../config/clienteAxios";
 import styles from "./ConfirmarCuenta.module.css";
+import Loading from "../../components/Loading/Loading";
 
 const ConfirmarCuenta = () => {
   const [alerta, setAlerta] = useState({});
@@ -45,7 +46,7 @@ const ConfirmarCuenta = () => {
     }
   };
 
-  if (cargando) return "Cargando...";
+  if (cargando) return <Loading/>;
   const { msg } = alerta;
 
   return (
