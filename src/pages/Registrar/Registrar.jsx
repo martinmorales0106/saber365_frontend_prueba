@@ -334,7 +334,7 @@ const Registrar = () => {
           </select>
         </div>
         <div className={styles.infoColegio}>
-          <p>Crea una contraseña segura y fácil de recordar.</p>
+          <p>Asegúrate de usar una contraseña que puedas recordar.</p>
         </div>
         <div className={styles.container}>
           <label htmlFor="password">

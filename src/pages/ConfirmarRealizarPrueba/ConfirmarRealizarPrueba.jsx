@@ -52,7 +52,7 @@ const ConfirmarRealizarPrueba = () => {
           />
         </div>
         <p>
-          Las cinco pruebas del Simulacro {simulacroEncontrado.titulo} se
+          Las pruebas del Simulacro {simulacroEncontrado.titulo} se
           dividen en{" "}
           {simulacroEncontrado.numero_sesiones === 1
             ? "una sesión:"
