@@ -261,3 +261,7 @@
   max-height: 42rem; /* Ajusta la altura según tus necesidades */
   overflow-y: auto;
 }
+
+.imagenOpcion {
+  width: 14rem;
+}
