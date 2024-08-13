@@ -190,6 +190,9 @@ const Registrar = () => {
     <>
       <h1 className={styles.titulo}>Crear Cuenta</h1>
       <form onSubmit={handleSubmit} className={styles.formulario}>
+        <div className={styles.infoColegio}>
+          <p>Información del usuario.</p>
+        </div>
         <div className={styles.container}>
           <label htmlFor="nombres">
             <img className={styles.icono} src={nombreRegistro} />
@@ -241,6 +244,9 @@ const Registrar = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+        </div>
+        <div className={styles.infoColegio}>
+          <p>Información del colegio.</p>
         </div>
         <div className={styles.container}>
           <img className={styles.icono} src={ubicacion} />
@@ -327,7 +333,9 @@ const Registrar = () => {
             ))}
           </select>
         </div>
-
+        <div className={styles.infoColegio}>
+          <p>Crea una contraseña segura y fácil de recordar.</p>
+        </div>
         <div className={styles.container}>
           <label htmlFor="password">
             <img className={styles.icono} src={contraseña} />

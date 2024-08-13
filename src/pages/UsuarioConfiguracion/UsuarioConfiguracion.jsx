@@ -317,6 +317,9 @@ const UsuarioConfiguracion = () => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
+            <div className={styles.infoColegio}>
+              <p>Actualiza la información de tu colegio.</p>
+            </div>
             <div className={styles.container}>
               <img className={styles.icono} src={ubicacion} />
               <select
