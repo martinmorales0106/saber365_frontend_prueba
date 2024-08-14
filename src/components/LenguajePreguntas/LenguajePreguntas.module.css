@@ -91,7 +91,7 @@
   flex-wrap: wrap;
   border-radius: 25px;
   background-color: white;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .imagenAmpliadaContainer {
@@ -165,8 +165,8 @@
 .letra {
   font-size: large;
   font-weight: bold;
-  margin-left: 0.3rem;
-  margin-right: 0.3rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .opcion {
@@ -261,5 +261,9 @@
 }
 
 .imagenOpcion {
-  width: 5rem;
+  max-width: 28rem;
+  object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo la relación de aspecto y cubriendo el contenedor */
+  cursor: pointer; /* Cambia el cursor al hacer clic para indicar que se puede ampliar */
+  transition: transform 0.3s; /* Agrega una transición suave */
+  cursor: zoom-in;
 }

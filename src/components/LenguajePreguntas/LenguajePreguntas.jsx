@@ -345,11 +345,26 @@ const LenguajePreguntas = () => {
                           />
                           <span className={styles.letra}>A.</span>
                           {isImageUrl(pregunta.opcionA) ? (
-                            <img
-                              src={pregunta.opcionA}
-                              alt="Opción A"
-                              className={styles.imagenOpcion}
-                            />
+                            <div
+                              className={styles.containerImg}
+                              onClick={() => setImagenAmpliada(!imagenAmpliada)}
+                            >
+                              {imagenAmpliada ? (
+                                <div className={styles.imagenAmpliadaContainer}>
+                                  <img
+                                    src={pregunta.opcionA}
+                                    className={styles.imagenAmpliada}
+                                    alt="Imagen Ampliada"
+                                  />
+                                </div>
+                              ) : (
+                                <img
+                                  src={pregunta.opcionA}
+                                  alt="Opción A"
+                                  className={styles.imagenOpcion}
+                                />
+                              )}
+                            </div>
                           ) : (
                             <p className={styles.opcion}>{pregunta.opcionA}</p>
                           )}
@@ -375,11 +390,26 @@ const LenguajePreguntas = () => {
                           />
                           <span className={styles.letra}>B.</span>
                           {isImageUrl(pregunta.opcionB) ? (
-                            <img
-                              src={pregunta.opcionB}
-                              alt="Opción B"
-                              className={styles.imagenOpcion}
-                            />
+                            <div
+                              className={styles.containerImg}
+                              onClick={() => setImagenAmpliada(!imagenAmpliada)}
+                            >
+                              {imagenAmpliada ? (
+                                <div className={styles.imagenAmpliadaContainer}>
+                                  <img
+                                    src={pregunta.opcionB}
+                                    className={styles.imagenAmpliada}
+                                    alt="Imagen Ampliada"
+                                  />
+                                </div>
+                              ) : (
+                                <img
+                                  src={pregunta.opcionB}
+                                  alt="Opción B"
+                                  className={styles.imagenOpcion}
+                                />
+                              )}
+                            </div>
                           ) : (
                             <p className={styles.opcion}>{pregunta.opcionB}</p>
                           )}
@@ -407,11 +437,26 @@ const LenguajePreguntas = () => {
                           />
                           <span className={styles.letra}>C.</span>
                           {isImageUrl(pregunta.opcionC) ? (
-                            <img
-                              src={pregunta.opcionC}
-                              alt="Opción C"
-                              className={styles.imagenOpcion}
-                            />
+                            <div
+                              className={styles.containerImg}
+                              onClick={() => setImagenAmpliada(!imagenAmpliada)}
+                            >
+                              {imagenAmpliada ? (
+                                <div className={styles.imagenAmpliadaContainer}>
+                                  <img
+                                    src={pregunta.opcionC}
+                                    className={styles.imagenAmpliada}
+                                    alt="Imagen Ampliada"
+                                  />
+                                </div>
+                              ) : (
+                                <img
+                                  src={pregunta.opcionC}
+                                  alt="Opción C"
+                                  className={styles.imagenOpcion}
+                                />
+                              )}
+                            </div>
                           ) : (
                             <p className={styles.opcion}>{pregunta.opcionC}</p>
                           )}
@@ -437,11 +482,26 @@ const LenguajePreguntas = () => {
                           />
                           <span className={styles.letra}>D.</span>
                           {isImageUrl(pregunta.opcionD) ? (
-                            <img
-                              src={pregunta.opcionD}
-                              alt="Opción D"
-                              className={styles.imagenOpcion}
-                            />
+                            <div
+                              className={styles.containerImg}
+                              onClick={() => setImagenAmpliada(!imagenAmpliada)}
+                            >
+                              {imagenAmpliada ? (
+                                <div className={styles.imagenAmpliadaContainer}>
+                                  <img
+                                    src={pregunta.opcionD}
+                                    className={styles.imagenAmpliada}
+                                    alt="Imagen Ampliada"
+                                  />
+                                </div>
+                              ) : (
+                                <img
+                                  src={pregunta.opcionD}
+                                  alt="Opción D"
+                                  className={styles.imagenOpcion}
+                                />
+                              )}
+                            </div>
                           ) : (
                             <p className={styles.opcion}>{pregunta.opcionD}</p>
                           )}
