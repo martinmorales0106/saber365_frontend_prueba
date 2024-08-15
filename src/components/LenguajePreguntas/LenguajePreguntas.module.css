@@ -113,8 +113,8 @@
 }
 
 .imagenAmpliada {
-  max-width: 90%; /* Ajusta el tamaño máximo de la imagen */
-  max-height: 90%; /* Ajusta la altura máxima de la imagen */
+  max-width: 100%; /* Ajusta el tamaño máximo de la imagen */
+  max-height: 100%; /* Ajusta la altura máxima de la imagen */
   cursor: zoom-out; /* Cambia el cursor al hacer clic para indicar que se puede reducir */
   transition: transform 0.3s; /* Agrega una transición suave */
 }

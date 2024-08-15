@@ -40,11 +40,17 @@ const MatematicasPreguntas = () => {
 
   const pruebasiguiente = () => {
     if (preguntaLocal + 1 >= preguntasFiltradas.length) {
-      if (selectedTab === "Matemáticas" && (auth.grado === "Undécimo" || auth.grado === "Décimo")) {
+      if (
+        selectedTab === "Matemáticas" &&
+        (auth.grado === "Undécimo" || auth.grado === "Décimo")
+      ) {
         handleTabChange("Lectura Crítica");
       }
 
-      if (selectedTab === "Matemáticas" && auth.grado != "Undécimo" & auth.grado != "Décimo") {
+      if (
+        selectedTab === "Matemáticas" &&
+        (auth.grado != "Undécimo") & (auth.grado != "Décimo")
+      ) {
         handleTabChange("Lenguaje");
       }
     }
@@ -60,7 +66,7 @@ const MatematicasPreguntas = () => {
     setImagenAmpliada(false);
   };
 
-  const paginasEspacios = 8;
+  const paginasEspacios = 9;
   const inicio =
     preguntaLocal > paginasEspacios ? preguntaLocal - paginasEspacios : 0;
   const fin = inicio + numerosPorPagina;
@@ -71,7 +77,7 @@ const MatematicasPreguntas = () => {
 
   const isImageUrl = (url) => {
     return /\.(jpg|jpeg|png|gif)$/.test(url);
-  };  
+  };
 
   return (
     <div>
@@ -91,12 +97,12 @@ const MatematicasPreguntas = () => {
 
           <div className={styles.numeracion}>
             {/* Barra de navegación de preguntas */}
-            {numerosPreguntas.map((numero, index) => (
+            {numerosPreguntas.map((numero) => (
               <span
                 key={numero}
-                onClick={() => seleccionarPregunta(index)}
+                onClick={() => seleccionarPregunta(numero)}
                 className={`${styles.numero} ${
-                  preguntaLocal  === index ? styles.seleccionado : ""
+                  preguntaLocal === numero ? styles.seleccionado : ""
                 }`}
               >
                 {numero}{" "}
@@ -122,7 +128,7 @@ const MatematicasPreguntas = () => {
         </div>
       </div>
       {preguntasFiltradas
-        .slice(preguntaLocal, preguntaLocal + 1)
+        .filter(pregunta => pregunta.numero === preguntaLocal) // Filtra la pregunta que coincida con preguntaLocal
         .map((pregunta, index) => (
           <div key={index} className={styles.containerPreguntas}>
             {(pregunta.contexto || pregunta.imagen) && (

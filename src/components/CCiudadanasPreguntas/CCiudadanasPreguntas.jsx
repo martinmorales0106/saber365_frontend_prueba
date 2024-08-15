@@ -53,7 +53,7 @@ const CCiudadanasPreguntas = () => {
     setImagenAmpliada(false);
   };
 
-  const paginasEspacios = 8;
+  const paginasEspacios = 9;
   const inicio =
     preguntaLocal > paginasEspacios ? preguntaLocal - paginasEspacios : 0;
   const fin = inicio + numerosPorPagina;
@@ -84,12 +84,12 @@ const CCiudadanasPreguntas = () => {
 
           <div className={styles.numeracion}>
             {/* Barra de navegación de preguntas */}
-            {numerosPreguntas.map((numero, index) => (
+            {numerosPreguntas.map((numero) => (
               <span
                 key={numero}
-                onClick={() => seleccionarPregunta(index)}
+                onClick={() => seleccionarPregunta(numero)}
                 className={`${styles.numero} ${
-                  preguntaLocal === index ? styles.seleccionado : ""
+                  preguntaLocal === numero ? styles.seleccionado : ""
                 }`}
               >
                 {numero}{" "}
@@ -115,7 +115,7 @@ const CCiudadanasPreguntas = () => {
         </div>
       </div>
       {preguntasFiltradas
-        .slice(preguntaLocal, preguntaLocal + 1)
+        .filter((pregunta) => pregunta.numero === preguntaLocal) // Filtra la pregunta que coincida con preguntaLocal
         .map((pregunta, index) => (
           <div key={index} className={styles.containerPreguntas}>
             {(pregunta.contexto || pregunta.imagen) && (
