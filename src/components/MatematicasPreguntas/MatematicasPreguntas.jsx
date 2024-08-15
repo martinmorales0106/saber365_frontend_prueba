@@ -86,7 +86,7 @@ const MatematicasPreguntas = () => {
           <button
             onClick={mostrarAnteriores}
             className={styles.boton}
-            style={{ display: preguntaLocal === 0 ? "none" : "block" }}
+            style={{ display: preguntaLocal === 1 ? "none" : "block" }}
           >
             <img
               src={atrasImg}
