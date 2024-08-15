@@ -101,7 +101,7 @@ const SocialesPreguntas = () => {
             className={styles.boton}
             style={{
               display:
-                preguntaLocal + 1 >= preguntasFiltradas.length
+                preguntaLocal >= preguntasFiltradas.length
                   ? "none"
                   : "block",
             }}
