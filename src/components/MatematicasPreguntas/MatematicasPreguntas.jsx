@@ -39,7 +39,7 @@ const MatematicasPreguntas = () => {
   };
 
   const pruebasiguiente = () => {
-    if (preguntaLocal + 1 >= preguntasFiltradas.length) {
+    if (preguntaLocal  >= preguntasFiltradas.length) {
       if (
         selectedTab === "Matemáticas" &&
         (auth.grado === "Undécimo" || auth.grado === "Décimo")
@@ -374,7 +374,7 @@ const MatematicasPreguntas = () => {
                     onClick={mostrarSiguientes}
                     style={{
                       display:
-                        preguntaLocal + 1 >= preguntasFiltradas.length
+                        preguntaLocal  >= preguntasFiltradas.length
                           ? "none"
                           : "block",
                     }}
@@ -386,7 +386,7 @@ const MatematicasPreguntas = () => {
                     onClick={pruebasiguiente}
                     style={{
                       display:
-                        preguntaLocal + 1 >= preguntasFiltradas.length &&
+                        preguntaLocal  >= preguntasFiltradas.length &&
                         selectedTab !== "Inglés"
                           ? "block"
                           : "none",

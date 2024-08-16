@@ -36,7 +36,7 @@ const SocialesPreguntas = () => {
   };
 
   const pruebasiguiente = () => {
-    if (preguntaLocal + 1 >= preguntasFiltradas.length) {
+    if (preguntaLocal  >= preguntasFiltradas.length) {
       if (selectedTab === "Sociales") {
         handleTabChange("Naturales");
       }
@@ -357,7 +357,7 @@ const SocialesPreguntas = () => {
                       onClick={mostrarSiguientes}
                       style={{
                         display:
-                          preguntaLocal + 1 >= preguntasFiltradas.length
+                          preguntaLocal  >= preguntasFiltradas.length
                             ? "none"
                             : "block",
                       }}
@@ -369,7 +369,7 @@ const SocialesPreguntas = () => {
                       onClick={pruebasiguiente}
                       style={{
                         display:
-                          preguntaLocal + 1 >= preguntasFiltradas.length &&
+                          preguntaLocal  >= preguntasFiltradas.length &&
                           selectedTab !== "Inglés"
                             ? "block"
                             : "none",

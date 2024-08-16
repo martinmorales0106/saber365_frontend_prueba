@@ -36,7 +36,7 @@ const LecturaCriticaPreguntas = () => {
   };
 
   const pruebasiguiente = () => {
-    if (preguntaLocal + 1 >= preguntasFiltradas.length) {
+    if (preguntaLocal  >= preguntasFiltradas.length) {
       if (selectedTab === "Lectura Crítica") {
         handleTabChange("Sociales");
       }
@@ -358,7 +358,7 @@ const LecturaCriticaPreguntas = () => {
                       onClick={mostrarSiguientes}
                       style={{
                         display:
-                          preguntaLocal + 1 >= preguntasFiltradas.length
+                          preguntaLocal  >= preguntasFiltradas.length
                             ? "none"
                             : "block",
                       }}
@@ -370,7 +370,7 @@ const LecturaCriticaPreguntas = () => {
                       onClick={pruebasiguiente}
                       style={{
                         display:
-                          preguntaLocal + 1 >= preguntasFiltradas.length &&
+                          preguntaLocal >= preguntasFiltradas.length &&
                           selectedTab !== "Inglés"
                             ? "block"
                             : "none",

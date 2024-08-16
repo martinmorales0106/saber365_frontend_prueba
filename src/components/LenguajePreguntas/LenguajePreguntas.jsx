@@ -136,7 +136,7 @@ const LenguajePreguntas = () => {
   };
 
   const pruebasiguiente = () => {
-    if (preguntaLocal + 1 >= preguntasFiltradas.length) {
+    if (preguntaLocal  >= preguntasFiltradas.length) {
       if (selectedTab === "Lenguaje") {
         handleTabChange("C. Ciudadanas");
       }
@@ -517,7 +517,7 @@ const LenguajePreguntas = () => {
                       onClick={mostrarSiguientes}
                       style={{
                         display:
-                          preguntaLocal + 1 >= preguntasFiltradas.length
+                          preguntaLocal  >= preguntasFiltradas.length
                             ? "none"
                             : "block",
                       }}
@@ -530,7 +530,7 @@ const LenguajePreguntas = () => {
                           className={styles.boton3}
                           style={{
                             display:
-                              preguntaLocal + 1 >= numerosPreguntas.length &&
+                              preguntaLocal  >= numerosPreguntas.length &&
                               selectedTab === "Lenguaje"
                                 ? "block"
                                 : "none",
@@ -546,7 +546,7 @@ const LenguajePreguntas = () => {
                           onClick={pruebasiguiente}
                           style={{
                             display:
-                              preguntaLocal + 1 >= preguntasFiltradas.length &&
+                              preguntaLocal >= preguntasFiltradas.length &&
                               selectedTab !== "Inglés"
                                 ? "block"
                                 : "none",

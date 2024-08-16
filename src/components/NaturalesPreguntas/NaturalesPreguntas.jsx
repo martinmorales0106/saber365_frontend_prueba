@@ -136,7 +136,7 @@ const NaturalesPreguntas = () => {
   };
 
   const pruebasiguiente = () => {
-    if (preguntaLocal + 1 >= preguntasFiltradas.length) {
+    if (preguntaLocal  >= preguntasFiltradas.length) {
       if (selectedTab === "Naturales") {
         handleTabChange("Inglés");
       }
@@ -457,7 +457,7 @@ const NaturalesPreguntas = () => {
                       onClick={mostrarSiguientes}
                       style={{
                         display:
-                          preguntaLocal + 1 >= preguntasFiltradas.length
+                          preguntaLocal  >= preguntasFiltradas.length
                             ? "none"
                             : "block",
                       }}
@@ -473,7 +473,7 @@ const NaturalesPreguntas = () => {
                           className={styles.boton3}
                           style={{
                             display:
-                              preguntaLocal + 1 >= numerosPreguntas.length &&
+                              preguntaLocal  >= numerosPreguntas.length &&
                               selectedTab === "Naturales"
                                 ? "block"
                                 : "none",
@@ -489,7 +489,7 @@ const NaturalesPreguntas = () => {
                           onClick={pruebasiguiente}
                           style={{
                             display:
-                              preguntaLocal + 1 >= preguntasFiltradas.length &&
+                              preguntaLocal  >= preguntasFiltradas.length &&
                               selectedTab !== "Inglés"
                                 ? "block"
                                 : "none",
