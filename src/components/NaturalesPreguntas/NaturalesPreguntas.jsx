@@ -473,7 +473,7 @@ const NaturalesPreguntas = () => {
                           className={styles.boton3}
                           style={{
                             display:
-                              preguntaLocal  >= numerosPreguntas.length &&
+                              preguntaLocal  >= preguntasFiltradas.length &&
                               selectedTab === "Naturales"
                                 ? "block"
                                 : "none",

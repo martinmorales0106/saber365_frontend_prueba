@@ -530,7 +530,7 @@ const LenguajePreguntas = () => {
                           className={styles.boton3}
                           style={{
                             display:
-                              preguntaLocal  >= numerosPreguntas.length &&
+                              preguntaLocal  >= preguntasFiltradas.length &&
                               selectedTab === "Lenguaje"
                                 ? "block"
                                 : "none",
