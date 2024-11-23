@@ -13,10 +13,10 @@ const AuthProvider = ({ children }) => {
   const [cargandoCol, setCargandoCol] = useState(true);
   const [colegios, setColegios] = useState({});
 
-  console.log(auth);
+  console.log(colegios);
   
   useEffect(() => {
-    const apiUrl = "https://www.datos.gov.co/resource/ea56-rtcx.json";
+    const apiUrl = "https://www.datos.gov.co/resource/28ii-2jxz.json";
     const appToken = "0mOA5CbJo9E2GsZwIAMYiqDA0";
 
     const fetchColegios = async () => {

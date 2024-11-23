@@ -62,6 +62,8 @@ const Registrar = () => {
     )
   ).sort();
 
+  console.log(colegios);
+  
   const nombresMunicipios = Array.from(
     new Set(
       Object.keys(colegios)
