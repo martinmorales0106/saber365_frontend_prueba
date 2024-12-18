@@ -17,17 +17,19 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading/Loading";
 
-const GRADO = [
-  "Tercero",
-  "Cuarto",
-  "Quinto",
-  "Sexto",
-  "Séptimo",
-  "Octavo",
-  "Noveno",
-  "Décimo",
-  "Undécimo",
-];
+// const GRADO = [
+//   "Tercero",
+//   "Cuarto",
+//   "Quinto",
+//   "Sexto",
+//   "Séptimo",
+//   "Octavo",
+//   "Noveno",
+//   "Décimo",
+//   "Undécimo",
+// ];
+
+const GRADO = ["Undécimo"];
 
 const Registrar = () => {
   const navigate = useNavigate();
@@ -63,7 +65,7 @@ const Registrar = () => {
   ).sort();
 
   console.log(colegios);
-  
+
   const nombresMunicipios = Array.from(
     new Set(
       Object.keys(colegios)

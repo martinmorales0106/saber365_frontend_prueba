@@ -15,17 +15,19 @@ import Swal from "sweetalert2";
 import Loading from "../../components/Loading/Loading";
 import nombreRegistro from "../../assets/Nombre-registro.png";
 
-const GRADO = [
-  "Tercero",
-  "Cuarto",
-  "Quinto",
-  "Sexto",
-  "Séptimo",
-  "Octavo",
-  "Noveno",
-  "Décimo",
-  "Undécimo",
-];
+// const GRADO = [
+//   "Tercero",
+//   "Cuarto",
+//   "Quinto",
+//   "Sexto",
+//   "Séptimo",
+//   "Octavo",
+//   "Noveno",
+//   "Décimo",
+//   "Undécimo",
+// ];
+
+const GRADO = ["Undécimo"];
 
 const UsuarioConfiguracion = () => {
   const { auth, colegios } = useAuth();
@@ -51,7 +53,7 @@ const UsuarioConfiguracion = () => {
   const [departamento, setDepartamento] = useState("");
   const [municipio, setMunicipio] = useState("");
   const [isNewSchool, setIsNewSchool] = useState(false);
-  
+
   useEffect(() => {
     if (auth?.id) {
       setId(auth.id);
@@ -136,7 +138,7 @@ const UsuarioConfiguracion = () => {
     };
 
     updateUsuario(editado);
-    
+
     setAlertaUsuario(true);
     setAlertaContraseña(false);
   };
