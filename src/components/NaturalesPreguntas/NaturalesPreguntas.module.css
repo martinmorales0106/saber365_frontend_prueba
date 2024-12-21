@@ -261,3 +261,11 @@
   max-height: 42rem; /* Ajusta la altura según tus necesidades */
   overflow-y: auto;
 }
+
+.imagenOpcion {
+  max-width: 28rem;
+  object-fit: cover; /* Ajusta el tamaño de la imagen manteniendo la relación de aspecto y cubriendo el contenedor */
+  cursor: pointer; /* Cambia el cursor al hacer clic para indicar que se puede ampliar */
+  transition: transform 0.3s; /* Agrega una transición suave */
+  cursor: zoom-in;
+}
