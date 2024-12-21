@@ -41,7 +41,7 @@ const ConfirmarRealizarPrueba = () => {
     navigate("/usuario/pruebas");
     return null;
   }
-  
+
   return (
     <div className={styles.content}>
       <div className={styles.imagen}>
@@ -52,8 +52,7 @@ const ConfirmarRealizarPrueba = () => {
           />
         </div>
         <p>
-          Las pruebas del Simulacro {simulacroEncontrado.titulo} se
-          dividen en{" "}
+          Las pruebas del Simulacro {simulacroEncontrado.titulo} se dividen en{" "}
           {simulacroEncontrado.numero_sesiones === 1
             ? "una sesión:"
             : "dos sesiones:"}
@@ -68,20 +67,23 @@ const ConfirmarRealizarPrueba = () => {
           {simulacroEncontrado.grado === "Noveno" && (
             <img src={sesionGratis9} className={styles.sesion1} />
           )}
-          {(simulacroEncontrado.grado === "Octavo" || simulacroEncontrado.grado === "Séptimo" || simulacroEncontrado.grado === "Sexto" || simulacroEncontrado.grado === "Quinto" )  && (
+          {(simulacroEncontrado.grado === "Octavo" ||
+            simulacroEncontrado.grado === "Séptimo" ||
+            simulacroEncontrado.grado === "Sexto" ||
+            simulacroEncontrado.grado === "Quinto") && (
             <img src={sesionGratis58} className={styles.sesion1} />
           )}
 
-          {(simulacroEncontrado.grado === "Tercero" || simulacroEncontrado.grado === "Cuarto") && (
+          {(simulacroEncontrado.grado === "Tercero" ||
+            simulacroEncontrado.grado === "Cuarto") && (
             <img src={sesionGratis34} className={styles.sesion1} />
           )}
-
         </div>
         <p className={styles.estructuraCuadernillo}>
           Estructura del Simulacro {simulacroEncontrado.titulo}{" "}
         </p>
         <div className={styles.tablaPreguntas}>
-        {simulacroEncontrado.grado === "Undécimo" && (
+          {simulacroEncontrado.grado === "Undécimo" && (
             <img src={tablaPreguntasGratis} className={styles.sesion1} />
           )}
           {simulacroEncontrado.grado === "Décimo" && (
@@ -90,11 +92,15 @@ const ConfirmarRealizarPrueba = () => {
           {simulacroEncontrado.grado === "Noveno" && (
             <img src={tablaPreguntasGratis9} className={styles.sesion1} />
           )}
-          {(simulacroEncontrado.grado === "Octavo" || simulacroEncontrado.grado === "Séptimo" || simulacroEncontrado.grado === "Sexto" || simulacroEncontrado.grado === "Quinto" )  && (
+          {(simulacroEncontrado.grado === "Octavo" ||
+            simulacroEncontrado.grado === "Séptimo" ||
+            simulacroEncontrado.grado === "Sexto" ||
+            simulacroEncontrado.grado === "Quinto") && (
             <img src={tablaPreguntasGratis58} className={styles.sesion1} />
           )}
 
-          {(simulacroEncontrado.grado === "Tercero" || simulacroEncontrado.grado === "Cuarto") && (
+          {(simulacroEncontrado.grado === "Tercero" ||
+            simulacroEncontrado.grado === "Cuarto") && (
             <img src={tablaPreguntasGratis34} className={styles.sesion1} />
           )}
         </div>
@@ -180,7 +186,11 @@ const ConfirmarRealizarPrueba = () => {
               {simulacroEncontrado.numero_sesiones === 1 && (
                 <tr>
                   <td>1</td>
-                  <td>{FormatearTiempo(simulacroEncontrado.tiempo)}</td>
+                  <td>
+                    {localStorage.getItem("contarsengundos")
+                      ? FormatearTiempo(localStorage.getItem("contarsengundos"))
+                      : FormatearTiempo(simulacroEncontrado.tiempo)}
+                  </td>
                   <td>{simulacroEncontrado.cantidad_preguntas}</td>
                   <td>1</td>
                   <td>
