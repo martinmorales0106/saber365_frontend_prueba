@@ -187,8 +187,8 @@ const ConfirmarRealizarPrueba = () => {
                 <tr>
                   <td>1</td>
                   <td>
-                    {localStorage.getItem("contarsengundos")
-                      ? FormatearTiempo(localStorage.getItem("contarsengundos"))
+                    {localStorage.getItem(`contadorSegundos${simulacroEncontrado?.titulo}`)
+                      ? FormatearTiempo(localStorage.getItem(`contadorSegundos${simulacroEncontrado?.titulo}`))
                       : FormatearTiempo(simulacroEncontrado.tiempo)}
                   </td>
                   <td>{simulacroEncontrado.cantidad_preguntas}</td>
