@@ -258,48 +258,52 @@ const InglesPreguntas = () => {
         <div className={styles.format}>
           {preguntasNivelActual[0]?.nivel === "1" && (
             <>
-              {preguntasNivelActual.map((pregunta, index) => (
-                <div key={index} className={styles.contenedorAux}>
-                  <div className={styles.containerPreguntas2}>
-                    <div className={styles.contenedor3}>
-                      <h4 className={styles.indice}>{pregunta.numero}.</h4>
-                      <div className={styles.contexto2}>
-                        {pregunta.pregunta
-                          .split("\n")
-                          .map((sentence, index) => (
-                            <p key={index}>{sentence.trim().slice(0, -2)}</p>
-                          ))}
+              {preguntasNivelActual
+                .sort((a, b) => a.numero - b.numero)
+                .map((pregunta, index) => (
+                  <div key={index} className={styles.contenedorAux}>
+                    <div className={styles.containerPreguntas2}>
+                      <div className={styles.contenedor3}>
+                        <h4 className={styles.indice}>{pregunta.numero}.</h4>
+                        <div className={styles.contexto2}>
+                          {pregunta.pregunta
+                            .split("\n")
+                            .map((sentence, index) => (
+                              <p key={index}>{sentence.trim().slice(0, -2)}</p>
+                            ))}
+                        </div>
+                      </div>
+                      <div className={styles.respuestaSelector}>
+                        <select
+                          id={`respuesta-${pregunta.id}`}
+                          value={
+                            opcionesSeleccionadas[pregunta.id]?.opcion || ""
+                          }
+                          onChange={(e) =>
+                            handleSeleccionRespuesta(
+                              e.target.value,
+                              pregunta.id,
+                              pregunta.numero,
+                              pregunta.area
+                            )
+                          }
+                        >
+                          {!opcionesSeleccionadas[pregunta.id]?.opcion && (
+                            <option value="">Seleccionar</option>
+                          )}
+                          <option value="A">A. {pregunta.opcionA}</option>
+                          <option value="B">B. {pregunta.opcionB}</option>
+                          <option value="C">C. {pregunta.opcionC}</option>
+                          <option value="D">D. {pregunta.opcionD}</option>
+                          <option value="E">E. {pregunta.opcionE}</option>
+                          <option value="F">F. {pregunta.opcionF}</option>
+                          <option value="G">G. {pregunta.opcionG}</option>
+                          <option value="H">H. {pregunta.opcionH}</option>
+                        </select>
                       </div>
                     </div>
-                    <div className={styles.respuestaSelector}>
-                      <select
-                        id={`respuesta-${pregunta.id}`}
-                        value={opcionesSeleccionadas[pregunta.id]?.opcion || ""}
-                        onChange={(e) =>
-                          handleSeleccionRespuesta(
-                            e.target.value,
-                            pregunta.id,
-                            pregunta.numero,
-                            pregunta.area
-                          )
-                        }
-                      >
-                        {!opcionesSeleccionadas[pregunta.id]?.opcion && (
-                          <option value="">Seleccionar</option>
-                        )}
-                        <option value="A">A. {pregunta.opcionA}</option>
-                        <option value="B">B. {pregunta.opcionB}</option>
-                        <option value="C">C. {pregunta.opcionC}</option>
-                        <option value="D">D. {pregunta.opcionD}</option>
-                        <option value="E">E. {pregunta.opcionE}</option>
-                        <option value="F">F. {pregunta.opcionF}</option>
-                        <option value="G">G. {pregunta.opcionG}</option>
-                        <option value="H">H. {pregunta.opcionH}</option>
-                      </select>
-                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </>
           )}
           {(preguntasNivelActual[0]?.nivel === "2" ||
