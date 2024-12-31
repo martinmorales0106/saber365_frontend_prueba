@@ -189,7 +189,7 @@ const InglesPreguntas = () => {
                   key={numero}
                   onClick={() => seleccionarPregunta(numerosPreguntas[numero-1])}
                   className={`${styles.numero} ${
-                    preguntaLocal + 1 == numero ? styles.seleccionado : ""
+                    preguntaLocal + 1 == numerosPreguntas[numero-1] ? styles.seleccionado : ""
                   }`}
                 >
                   {numero}{" "}
