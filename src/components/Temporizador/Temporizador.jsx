@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 
 const Temporizador = () => {
   const { setTiempoAgotado, setSegundos, segundos, simulacroEncontrado } = useTabs();
-console.log(segundos);
 
   useEffect(() => {
     const temporizador = setInterval(() => {

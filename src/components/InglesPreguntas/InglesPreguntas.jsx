@@ -47,6 +47,14 @@ const InglesPreguntas = () => {
     localStorage.setItem("inglesPregunta", preguntaLocal.toString());
   }, [preguntaLocal]);
 
+  const nivelesUnicos = preguntasFiltradas.reduce((niveles, pregunta) => {
+    niveles.add(pregunta.nivel);
+    return niveles;
+  }, new Set());
+
+  const numerosPreguntas = Array.from(nivelesUnicos).sort((a, b) => a - b);
+  
+
   const mostrarSiguientes = () => {
     setPreguntaLocal((prev) => prev + 1);
     setImagenAmpliada(false);
@@ -143,19 +151,13 @@ const InglesPreguntas = () => {
     setImagenAmpliada(false);
   };
 
-  const nivelesUnicos = preguntasFiltradas.reduce((niveles, pregunta) => {
-    niveles.add(pregunta.nivel);
-    return niveles;
-  }, new Set());
-
-  const numerosPreguntas = Array.from(nivelesUnicos).sort((a, b) => a - b);
-  console.log(numerosPreguntas);
+ 
   
   const newArray = Array.from({ length: numerosPreguntas.length }, (_, i) => i + 1);
 
   useEffect(() => {
     const filtradas = preguntasFiltradas.filter(
-      (pregunta) => pregunta.nivel === (preguntaLocal + 1).toString()
+      (pregunta) => pregunta.nivel === (numerosPreguntas[preguntaLocal] ).toString()
     );
     setPreguntasNivelActual(filtradas);
   }, [preguntasFiltradas, preguntaLocal]);
@@ -187,9 +189,9 @@ const InglesPreguntas = () => {
               .map((numero) => (
                 <span
                   key={numero}
-                  onClick={() => seleccionarPregunta(numerosPreguntas[numero-1])}
+                  onClick={() => seleccionarPregunta(numero)}
                   className={`${styles.numero} ${
-                    preguntaLocal + 1 == numerosPreguntas[numero-1] ? styles.seleccionado : ""
+                    preguntaLocal + 1 == numero ? styles.seleccionado : ""
                   }`}
                 >
                   {numero}{" "}
