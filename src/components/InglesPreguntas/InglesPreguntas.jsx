@@ -53,7 +53,6 @@ const InglesPreguntas = () => {
   }, new Set());
 
   const numerosPreguntas = Array.from(nivelesUnicos).sort((a, b) => a - b);
-  
 
   const mostrarSiguientes = () => {
     setPreguntaLocal((prev) => prev + 1);
@@ -151,13 +150,15 @@ const InglesPreguntas = () => {
     setImagenAmpliada(false);
   };
 
- 
-  
-  const newArray = Array.from({ length: numerosPreguntas.length }, (_, i) => i + 1);
+  const newArray = Array.from(
+    { length: numerosPreguntas.length },
+    (_, i) => i + 1
+  );
 
   useEffect(() => {
     const filtradas = preguntasFiltradas.filter(
-      (pregunta) => pregunta.nivel === (numerosPreguntas[preguntaLocal] ).toString()
+      (pregunta) =>
+        pregunta.nivel === numerosPreguntas[preguntaLocal].toString()
     );
     setPreguntasNivelActual(filtradas);
   }, [preguntasFiltradas, preguntaLocal]);
@@ -318,27 +319,198 @@ const InglesPreguntas = () => {
             preguntasNivelActual[0]?.nivel === "6" ||
             preguntasNivelActual[0]?.nivel === "7") && (
             <>
-              {preguntasNivelActual.map((pregunta, index) => (
-                <div key={index} className={styles.contenedorAux}>
-                  <div
-                    className={
-                      preguntasNivelActual[0]?.nivel === "6"
-                        ? styles.containerPreguntas2SinFlex
-                        : styles.containerPreguntas2
-                    }
-                  >
+              {preguntasNivelActual
+                .sort((a, b) => a.numero - b.numero)
+                .map((pregunta, index) => (
+                  <div key={index} className={styles.contenedorAux}>
                     <div
                       className={
-                        preguntasNivelActual[0]?.nivel === "4" ||
-                        preguntasNivelActual[0]?.nivel === "7"
-                          ? styles.contenedor4
-                          : styles.contenedor3
+                        preguntasNivelActual[0]?.nivel === "6"
+                          ? styles.containerPreguntas2SinFlex
+                          : styles.containerPreguntas2
                       }
                     >
-                      <h4 className={styles.indice}>{pregunta.numero}.</h4>
-                      {(preguntasNivelActual[0]?.nivel === "4" ||
-                        preguntasNivelActual[0]?.nivel === "7") && (
-                        <div className={styles.nivel4}>
+                      <div
+                        className={
+                          preguntasNivelActual[0]?.nivel === "4" ||
+                          preguntasNivelActual[0]?.nivel === "7"
+                            ? styles.contenedor4
+                            : styles.contenedor3
+                        }
+                      >
+                        <h4 className={styles.indice}>{pregunta.numero}.</h4>
+                        {(preguntasNivelActual[0]?.nivel === "4" ||
+                          preguntasNivelActual[0]?.nivel === "7") && (
+                          <div className={styles.nivel4}>
+                            <div className={styles.opcionesRespuestas}>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name={`opciones-${pregunta.id}`}
+                                  value="A"
+                                  onChange={(e) =>
+                                    handleSeleccionRespuesta(
+                                      e.target.value,
+                                      pregunta.id,
+                                      pregunta.numero,
+                                      pregunta.area
+                                    )
+                                  }
+                                  checked={
+                                    opcionesSeleccionadas[pregunta.id]
+                                      ?.opcion === "A"
+                                  }
+                                />
+                                <span className={styles.letra}>A.</span>
+                                {isImageUrl(pregunta.opcionA) ? (
+                                  <img
+                                    src={pregunta.opcionA}
+                                    alt="Opción A"
+                                    className={styles.imagenOpcion}
+                                  />
+                                ) : (
+                                  <p className={styles.opcion}>
+                                    {pregunta.opcionA}
+                                  </p>
+                                )}
+                              </label>
+                            </div>
+                            <div className={styles.opcionesRespuestas}>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name={`opciones-${pregunta.id}`}
+                                  value="B"
+                                  onChange={(e) =>
+                                    handleSeleccionRespuesta(
+                                      e.target.value,
+                                      pregunta.id,
+                                      pregunta.numero,
+                                      pregunta.area
+                                    )
+                                  }
+                                  checked={
+                                    opcionesSeleccionadas[pregunta.id]
+                                      ?.opcion === "B"
+                                  }
+                                />
+                                <span className={styles.letra}>B.</span>
+                                {isImageUrl(pregunta.opcionB) ? (
+                                  <img
+                                    src={pregunta.opcionB}
+                                    alt="Opción B"
+                                    className={styles.imagenOpcion}
+                                  />
+                                ) : (
+                                  <p className={styles.opcion}>
+                                    {pregunta.opcionB}
+                                  </p>
+                                )}
+                              </label>
+                            </div>
+                            <div className={styles.opcionesRespuestas}>
+                              <label>
+                                <input
+                                  type="radio"
+                                  name={`opciones-${pregunta.id}`}
+                                  value="C"
+                                  onChange={(e) =>
+                                    handleSeleccionRespuesta(
+                                      e.target.value,
+                                      pregunta.id,
+                                      pregunta.numero,
+                                      pregunta.area
+                                    )
+                                  }
+                                  checked={
+                                    opcionesSeleccionadas[pregunta.id]
+                                      ?.opcion === "C"
+                                  }
+                                />
+                                <span className={styles.letra}>C.</span>
+                                {isImageUrl(pregunta.opcionC) ? (
+                                  <img
+                                    src={pregunta.opcionC}
+                                    alt="Opción C"
+                                    className={styles.imagenOpcion}
+                                  />
+                                ) : (
+                                  <p className={styles.opcion}>
+                                    {pregunta.opcionC}
+                                  </p>
+                                )}
+                              </label>
+                            </div>
+                            {preguntasNivelActual[0]?.nivel === "7" && (
+                              <div className={styles.opcionesRespuestas}>
+                                <label>
+                                  <input
+                                    type="radio"
+                                    name={`opciones-${pregunta.id}`}
+                                    value="D"
+                                    onChange={(e) =>
+                                      handleSeleccionRespuesta(
+                                        e.target.value,
+                                        pregunta.id,
+                                        pregunta.numero,
+                                        pregunta.area
+                                      )
+                                    }
+                                    checked={
+                                      opcionesSeleccionadas[pregunta.id]
+                                        ?.opcion === "D"
+                                    }
+                                  />
+                                  <span className={styles.letra}>D.</span>
+                                  {isImageUrl(pregunta.opcionD) ? (
+                                    <img
+                                      src={pregunta.opcionD}
+                                      alt="Opción D"
+                                      className={styles.imagenOpcion}
+                                    />
+                                  ) : (
+                                    <p className={styles.opcion}>
+                                      {pregunta.opcionD}
+                                    </p>
+                                  )}
+                                </label>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        <div className={styles.contexto2}>
+                          {preguntasNivelActual[0]?.nivel === "2" && (
+                            <>
+                              {Object.keys(pregunta.imagen).length > 0 && (
+                                <div className={styles.containerImg}>
+                                  <img
+                                    src={pregunta.imagen}
+                                    className={styles.imagen}
+                                    alt="Imagen"
+                                  />
+                                </div>
+                              )}
+                            </>
+                          )}
+                          {(preguntasNivelActual[0]?.nivel === "3" ||
+                            preguntasNivelActual[0]?.nivel === "5" ||
+                            preguntasNivelActual[0]?.nivel === "6") && (
+                            <div className={styles.contexto2}>
+                              {pregunta.pregunta
+                                .split("\n")
+                                .map((sentence, index) => (
+                                  <p key={index}>
+                                    {sentence.trim().slice(0, -2)}
+                                  </p>
+                                ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {preguntasNivelActual[0]?.nivel !== "4" &&
+                      preguntasNivelActual[0]?.nivel !== "7" ? (
+                        <div>
                           <div className={styles.opcionesRespuestas}>
                             <label>
                               <input
@@ -438,7 +610,7 @@ const InglesPreguntas = () => {
                               )}
                             </label>
                           </div>
-                          {preguntasNivelActual[0]?.nivel === "7" && (
+                          {preguntasNivelActual[0]?.nivel === "6" && (
                             <div className={styles.opcionesRespuestas}>
                               <label>
                                 <input
@@ -474,179 +646,10 @@ const InglesPreguntas = () => {
                             </div>
                           )}
                         </div>
-                      )}
-
-                      <div className={styles.contexto2}>
-                        {preguntasNivelActual[0]?.nivel === "2" && (
-                          <>
-                            {Object.keys(pregunta.imagen).length > 0 && (
-                              <div className={styles.containerImg}>
-                                <img
-                                  src={pregunta.imagen}
-                                  className={styles.imagen}
-                                  alt="Imagen"
-                                />
-                              </div>
-                            )}
-                          </>
-                        )}
-                        {(preguntasNivelActual[0]?.nivel === "3" ||
-                          preguntasNivelActual[0]?.nivel === "5" ||
-                          preguntasNivelActual[0]?.nivel === "6") && (
-                          <div className={styles.contexto2}>
-                            {pregunta.pregunta
-                              .split("\n")
-                              .map((sentence, index) => (
-                                <p key={index}>
-                                  {sentence.trim().slice(0, -2)}
-                                </p>
-                              ))}
-                          </div>
-                        )}
-                      </div>
+                      ) : null}
                     </div>
-                    {preguntasNivelActual[0]?.nivel !== "4" &&
-                    preguntasNivelActual[0]?.nivel !== "7" ? (
-                      <div>
-                        <div className={styles.opcionesRespuestas}>
-                          <label>
-                            <input
-                              type="radio"
-                              name={`opciones-${pregunta.id}`}
-                              value="A"
-                              onChange={(e) =>
-                                handleSeleccionRespuesta(
-                                  e.target.value,
-                                  pregunta.id,
-                                  pregunta.numero,
-                                  pregunta.area
-                                )
-                              }
-                              checked={
-                                opcionesSeleccionadas[pregunta.id]?.opcion ===
-                                "A"
-                              }
-                            />
-                            <span className={styles.letra}>A.</span>
-                            {isImageUrl(pregunta.opcionA) ? (
-                              <img
-                                src={pregunta.opcionA}
-                                alt="Opción A"
-                                className={styles.imagenOpcion}
-                              />
-                            ) : (
-                              <p className={styles.opcion}>
-                                {pregunta.opcionA}
-                              </p>
-                            )}
-                          </label>
-                        </div>
-                        <div className={styles.opcionesRespuestas}>
-                          <label>
-                            <input
-                              type="radio"
-                              name={`opciones-${pregunta.id}`}
-                              value="B"
-                              onChange={(e) =>
-                                handleSeleccionRespuesta(
-                                  e.target.value,
-                                  pregunta.id,
-                                  pregunta.numero,
-                                  pregunta.area
-                                )
-                              }
-                              checked={
-                                opcionesSeleccionadas[pregunta.id]?.opcion ===
-                                "B"
-                              }
-                            />
-                            <span className={styles.letra}>B.</span>
-                            {isImageUrl(pregunta.opcionB) ? (
-                              <img
-                                src={pregunta.opcionB}
-                                alt="Opción B"
-                                className={styles.imagenOpcion}
-                              />
-                            ) : (
-                              <p className={styles.opcion}>
-                                {pregunta.opcionB}
-                              </p>
-                            )}
-                          </label>
-                        </div>
-                        <div className={styles.opcionesRespuestas}>
-                          <label>
-                            <input
-                              type="radio"
-                              name={`opciones-${pregunta.id}`}
-                              value="C"
-                              onChange={(e) =>
-                                handleSeleccionRespuesta(
-                                  e.target.value,
-                                  pregunta.id,
-                                  pregunta.numero,
-                                  pregunta.area
-                                )
-                              }
-                              checked={
-                                opcionesSeleccionadas[pregunta.id]?.opcion ===
-                                "C"
-                              }
-                            />
-                            <span className={styles.letra}>C.</span>
-                            {isImageUrl(pregunta.opcionC) ? (
-                              <img
-                                src={pregunta.opcionC}
-                                alt="Opción C"
-                                className={styles.imagenOpcion}
-                              />
-                            ) : (
-                              <p className={styles.opcion}>
-                                {pregunta.opcionC}
-                              </p>
-                            )}
-                          </label>
-                        </div>
-                        {preguntasNivelActual[0]?.nivel === "6" && (
-                          <div className={styles.opcionesRespuestas}>
-                            <label>
-                              <input
-                                type="radio"
-                                name={`opciones-${pregunta.id}`}
-                                value="D"
-                                onChange={(e) =>
-                                  handleSeleccionRespuesta(
-                                    e.target.value,
-                                    pregunta.id,
-                                    pregunta.numero,
-                                    pregunta.area
-                                  )
-                                }
-                                checked={
-                                  opcionesSeleccionadas[pregunta.id]?.opcion ===
-                                  "D"
-                                }
-                              />
-                              <span className={styles.letra}>D.</span>
-                              {isImageUrl(pregunta.opcionD) ? (
-                                <img
-                                  src={pregunta.opcionD}
-                                  alt="Opción D"
-                                  className={styles.imagenOpcion}
-                                />
-                              ) : (
-                                <p className={styles.opcion}>
-                                  {pregunta.opcionD}
-                                </p>
-                              )}
-                            </label>
-                          </div>
-                        )}
-                      </div>
-                    ) : null}
                   </div>
-                </div>
-              ))}
+                ))}
             </>
           )}
         </div>
