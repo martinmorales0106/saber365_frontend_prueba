@@ -12,8 +12,6 @@ const AuthProvider = ({ children }) => {
   const [cargando, setCargando] = useState(true);
   const [cargandoCol, setCargandoCol] = useState(true);
   const [colegios, setColegios] = useState({});
-
-  console.log(colegios);
   
   useEffect(() => {
     const apiUrl = "https://www.datos.gov.co/resource/28ii-2jxz.json";

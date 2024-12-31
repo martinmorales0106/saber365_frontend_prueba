@@ -158,7 +158,7 @@ const InglesPreguntas = () => {
   useEffect(() => {
     const filtradas = preguntasFiltradas.filter(
       (pregunta) =>
-        pregunta.nivel === numerosPreguntas[preguntaLocal].toString()
+        pregunta.nivel === numerosPreguntas[preguntaLocal]?.toString()
     );
     setPreguntasNivelActual(filtradas);
   }, [preguntasFiltradas, preguntaLocal]);
