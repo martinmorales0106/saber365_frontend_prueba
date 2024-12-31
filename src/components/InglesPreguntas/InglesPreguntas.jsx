@@ -149,6 +149,7 @@ const InglesPreguntas = () => {
   }, new Set());
 
   const numerosPreguntas = Array.from(nivelesUnicos);
+  const newArray = Array.from({ length: numerosPreguntas.length }, (_, i) => i + 1);
 
   useEffect(() => {
     const filtradas = preguntasFiltradas.filter(
@@ -179,7 +180,7 @@ const InglesPreguntas = () => {
 
           <div className={styles.numeracion}>
             {/* Barra de navegación de preguntas */}
-            {numerosPreguntas
+            {newArray
               .sort((a, b) => a - b) // Ordena los números de menor a mayor
               .map((numero) => (
                 <span
