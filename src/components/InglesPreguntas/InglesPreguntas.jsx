@@ -148,7 +148,9 @@ const InglesPreguntas = () => {
     return niveles;
   }, new Set());
 
-  const numerosPreguntas = Array.from(nivelesUnicos);
+  const numerosPreguntas = Array.from(nivelesUnicos).sort((a, b) => a - b);
+  console.log(numerosPreguntas);
+  
   const newArray = Array.from({ length: numerosPreguntas.length }, (_, i) => i + 1);
 
   useEffect(() => {
@@ -185,7 +187,7 @@ const InglesPreguntas = () => {
               .map((numero) => (
                 <span
                   key={numero}
-                  onClick={() => seleccionarPregunta(numero)}
+                  onClick={() => seleccionarPregunta(numerosPreguntas[numero-1])}
                   className={`${styles.numero} ${
                     preguntaLocal + 1 == numero ? styles.seleccionado : ""
                   }`}
