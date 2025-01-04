@@ -150,7 +150,7 @@ const InglesPreguntas = () => {
     setImagenAmpliada(false);
   };
 
-  const newArray = Array.from(
+  const newArray = Array?.from(
     { length: numerosPreguntas.length },
     (_, i) => i + 1
   );
@@ -186,7 +186,7 @@ const InglesPreguntas = () => {
           <div className={styles.numeracion}>
             {/* Barra de navegación de preguntas */}
             {newArray
-              .sort((a, b) => a - b) // Ordena los números de menor a mayor
+              ?.sort((a, b) => a - b) // Ordena los números de menor a mayor
               .map((numero) => (
                 <span
                   key={numero}
