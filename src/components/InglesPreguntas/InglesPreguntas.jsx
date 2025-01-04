@@ -151,7 +151,7 @@ const InglesPreguntas = () => {
   };
 
   const newArray = Array?.from(
-    { length: numerosPreguntas.length },
+    { length: numerosPreguntas?.length },
     (_, i) => i + 1
   );
 
