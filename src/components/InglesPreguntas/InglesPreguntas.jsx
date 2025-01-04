@@ -161,7 +161,7 @@ const InglesPreguntas = () => {
         pregunta.nivel === numerosPreguntas[preguntaLocal]?.toString()
     );
     setPreguntasNivelActual(filtradas);
-  }, [preguntasFiltradas, preguntaLocal]);
+  }, [preguntasFiltradas, preguntaLocal, numerosPreguntas]);
 
   const isImageUrl = (url) => {
     return /\.(jpg|jpeg|png|gif)$/.test(url);
