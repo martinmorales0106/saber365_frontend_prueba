@@ -33,7 +33,7 @@ const AuthProvider = ({ children }) => {
         // Limpiar el temporizador cuando el componente se desmonte
         return () => clearTimeout(timer);
       } catch (error) {
-        console.log();(error);
+        console.log(error);
       }
     };
 

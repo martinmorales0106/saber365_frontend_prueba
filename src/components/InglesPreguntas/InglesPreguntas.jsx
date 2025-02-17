@@ -47,12 +47,12 @@ const InglesPreguntas = () => {
     localStorage.setItem("inglesPregunta", preguntaLocal.toString());
   }, [preguntaLocal]);
 
-  const nivelesUnicos = preguntasFiltradas.reduce((niveles, pregunta) => {
+  const nivelesUnicos = preguntasFiltradas?.reduce((niveles, pregunta) => {
     niveles.add(pregunta.nivel);
     return niveles;
   }, new Set());
 
-  const numerosPreguntas = Array.from(nivelesUnicos).sort((a, b) => a - b);
+  const numerosPreguntas = Array?.from(nivelesUnicos).sort((a, b) => a - b);
 
   const mostrarSiguientes = () => {
     setPreguntaLocal((prev) => prev + 1);
@@ -155,13 +155,15 @@ const InglesPreguntas = () => {
     (_, i) => i + 1
   );
 
+  
+
   useEffect(() => {
     const filtradas = preguntasFiltradas.filter(
       (pregunta) =>
         pregunta.nivel === numerosPreguntas[preguntaLocal]?.toString()
     );
     setPreguntasNivelActual(filtradas);
-  }, [preguntasFiltradas, preguntaLocal, numerosPreguntas]);
+  }, [preguntasFiltradas, preguntaLocal]);
 
   const isImageUrl = (url) => {
     return /\.(jpg|jpeg|png|gif)$/.test(url);
@@ -265,7 +267,7 @@ const InglesPreguntas = () => {
           {preguntasNivelActual[0]?.nivel === "1" && (
             <>
               {preguntasNivelActual
-                .sort((a, b) => a.numero - b.numero)
+                ?.sort((a, b) => a.numero - b.numero)
                 .map((pregunta, index) => (
                   <div key={index} className={styles.contenedorAux}>
                     <div className={styles.containerPreguntas2}>
@@ -320,7 +322,7 @@ const InglesPreguntas = () => {
             preguntasNivelActual[0]?.nivel === "7") && (
             <>
               {preguntasNivelActual
-                .sort((a, b) => a.numero - b.numero)
+                ?.sort((a, b) => a.numero - b.numero)
                 .map((pregunta, index) => (
                   <div key={index} className={styles.contenedorAux}>
                     <div
