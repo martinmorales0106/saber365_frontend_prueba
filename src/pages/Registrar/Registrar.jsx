@@ -97,8 +97,8 @@ const Registrar = () => {
         email,
         grado,
         colegio,
-        departamento,
-        municipio,
+        // departamento,
+        // municipio,
         password,
         repetirPassword,
       ].includes("")
