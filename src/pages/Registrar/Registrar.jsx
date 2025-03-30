@@ -59,9 +59,7 @@ const Registrar = () => {
   }
 
   const nombresDepartamentos = Array.from(
-    new Set(
-      Object.keys(colegios).map((key) => colegios[key].nombredepartamento)
-    )
+    new Set(Object.keys(colegios).map((key) => colegios[key].departamento))
   ).sort();
 
   console.log(colegios);
@@ -69,8 +67,9 @@ const Registrar = () => {
   const nombresMunicipios = Array.from(
     new Set(
       Object.keys(colegios)
-        .filter((key) => colegios[key].nombredepartamento === departamento)
-        .map((key) => colegios[key].nombremunicipio)
+        .filter((key) => colegios[key].departamento === departamento)
+        .map((key) => colegios[key].municipio
+      )
     )
   ).sort();
 
@@ -79,10 +78,10 @@ const Registrar = () => {
       Object.keys(colegios)
         .filter(
           (key) =>
-            colegios[key].nombredepartamento === departamento &&
-            colegios[key].nombremunicipio === municipio
+            colegios[key].departamento === departamento &&
+            colegios[key].municipio === municipio
         )
-        .map((key) => colegios[key].nombreestablecimiento)
+        .map((key) => colegios[key].nombre_establecimiento)
     )
   ).sort();
 

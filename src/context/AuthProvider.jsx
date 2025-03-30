@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
   const [colegios, setColegios] = useState({});
   
   useEffect(() => {
-    const apiUrl = "https://www.datos.gov.co/resource/28ii-2jxz.json";
+    const apiUrl = "https://www.datos.gov.co/resource/cfw5-qzt5.json";
     const appToken = "0mOA5CbJo9E2GsZwIAMYiqDA0";
 
     const fetchColegios = async () => {
