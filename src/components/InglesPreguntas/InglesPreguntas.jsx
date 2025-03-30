@@ -155,8 +155,6 @@ const InglesPreguntas = () => {
     (_, i) => i + 1
   );
 
-  
-
   useEffect(() => {
     const filtradas = preguntasFiltradas.filter(
       (pregunta) =>
@@ -233,12 +231,12 @@ const InglesPreguntas = () => {
                 ))}
             </div>
           ) : null}
-          {((preguntasNivelActual[0]?.imagen.length > 0 &&
-            preguntasNivelActual[0]?.nivel == "3") ||
+          {((preguntasNivelActual[0]?.imagen > 0 &&
+           preguntasNivelActual[0]?.nivel == "3" ||
             preguntasNivelActual[0]?.nivel == "4" ||
             preguntasNivelActual[0]?.nivel == "5" ||
             preguntasNivelActual[0]?.nivel == "6" ||
-            preguntasNivelActual[0]?.nivel == "7") && (
+            preguntasNivelActual[0]?.nivel == "7")) && (
             <div
               className={styles.containerImg}
               onClick={() => setImagenAmpliada(!imagenAmpliada)}
