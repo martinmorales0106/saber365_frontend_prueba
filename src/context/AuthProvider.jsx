@@ -2,7 +2,6 @@ import { useState, useEffect, createContext } from "react";
 
 import clienteAxios from "../config/clienteAxios";
 import PropTypes from "prop-types"; // Importa PropTypes
-import axios from 'axios'
 
 const AuthContext = createContext();
 
@@ -14,17 +13,9 @@ const AuthProvider = ({ children }) => {
   const [colegios, setColegios] = useState({});
   
   useEffect(() => {
-    const apiUrl = "https://www.datos.gov.co/resource/cfw5-qzt5.json";
-    const appToken = "0mOA5CbJo9E2GsZwIAMYiqDA0";
-
     const fetchColegios = async () => {
       try {
-        const response = await axios.get(apiUrl, {
-          params: {
-            $$app_token: appToken,
-            $limit: 575403,
-          },
-        });
+        const response = await clienteAxios(`/usuarios/obtener-colegios`);
         setColegios(response.data);
         const timer = setTimeout(() => {
           setCargandoCol(false);
@@ -38,7 +29,11 @@ const AuthProvider = ({ children }) => {
     };
 
     fetchColegios();
-  }, []);
+  }
+, []);
+
+console.log(colegios);
+
 
   useEffect(() => {
     const autenticarUsuario = async () => {

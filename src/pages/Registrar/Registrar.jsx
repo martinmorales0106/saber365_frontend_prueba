@@ -54,6 +54,7 @@ const Registrar = () => {
 
   const [isNewSchool, setIsNewSchool] = useState(false);
 
+
   if (!colegios) {
     return <Loading />;
   }
