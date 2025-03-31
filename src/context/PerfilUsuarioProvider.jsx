@@ -89,7 +89,8 @@ const PerfilUsuarioProvider = ({ children }) => {
     }
 
     fetchSimulacros();
-  }, []);
+  }, [auth]);
+  
 
   useEffect(() => {
     async function fetchSimulacrosFinalizados() {

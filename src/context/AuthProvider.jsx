@@ -32,9 +32,6 @@ const AuthProvider = ({ children }) => {
   }
 , []);
 
-console.log(colegios);
-
-
   useEffect(() => {
     const autenticarUsuario = async () => {
       try {

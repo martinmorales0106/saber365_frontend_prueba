@@ -63,8 +63,6 @@ const Registrar = () => {
     new Set(Object.keys(colegios).map((key) => colegios[key].departamento))
   ).sort();
 
-  console.log(colegios);
-
   const nombresMunicipios = Array.from(
     new Set(
       Object.keys(colegios)
