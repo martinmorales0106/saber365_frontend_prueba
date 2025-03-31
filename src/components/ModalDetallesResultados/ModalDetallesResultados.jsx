@@ -24,8 +24,6 @@ const ModalDetallesResultados = () => {
   const [grado, setGrado] = useState("");
   const modalRef = useRef();
 
-  console.log(resultadoArea);
-
   const handleCloseModal = (event) => {
     // Cierra la modal solo si se hace clic fuera de la ventana modal
     if (modalRef.current && !modalRef.current.contains(event.target)) {

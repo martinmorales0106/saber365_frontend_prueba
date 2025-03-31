@@ -270,7 +270,7 @@ const PerfilUsuarioProvider = ({ children }) => {
       console.log(error.message);
     }
   };
-
+  
   useEffect(() => {
     async function fetchTopPuntajeGlobal() {
       try {

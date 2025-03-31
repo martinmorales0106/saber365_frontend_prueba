@@ -94,6 +94,8 @@ const Resultados = () => {
   const puntajePorArea =
     simulacroFinalizado?.resultadoSimulacro?.puntaje_por_area || {};
 
+  console.log(simulacroFinalizado.resultadoSimulacro);
+  
   return (
     <div>
       <div className={styles.contenedor}>
@@ -117,7 +119,10 @@ const Resultados = () => {
                     <h3>
                       {
                         simulacroFinalizado?.resultadoSimulacro?.usuario
-                          .nombreUsuario
+                          .nombres
+                      }{
+                        simulacroFinalizado?.resultadoSimulacro?.usuario
+                          .apellidos
                       }
                     </h3>
                   </div>
@@ -140,7 +145,10 @@ const Resultados = () => {
                       {simulacroFinalizado?.resultadoSimulacro?.usuario.colegio}
                     </h3>
                   </div>
-                  <div className={styles.informacionDatos}></div>
+                  <div className={styles.informacionDatos}>
+                    <p>{simulacroFinalizado?.resultadoSimulacro?.usuario.municipio}</p>-
+                    <p>{simulacroFinalizado?.resultadoSimulacro?.usuario.departamento}</p>
+                  </div>
                 </div>
                 <div className={styles.datosUsuario}>
                   <div className={styles.contenedorDatos}>
