@@ -14,15 +14,15 @@ const MatematicasPreguntas = () => {
     handleSeleccionRespuesta,
     opcionesSeleccionadas,
   } = useTabs();
-
+  
   const { auth } = useAuth();
-
+ 
   const [imagenAmpliada, setImagenAmpliada] = useState(false);
 
   const preguntaActualGuardada = localStorage.getItem("matemáticasPregunta");
   const preguntaInicial = preguntaActualGuardada
     ? parseInt(preguntaActualGuardada, 10)
-    : 0;
+    : 1;
 
   const [preguntaLocal, setPreguntaLocal] = useState(preguntaInicial);
 

@@ -38,6 +38,7 @@ const PerfilUsuarioProvider = ({ children }) => {
 
   useEffect(() => {
     if (preguntasSimulacro.length > 0) {
+      if (!selectArea) return; // Evita ejecutar si no hay área seleccionada
       const filtrarPreguntas = async () => {
         const filtradas = preguntasSimulacro.filter(
           (pregunta) => pregunta.area === selectArea
@@ -48,7 +49,7 @@ const PerfilUsuarioProvider = ({ children }) => {
       filtrarPreguntas();
     }
   }, [preguntasSimulacro, selectArea]);
-
+  
   const mostrarAlerta = (alerta) => {
     setAlerta(alerta);
     setTimeout(() => {
@@ -91,8 +92,6 @@ const PerfilUsuarioProvider = ({ children }) => {
     fetchSimulacros();
   }, [auth]);
   
-  console.log(simulacrosUsuario);
-  
   useEffect(() => {
     async function fetchSimulacrosFinalizados() {
       try {
@@ -125,7 +124,7 @@ const PerfilUsuarioProvider = ({ children }) => {
     }
 
     fetchSimulacrosFinalizados();
-  }, [auth, simulacroFinalizado]);
+  }, [auth]);
 
   useEffect(() => {
     async function fetchPreguntas() {
@@ -160,7 +159,7 @@ const PerfilUsuarioProvider = ({ children }) => {
     }
 
     fetchPreguntas();
-  }, []);
+  }, [auth]);
 
   useEffect(() => {
     const obtenerPreguntasPorSimulacro = async () => {
@@ -176,7 +175,8 @@ const PerfilUsuarioProvider = ({ children }) => {
 
     obtenerPreguntasPorSimulacro();
   }, [simulacroId, preguntasUsuario]);
-
+ 
+  
   const submitPreguntas = async (respuesta) => {
     const token = localStorage.getItem("token");
     if (!token) return;

@@ -116,6 +116,9 @@ const RealizarPrueba = () => {
     obtenerSimulacrosFinalizados,
     navigate,
     simulacroRealizado,
+    auth.id,
+    setSelectArea,
+    setSimulacroId,
   ]);
 
   return (

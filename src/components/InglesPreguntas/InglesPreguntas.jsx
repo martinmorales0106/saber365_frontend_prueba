@@ -22,7 +22,7 @@ const InglesPreguntas = () => {
 
   const {
     selectedTab,
-    setSelectedTab,
+    handleTabChange,
     handleSeleccionRespuesta,
     opcionesSeleccionadas,
     setOpcionesSeleccionadas,
@@ -53,7 +53,7 @@ const InglesPreguntas = () => {
   }, new Set());
 
   const numerosPreguntas = Array?.from(nivelesUnicos).sort((a, b) => a - b);
-
+ 
   const mostrarSiguientes = () => {
     setPreguntaLocal((prev) => prev + 1);
     setImagenAmpliada(false);
@@ -129,7 +129,7 @@ const InglesPreguntas = () => {
 
       setOpcionesSeleccionadas("");
       setTiempoAgotado(false); // Reiniciar el estado de tiempo agotado
-      setSelectedTab("Matemáticas");
+      handleTabChange("Matemáticas");
       localStorage.setItem("inglesPregunta", "0");
       localStorage.setItem("lecturaPregunta", "0");
       localStorage.setItem("matemáticasPregunta", "0");

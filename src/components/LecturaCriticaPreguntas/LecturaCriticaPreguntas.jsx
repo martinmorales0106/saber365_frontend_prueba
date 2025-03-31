@@ -19,7 +19,7 @@ const LecturaCriticaPreguntas = () => {
   const preguntaActualGuardada = localStorage.getItem("lecturaPregunta");
   const preguntaInicial = preguntaActualGuardada
     ? parseInt(preguntaActualGuardada, 10)
-    : 0;
+    : 1;
 
   const [preguntaLocal, setPreguntaLocal] = useState(preguntaInicial);
 
