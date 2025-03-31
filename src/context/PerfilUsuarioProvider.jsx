@@ -91,7 +91,8 @@ const PerfilUsuarioProvider = ({ children }) => {
     fetchSimulacros();
   }, [auth]);
   
-
+  console.log(simulacrosUsuario);
+  
   useEffect(() => {
     async function fetchSimulacrosFinalizados() {
       try {
