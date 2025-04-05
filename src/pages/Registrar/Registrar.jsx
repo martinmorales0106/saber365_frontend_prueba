@@ -67,7 +67,7 @@ const Registrar = () => {
     new Set(
       Object.keys(colegios)
         .filter((key) => colegios[key].departamento === departamento)
-        .map((key) => colegios[key].municipio
+        .map((key) => colegios[key].municipio.toUpperCase()
       )
     )
   ).sort();
@@ -78,7 +78,7 @@ const Registrar = () => {
         .filter(
           (key) =>
             colegios[key].departamento === departamento &&
-            colegios[key].municipio === municipio
+            colegios[key].municipio.toUpperCase() === municipio
         )
         .map((key) => colegios[key].nombre_establecimiento)
     )
@@ -95,8 +95,8 @@ const Registrar = () => {
         email,
         grado,
         colegio,
-        // departamento,
-        // municipio,
+        departamento,
+        municipio,
         password,
         repetirPassword,
       ].includes("")
@@ -143,7 +143,7 @@ const Registrar = () => {
         nombres,
         apellidos,
         departamento,
-        municipio,
+        municipio: municipio.toUpperCase(),
       });
 
       setAlerta({

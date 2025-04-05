@@ -25,6 +25,7 @@ import naturalesImg from "../../assets/naturalesImg.png";
 import inglesImg from "../../assets/inglesImg.png";
 import ciudadanaImg from "../../assets/ciudadanaImg.png";
 import NoResultado from "../../components/NoResultado/NoResultado";
+import { useState } from "react";
 
 // Registrar los componentes de Chart.js
 ChartJS.register(
@@ -166,6 +167,8 @@ const UsuarioInicio = () => {
   const { topPuntajeGlobal, topPuntajePorArea, simulacrosCompletados } =
     usePerfilUsuario();
 
+  const [areaSeleccionada, setAreaSeleccionada] = useState("Matemáticas");
+
   const groupedSimulacros = groupByGrade(simulacrosCompletados);
 
   simulacrosCompletados.sort(
@@ -203,7 +206,6 @@ const UsuarioInicio = () => {
     }
   };
 
-  console.log(topPuntajePorArea);
   return (
     <div className={styles.fondo}>
       <div className={styles.container}>
@@ -223,8 +225,30 @@ const UsuarioInicio = () => {
             <img src={bannerUsuarioImg} />
           </div>
           {simulacrosCompletados.length > 0 && (
-            <h3 className={styles.desempeño}>Desempeño por Simulacro</h3>
+            <h2 className={styles.desempeño}>Desempeño por Simulacro</h2>
           )}
+
+          {simulacrosCompletados.length > 0 && (
+            <div className={styles.contenedorNivelDesempeño}>
+              <p>
+                En la siguiente gráfica se presenta el rendimiento obtenido en
+                cada una de las áreas evaluadas durante los simulacros. Esta
+                visualización permite identificar fortalezas y oportunidades de
+                mejora en asignaturas clave como{" "}
+                <strong>
+                  Inglés, Lenguaje: Lectura Crítica, Matemáticas, Ciencias
+                  Naturales y Sociales: Competencias Ciudadanas
+                </strong>
+                , proporcionando una visión integral del desempeño académico.
+              </p>
+              <p>
+                Cada barra representa el puntaje obtenido en el simulacro, lo
+                que facilita la comparación entre áreas y ayuda a establecer
+                estrategias para mejorar el desempeño en futuras evaluaciones.
+              </p>
+            </div>
+          )}
+
           {simulacrosCompletados.length > 0 ? (
             <>
               {Object.keys(groupedSimulacros).map((grade) => (
@@ -242,7 +266,7 @@ const UsuarioInicio = () => {
             />
           )}
           {topPuntajeGlobal.mejoresPuntajesGlobales.length > 0 && (
-            <h3 className={styles.h2MejorePuntajes}>Top mejores puntajes</h3>
+            <h2 className={styles.h2MejorePuntajes}>Top mejores puntajes</h2>
           )}
           <div className={styles.contenedorTop}>
             <div className={styles.topEstudiantes}>
@@ -322,16 +346,32 @@ const UsuarioInicio = () => {
             <div className={styles.contenedorPorArea}>
               {topPuntajePorArea["Matemáticas"].mejoresPuntajesPorArea.length >
                 0 && <h4>Según puntajes por área</h4>}
+              {Object.keys(topPuntajePorArea).map((area) => (
+                <button
+                  key={area}
+                  className={`${styles.botonArea} ${
+                    areaSeleccionada === area ? styles.botonActivo : ""
+                  }`}
+                  onClick={() => setAreaSeleccionada(area)}
+                >
+                  {area}
+                </button>
+              ))}
+              
               {topPuntajePorArea["Matemáticas"].mejoresPuntajesPorArea.length >
               0 ? (
                 <div className={styles.areasContainer}>
-                  {Object.keys(topPuntajePorArea).map((area, index) => {
+                  {(areaSeleccionada ? [areaSeleccionada] : Object.keys(topPuntajePorArea)).map((area, index) => {
                     const areaData = topPuntajePorArea[area];
                     if (
                       !areaData.mayorPuntajeUsuario &&
                       areaData.mejoresPuntajesPorArea.length === 0
                     ) {
-                      return null;
+                      return (
+                        <div key={index} className={styles.areaVacia}>
+                          <p>No hay puntajes registrados para el área <strong>{area}</strong>.</p>
+                        </div>
+                      );
                     }
                     return (
                       <div key={index} className={styles.areaItem}>
@@ -376,6 +416,56 @@ const UsuarioInicio = () => {
                                 </div>
                               </li>
                             ))}
+                            {!topPuntajePorArea[
+                              area
+                            ]?.mejoresPuntajesPorArea?.some(
+                              (puntaje) =>
+                                puntaje.id_usuario ===
+                                topPuntajePorArea[area]?.mayorPuntajeUsuario
+                                  ?.id_usuario
+                            ) &&
+                              topPuntajePorArea[area]?.mayorPuntajeUsuario && (
+                                <div className={styles.miPuntaje}>
+                                  <div className={styles.contenedorNumero}>
+                                    <span className={styles.indiceNumero}>
+                                      {
+                                        topPuntajePorArea[area]
+                                          ?.mayorPuntajeUsuario.posicion
+                                      }
+                                    </span>
+                                  </div>
+                                  <div className={styles.usuarioInfo}>
+                                    <span className={styles.nombreUsuario}>
+                                      {
+                                        topPuntajePorArea[area]
+                                          ?.mayorPuntajeUsuario.nombreUsuario
+                                      }
+                                    </span>
+                                    <span className={styles.grado}>
+                                      {
+                                        topPuntajePorArea[area]
+                                          ?.mayorPuntajeUsuario.grado
+                                      }
+                                    </span>
+                                  </div>
+                                  <div className={styles.usuarioInfo}>
+                                    <span className={styles.puntajeArea}>
+                                      {Math.ceil(
+                                        topPuntajePorArea[area]
+                                          ?.mayorPuntajeUsuario.puntaje_area
+                                      )}
+                                    </span>
+                                  </div>
+                                  <div>
+                                    <span className={styles.tituloSimulacro}>
+                                      {
+                                        topPuntajePorArea[area]
+                                          ?.mayorPuntajeUsuario.titulo
+                                      }
+                                    </span>
+                                  </div>
+                                </div>
+                              )}
                           </ul>
                         </div>
                       </div>
@@ -383,6 +473,7 @@ const UsuarioInicio = () => {
                   })}
                 </div>
               ) : null}
+              {/* Agregar el mayor puntaje del usuario si no está en los tres primeros */}
             </div>
           </div>
           {simulacrosMasRecientes.length > 0 && (

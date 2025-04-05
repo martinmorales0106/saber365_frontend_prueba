@@ -27,7 +27,7 @@
 .banner {
   display: flex;
   background-color: #2ecc71;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 25px;
   margin-bottom: 1rem;
   /* Espacio opcional para separar del contenido siguiente */
@@ -49,10 +49,31 @@
   padding-right: 2rem;
   padding-left: 2rem;
   text-align: center;
-  font-size: large;
-  font-weight: 400;
+  font-size:larger;
+  font-weight:600;
 }
 
+.contenedorNivelDesempeño {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: justify;
+  padding: 1rem;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  border-radius: 25px;
+  font-size: large;
+  background-color: #f9f9f9; /* Color de fondo suave */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.contenedorNivelDesempeño p {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  line-height: 1.6; /* Espaciado entre líneas */
+  color: #3d3c3c;
+  margin-bottom: 0.5rem;
+}
 .contenedorTop {
   display: flex;
   width: 100%;
@@ -84,9 +105,9 @@
   margin: 0.4rem;
   padding: 0.3rem;
   display: flex;
-  background-color: #eef1f1;
-  align-items: center;
-  width: 40%;
+  background-color: #eef1ee;
+  align-items:center;
+  width: 80%;
   justify-content: space-between;
   border: 2px solid #2ecc71;
 }
@@ -139,6 +160,7 @@
   text-align: center;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+ 
 }
 
 .nombreUsuario {
@@ -227,7 +249,7 @@
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   transition: transform 0.3s ease;
-  background-color: #d7fbfd7c;
+  background-color: #c9f3f5b4;
 }
 
 .simulacros:hover {
@@ -277,17 +299,17 @@
 
 .desempeño {
   margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
   text-align: center;
-  padding: 1rem;
+  color: #333;
 }
+
 .areaItem {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
 .grafico {
-  width: 100%;
+  width: 75%;
   background-color: #ffffff;
   margin-bottom: 2rem;
   border-radius: 5rem;
@@ -301,6 +323,22 @@
   width: 100%;
   height: 400px; /* Ajusta la altura según tus necesidades */
 }
+
+.botonArea {
+  margin: 5px;
+  padding: 6px 12px;
+  border: none;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.botonActivo {
+  background-color: #b87a07;
+  color: white;
+}
+
+
 
 @media (max-width: 768px) {
   .chartContainer {

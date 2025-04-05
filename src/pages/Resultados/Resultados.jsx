@@ -95,7 +95,7 @@ const Resultados = () => {
     simulacroFinalizado?.resultadoSimulacro?.puntaje_por_area || {};
 
   console.log(simulacroFinalizado.resultadoSimulacro);
-  
+
   return (
     <div>
       <div className={styles.contenedor}>
@@ -117,10 +117,8 @@ const Resultados = () => {
                       />
                     </div>
                     <h3>
+                      {simulacroFinalizado?.resultadoSimulacro?.usuario.nombres}{" "}
                       {
-                        simulacroFinalizado?.resultadoSimulacro?.usuario
-                          .nombres
-                      }{
                         simulacroFinalizado?.resultadoSimulacro?.usuario
                           .apellidos
                       }
@@ -146,8 +144,19 @@ const Resultados = () => {
                     </h3>
                   </div>
                   <div className={styles.informacionDatos}>
-                    <p>{simulacroFinalizado?.resultadoSimulacro?.usuario.municipio}</p>-
-                    <p>{simulacroFinalizado?.resultadoSimulacro?.usuario.departamento}</p>
+                    <p>
+                      {
+                        simulacroFinalizado?.resultadoSimulacro?.usuario
+                          .municipio
+                      }
+                    </p>
+                    -
+                    <p>
+                      {
+                        simulacroFinalizado?.resultadoSimulacro?.usuario
+                          .departamento
+                      }
+                    </p>
                   </div>
                 </div>
                 <div className={styles.datosUsuario}>
@@ -312,7 +321,9 @@ const Resultados = () => {
                             nivel: nivelPorArea[area],
                             puesto: posicionPorArea[area],
                             area,
-                            grado: simulacroFinalizado?.resultadoSimulacro?.simulacro.grado
+                            grado:
+                              simulacroFinalizado?.resultadoSimulacro?.simulacro
+                                .grado,
                           })
                         }
                       />
