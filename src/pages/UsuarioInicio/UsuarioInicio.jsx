@@ -173,17 +173,20 @@ const obtenerNivelDesempeño = (puntaje) => {
   } else if (puntaje <= 300) {
     return {
       nivel: "Mínimo",
-      mensaje: "Estás progresando bien. Sigue practicando y pronto dominarás aún más conceptos.",
+      mensaje:
+        "Estás progresando bien. Sigue practicando y pronto dominarás aún más conceptos.",
     };
   } else if (puntaje <= 380) {
     return {
       nivel: "Satisfactorio",
-      mensaje: '¡Excelente trabajo! Demuestras un buen dominio de los conceptos. Sigue reforzando tus habilidades para llegar aún más lejos.',
+      mensaje:
+        "¡Excelente trabajo! Demuestras un buen dominio de los conceptos. Sigue reforzando tus habilidades para llegar aún más lejos.",
     };
   } else {
     return {
       nivel: "Avanzado",
-      mensaje:"¡Felicidades! Has alcanzado un nivel avanzado en este proceso. Tu dedicación y esfuerzo se reflejan en un desempeño más elavado."
+      mensaje:
+        "¡Felicidades! Has alcanzado un nivel avanzado en este proceso. Tu dedicación y esfuerzo se reflejan en un desempeño más elavado.",
     };
   }
 };
@@ -201,6 +204,11 @@ const UsuarioInicio = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
+  console.log(simulacrosCompletados);
+
+  // total de simulacros completados
+  const totalSimulacros = simulacrosCompletados.length;
+
   // sacar los puntajes del usuario
   const puntajesGlobales = simulacrosCompletados.map(
     (sim) => sim.puntaje_global
@@ -208,8 +216,14 @@ const UsuarioInicio = () => {
 
   // Obtener el puntaje más alto
   const puntajeMasAlto = Math.max(...puntajesGlobales);
-
   const { nivel, mensaje } = obtenerNivelDesempeño(puntajeMasAlto);
+
+  // promedio de puntajes
+  const totalPuntajes = puntajesGlobales.reduce((acc, curr) => acc + curr, 0);
+  const puntajePromedio =
+    puntajesGlobales.length > 0
+      ? (totalPuntajes / puntajesGlobales.length).toFixed(0)
+      : 0;
 
   // Obtener los dos simulacros más recientes
   const simulacrosMasRecientes = simulacrosCompletados.slice(0, 2);
@@ -242,6 +256,13 @@ const UsuarioInicio = () => {
     }
   };
 
+  const claseFondoPorNivel = {
+    Insuficiente: styles.insuficiente,
+    Mínimo: styles.minimo,
+    Satisfactorio: styles.satisfactorio,
+    Avanzado: styles.avanzado,
+  };
+
   return (
     <div className={styles.fondo}>
       <div className={styles.container}>
@@ -260,16 +281,41 @@ const UsuarioInicio = () => {
             </div>
             <img src={bannerUsuarioImg} />
           </div>
-          <h2 className={styles.tituloBarraProgreso}>Tu Desempeño</h2>
-          <div className={styles.contenedorBarraProgreso}>
-            <div className={styles.contenedorBarra}>
-              <BarraProgreso current={puntajeMasAlto} />
+          {simulacrosCompletados.length > 0 && (
+            <h2 className={styles.tituloBarraProgreso}>Tu Desempeño</h2>
+          )}
+          {simulacrosCompletados.length > 0 && (
+            <div className={styles.contenedorBarraProgreso}>
+              <div className={styles.contenedorBarra}>
+                <BarraProgreso current={puntajeMasAlto} />
+              </div>
+              <div
+                className={`${styles.contenedorNivelAlcanzado} ${claseFondoPorNivel[nivel]}`}
+              >
+                <h2 className={styles.nivelDesempeño}>
+                  Nivel de Desempeño: {nivel}
+                </h2>
+                <p className={styles.nivelMensaje}>{mensaje}</p>
+              </div>
             </div>
-            <div className={styles.contenedorNivelAlcanzado}>
-              <h2 className={styles.nivelDesempeño}>Nivel de Desempeño: {nivel}</h2>
-              <p className={styles.nivelMensaje}>{mensaje}</p>
+          )}
+          {simulacrosCompletados.length > 0 && (
+            <div className={styles.contenedorEstadistica}>
+              <div className={styles.cardEstadistica}>
+                <div className={styles.valor}>{puntajeMasAlto}</div>
+                <div className={styles.label}>Mejor Puntaje</div>
+              </div>
+              <div className={styles.cardEstadistica}>
+                <div className={styles.valor}>{totalSimulacros}</div>
+                <div className={styles.label}>Simulacros Completados</div>
+              </div>
+              <div className={styles.cardEstadistica}>
+                <div className={styles.valor}>{puntajePromedio}</div>
+                <div className={styles.label}>Puntaje Promedio</div>
+              </div>
             </div>
-          </div>
+          )}
+
           {simulacrosCompletados.length > 0 && (
             <h2 className={styles.desempeño}>Gráfica de desempeño por área</h2>
           )}

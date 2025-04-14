@@ -80,10 +80,33 @@
 .contenedorNivelAlcanzado{
   width: 100%;
   margin: 1rem;
+  margin-right: 1rem;
   padding: 2rem;
-  background-color: #f3ecec;
   border-radius: 25px;
+  background-color: #f4eeee; /* Color de fondo suave */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
+
+.insuficiente {
+  background-color: #d9a491; 
+  border-left: 5px solid #653328;
+}
+
+.minimo {
+  background-color: #ffcdbd; 
+  border-left: 5px solid #E04A09;
+}
+
+.satisfactorio {
+  background-color: #fef7b2;
+  border-left: 5px solid #D8DC2C;
+}
+
+.avanzado {
+  background-color: #c8fdca; 
+  border-left: 5px solid #18C83F;
+}
+
 
 .nivelDesempeño {
   padding-top: 2rem;
@@ -98,7 +121,46 @@
   margin-bottom: 1rem; /* Espacio inferior opcional */
 }
 
+.contenedorEstadistica {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin: 1rem auto;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+}
 
+.cardEstadistica {
+  flex: 1 1 200px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.cardEstadistica:hover {
+  transform: translateY(-5px);
+}
+
+.valor {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+.label {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: #060606;
+}
+/* Fin estilos barra de progresos */
+/* Estilos para el contenedor de la gráfica de desempeño */
 .contenedorNivelDesempeño {
   margin-top: 1rem;
   margin-bottom: 1rem;

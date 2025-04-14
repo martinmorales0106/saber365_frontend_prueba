@@ -194,7 +194,6 @@ function polarToCartesian(cx, cy, r, angleDeg) {
 }
 
 BarraProgreso.propTypes = {
-  goal: PropTypes.number.isRequired,
   current: PropTypes.number.isRequired,
 };
 
