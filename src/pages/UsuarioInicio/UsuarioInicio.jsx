@@ -26,6 +26,7 @@ import inglesImg from "../../assets/inglesImg.png";
 import ciudadanaImg from "../../assets/ciudadanaImg.png";
 import NoResultado from "../../components/NoResultado/NoResultado";
 import { useState } from "react";
+import BarraProgreso from "../../components/BarraProgreso/BarraProgreso";
 
 // Registrar los componentes de Chart.js
 ChartJS.register(
@@ -162,6 +163,31 @@ const barChart = (simulacrosCompletados) => {
   return <Bar data={data} options={options} />;
 };
 
+const obtenerNivelDesempeño = (puntaje) => {
+  if (puntaje <= 220) {
+    return {
+      nivel: "Insuficiente",
+      mensaje:
+        "Estás dando los primeros pasos. No te desanimes, cada intento te acerca más a mejorar tus habilidades.",
+    };
+  } else if (puntaje <= 300) {
+    return {
+      nivel: "Mínimo",
+      mensaje: "Estás progresando bien. Sigue practicando y pronto dominarás aún más conceptos.",
+    };
+  } else if (puntaje <= 380) {
+    return {
+      nivel: "Satisfactorio",
+      mensaje: '¡Excelente trabajo! Demuestras un buen dominio de los conceptos. Sigue reforzando tus habilidades para llegar aún más lejos.',
+    };
+  } else {
+    return {
+      nivel: "Avanzado",
+      mensaje:"¡Felicidades! Has alcanzado un nivel avanzado en este proceso. Tu dedicación y esfuerzo se reflejan en un desempeño más elavado."
+    };
+  }
+};
+
 const UsuarioInicio = () => {
   const { auth } = useAuth();
   const { topPuntajeGlobal, topPuntajePorArea, simulacrosCompletados } =
@@ -174,6 +200,16 @@ const UsuarioInicio = () => {
   simulacrosCompletados.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
+
+  // sacar los puntajes del usuario
+  const puntajesGlobales = simulacrosCompletados.map(
+    (sim) => sim.puntaje_global
+  );
+
+  // Obtener el puntaje más alto
+  const puntajeMasAlto = Math.max(...puntajesGlobales);
+
+  const { nivel, mensaje } = obtenerNivelDesempeño(puntajeMasAlto);
 
   // Obtener los dos simulacros más recientes
   const simulacrosMasRecientes = simulacrosCompletados.slice(0, 2);
@@ -224,8 +260,18 @@ const UsuarioInicio = () => {
             </div>
             <img src={bannerUsuarioImg} />
           </div>
+          <h2 className={styles.tituloBarraProgreso}>Tu Desempeño</h2>
+          <div className={styles.contenedorBarraProgreso}>
+            <div className={styles.contenedorBarra}>
+              <BarraProgreso current={puntajeMasAlto} />
+            </div>
+            <div className={styles.contenedorNivelAlcanzado}>
+              <h2 className={styles.nivelDesempeño}>Nivel de Desempeño: {nivel}</h2>
+              <p className={styles.nivelMensaje}>{mensaje}</p>
+            </div>
+          </div>
           {simulacrosCompletados.length > 0 && (
-            <h2 className={styles.desempeño}>Desempeño por Simulacro</h2>
+            <h2 className={styles.desempeño}>Gráfica de desempeño por área</h2>
           )}
 
           {simulacrosCompletados.length > 0 && (
@@ -265,6 +311,7 @@ const UsuarioInicio = () => {
               textBoton="Realizar un simulacro"
             />
           )}
+
           {topPuntajeGlobal.mejoresPuntajesGlobales.length > 0 && (
             <h2 className={styles.h2MejorePuntajes}>Top mejores puntajes</h2>
           )}
@@ -357,11 +404,14 @@ const UsuarioInicio = () => {
                   {area}
                 </button>
               ))}
-              
+
               {topPuntajePorArea["Matemáticas"].mejoresPuntajesPorArea.length >
               0 ? (
                 <div className={styles.areasContainer}>
-                  {(areaSeleccionada ? [areaSeleccionada] : Object.keys(topPuntajePorArea)).map((area, index) => {
+                  {(areaSeleccionada
+                    ? [areaSeleccionada]
+                    : Object.keys(topPuntajePorArea)
+                  ).map((area, index) => {
                     const areaData = topPuntajePorArea[area];
                     if (
                       !areaData.mayorPuntajeUsuario &&
@@ -369,7 +419,10 @@ const UsuarioInicio = () => {
                     ) {
                       return (
                         <div key={index} className={styles.areaVacia}>
-                          <p>No hay puntajes registrados para el área <strong>{area}</strong>.</p>
+                          <p>
+                            No hay puntajes registrados para el área{" "}
+                            <strong>{area}</strong>.
+                          </p>
                         </div>
                       );
                     }

@@ -53,6 +53,52 @@
   font-weight:600;
 }
 
+/* Estilos barra de progresos */
+.contenedorBarraProgreso{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.contenedorBarra {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.tituloBarraProgreso {
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.contenedorNivelAlcanzado{
+  width: 100%;
+  margin: 1rem;
+  padding: 2rem;
+  background-color: #f3ecec;
+  border-radius: 25px;
+}
+
+.nivelDesempeño {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.nivelMensaje {
+  width: 100%;
+  font-size: large;
+  text-align: justify;
+  color: #333; /* Color del texto */
+  margin-bottom: 1rem; /* Espacio inferior opcional */
+}
+
+
 .contenedorNivelDesempeño {
   margin-top: 1rem;
   margin-bottom: 1rem;
