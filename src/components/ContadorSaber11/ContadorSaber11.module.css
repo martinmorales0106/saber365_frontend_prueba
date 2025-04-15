@@ -1,0 +1,73 @@
+.contadorContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background-color: #fff0f0;
+    border: 2px solid #ff6b6b;
+    border-radius: 16px;
+    padding: 20px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 18px;
+    max-width: 500px;
+    margin: 40px auto;
+    box-shadow: 0 8px 20px rgba(255, 0, 0, 0.15);
+    animation: entrada 1s ease-out forwards;
+  }
+  
+  .iconoReloj {
+    font-size: 48px;
+    animation: pulse 1.2s infinite;
+    align-items: center;
+  }
+  
+  .contenido h2 {
+    font-size: 20px;
+    color: #c70000;
+    margin: 0.5rem;
+    text-align: center;
+  }
+  
+  .contenido p {
+    font-size: 18px;
+    color: #333;
+    margin-top: 8px;
+  }
+  
+  .dias {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d10000;
+  }
+  
+  .cerrarPopup {
+    position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  color: #b00000;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  }
+  
+  @keyframes entrada {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.15);
+    }
+  }
+  

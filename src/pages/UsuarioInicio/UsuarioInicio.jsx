@@ -27,6 +27,7 @@ import ciudadanaImg from "../../assets/ciudadanaImg.png";
 import NoResultado from "../../components/NoResultado/NoResultado";
 import { useState } from "react";
 import BarraProgreso from "../../components/BarraProgreso/BarraProgreso";
+import ContadorSaber11 from "../../components/ContadorSaber11/ContadorSaber11";
 
 // Registrar los componentes de Chart.js
 ChartJS.register(
@@ -281,8 +282,11 @@ const UsuarioInicio = () => {
             </div>
             <img src={bannerUsuarioImg} />
           </div>
+          <div>
+           <ContadorSaber11 />
+          </div>
           {simulacrosCompletados.length > 0 && (
-            <h2 className={styles.tituloBarraProgreso}>Tu Desempeño</h2>
+            <h2 className={styles.tituloBarraProgreso}>Desempeño General</h2>
           )}
           {simulacrosCompletados.length > 0 && (
             <div className={styles.contenedorBarraProgreso}>
@@ -316,6 +320,7 @@ const UsuarioInicio = () => {
             </div>
           )}
 
+          
           {simulacrosCompletados.length > 0 && (
             <h2 className={styles.desempeño}>Gráfica de desempeño por área</h2>
           )}
