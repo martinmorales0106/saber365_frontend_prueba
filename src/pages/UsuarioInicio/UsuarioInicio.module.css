@@ -29,7 +29,6 @@
   background-color: #2ecc71;
   padding: 2rem;
   border-radius: 25px;
-  margin-bottom: 1rem;
   /* Espacio opcional para separar del contenido siguiente */
 }
 
@@ -49,35 +48,38 @@
   padding-right: 2rem;
   padding-left: 2rem;
   text-align: center;
-  font-size:larger;
-  font-weight:600;
+  font-size: larger;
+  font-weight: 600;
 }
 
 /* Estilos barra de progresos */
-.contenedorBarraProgreso{
+.contenedorBarraProgreso {
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  text-align: center;
+  flex-direction: row; /* Por defecto: en fila (para pantallas grandes) */
   justify-content: center;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  gap: 1rem; /* Espacio entre barra y nivel */
+  box-sizing: border-box;
+  padding: 2rem;
 }
 .contenedorBarra {
+  flex: 1;
   width: 100%;
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
-
 }
 
 .tituloBarraProgreso {
   text-align: center;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 1.5rem;
 }
 
-.contenedorNivelAlcanzado{
+.contenedorNivelAlcanzado {
+  flex: 1;
   width: 100%;
   margin: 1rem;
   margin-right: 1rem;
@@ -85,63 +87,73 @@
   border-radius: 25px;
   background-color: #f4eeee; /* Color de fondo suave */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  box-sizing: border-box;
 }
 
 .insuficiente {
-  background-color: #d9a491; 
+  background-color: #ffa584;
   border-left: 5px solid #653328;
 }
 
 .minimo {
-  background-color: #ffcdbd; 
-  border-left: 5px solid #E04A09;
+  background-color: #FBB6A0;
+  border-left: 5px solid #e04a09;
 }
 
 .satisfactorio {
-  background-color: #fef7b2;
-  border-left: 5px solid #D8DC2C;
+  background-color: #FFF8B0;
+  border-left: 5px solid #d8dc2c;
 }
 
 .avanzado {
-  background-color: #c8fdca; 
-  border-left: 5px solid #18C83F;
+  background-color: #c5ffc7;
+  border-left: 5px solid #18c83f;
 }
-
 
 .nivelDesempeño {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #07090a;
+  text-align: center;
 }
+
 
 .nivelMensaje {
   width: 100%;
-  font-size: large;
   text-align: justify;
-  color: #333; /* Color del texto */
+  color: #07090a; /* Color del texto */
   margin-bottom: 1rem; /* Espacio inferior opcional */
+  font-size: 1rem;
+
 }
 
 .contenedorEstadistica {
-  width: 100%;
+  width: 97%;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   gap: 1rem;
-  margin: 1rem auto;
+  margin: 1rem;
   padding: 1rem;
-  background-color: #f9f9f9;
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   flex-wrap: wrap;
 }
 
 .cardEstadistica {
-  flex: 1 1 200px;
+  flex: 0 1 180px; /* mismo ancho para todos, pero permite adaptarse */
   background-color: #ffffff;
   border-radius: 10px;
   padding: 1rem;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .cardEstadistica:hover {
@@ -149,7 +161,7 @@
 }
 
 .valor {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: #000000;
 }
@@ -158,151 +170,25 @@
   margin-top: 0.5rem;
   font-size: 1.1rem;
   color: #060606;
-}
-/* Fin estilos barra de progresos */
-/* Estilos para el contenedor de la gráfica de desempeño */
-.contenedorNivelDesempeño {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  text-align: justify;
-  padding: 1rem;
-  padding-left: 5rem;
-  padding-right: 5rem;
-  border-radius: 25px;
-  font-size: large;
-  background-color: #f9f9f9; /* Color de fondo suave */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-}
-
-.contenedorNivelDesempeño p {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  line-height: 1.6; /* Espaciado entre líneas */
-  color: #3d3c3c;
-  margin-bottom: 0.5rem;
-}
-.contenedorTop {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  padding-bottom: 1rem;
-  margin: 1rem;
-  margin-top: 1.5rem;
-}
-
-.topEstudiantes {
-  margin-top: 0.5rem; /* Espacio superior opcional */
-  width: 50%;
-}
-
-.itemPuntaje {
-  margin: 0.4rem;
-  counter-increment: custom-counter;
-  padding: 0.3rem;
-  display: flex;
-  background-color: #eef1f1;
-  align-items: center;
-  width: 80%;
-  justify-content: space-between;
-}
-
-.miPuntaje {
-  margin: 0.4rem;
-  padding: 0.3rem;
-  display: flex;
-  background-color: #eef1ee;
-  align-items:center;
-  width: 80%;
-  justify-content: space-between;
-  border: 2px solid #2ecc71;
-}
-
-.itemPuntaje::before {
-  content: counter(custom-counter);
-  display: inline-block;
-  width: 1.5rem; /* Ancho del número */
-  height: 1.5rem; /* Altura del número */
-  background-color: #2ecc71; /* Color de fondo del número */
-  color: white; /* Color del texto del número */
-  font-size: 1rem; /* Tamaño del texto del número */
-  font-weight: bold; /* Peso de la fuente del número */
-  text-align: center; /* Alineación del texto del número */
-  align-items: center;
-  justify-content: center;
-  line-height: 1.5rem; /* Altura de línea del número */
-  margin-right: 0.5rem; /* Margen derecho entre el número y el contenido */
-  border-radius: 25%; /* Redondeado del fondo del número */
-}
-
-.indiceNumero {
-  display: inline-flex;
-  width: 1.5rem; /* Ancho del número */
-  height: 1.5rem; /* Altura del número */
-  background-color: #2ecc71; /* Color de fondo del número */
-  color: white; /* Color del texto del número */
-  font-size: 1rem; /* Tamaño del texto del número */
-  font-weight: bold; /* Peso de la fuente del número */
-  text-align: center; /* Alineación del texto del número */
-  align-items: center;
-  justify-content: center;
-  line-height: 1.5rem; /* Altura de línea del número */
-  border-radius: 25%; /* Redondeado del fondo del número */
-}
-
-.contenedorNumero {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: start;
-  text-align: start;
-}
-
-.usuarioInfo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
- 
 }
 
-.nombreUsuario {
-  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
-  color: #333; /* Color del texto del nombre de usuario */
-  font-weight: bold; /* Peso de la fuente del nombre de usuario */
-  text-transform: capitalize; /* Transforma el texto a mayúsculas */
-  align-items: center;
+/* Estilos diferenciados para mejor y peor materia */
+.mejorMateria .valor {
+  color: #16a34a; /* verde */
 }
 
-.grado {
-  font-size: 0.9rem; /* Tamaño de la fuente del nombre de usuario */
-  color: #333; /* Color del texto del nombre de usuario */
-  font-weight: bold; /* Peso de la fuente del nombre de usuario */
-  text-transform: lowercase; /* Transforma el texto a mayúsculas */
-  align-items: center;
+.peorMateria .valor {
+  color: #dc2626; /* rojo */
 }
 
-.puntajeGlobal {
-  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
-  color: #333333; /* Color del texto del nombre de usuario */
-  font-weight: bold; /* Peso de la fuente del nombre de usuario */
-}
+/* Fin estilos barra de progresos */
 
-.tiempoPrueba {
-  font-size: 0.9rem; /* Tamaño de la fuente del nombre de usuario */
-  color: #333; /* Color del texto del nombre de usuario */
-  font-weight: bold; /* Peso de la fuente del nombre de usuario */
-}
-
-.tituloSimulacro {
-  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+.tituloSimulacroUltimos {
+  margin-top: 2.5rem;
   color: #333; /* Color del texto del nombre de usuario */
   font-weight: bold;
+  text-align: center;
 }
 
 .bordeVerde {
@@ -338,7 +224,7 @@
 
 .containerPruebas {
   width: 100%;
-  padding: 1%;
+  padding: 2;
   background-color: white;
   border-radius: 25px;
   display: flex;
@@ -347,7 +233,6 @@
   align-items: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
-
 }
 
 .simulacros {
@@ -356,8 +241,11 @@
   margin: 0.5rem;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
+  padding: 1rem;
   transition: transform 0.3s ease;
   background-color: #c9f3f5b4;
+  padding: 1rem 0;
+  padding-bottom: 2rem;
 }
 
 .simulacros:hover {
@@ -382,18 +270,18 @@
   color: #001f3f;
 }
 
-.tituloPrueba{
+.tituloPrueba {
   padding-left: 1rem;
-  color:#001f3f;
+  color: #001f3f;
 }
 
-.fechaSimulacro{
+.fechaSimulacro {
   padding-left: 1rem;
 }
 
-.contenedorPuntajes{
+.contenedorPuntajes {
   padding-left: 1rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .span {
@@ -416,20 +304,8 @@
   padding-bottom: 0.5rem;
 }
 
-.grafico {
-  width: 75%;
-  background-color: #ffffff;
-  margin-bottom: 2rem;
-  border-radius: 5rem;
-}
-
 .h2MejorePuntajes {
   margin-top: 1rem;
-}
-
-.chartContainer {
-  width: 100%;
-  height: 400px; /* Ajusta la altura según tus necesidades */
 }
 
 .botonArea {
@@ -446,16 +322,204 @@
   color: white;
 }
 
+.contenedor {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #1a202c; /* gris oscuro */
+}
+
+.mensaje {
+  text-align: center;
+  color: #4a5568; /* gris medio */
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.seccionGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.tarjeta {
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-4px);
+}
+.contador {
+  background-color: #fffaf0;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+
+.contenedorInterno {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+}
 
 
-@media (max-width: 768px) {
-  .chartContainer {
-    height: 300px; /* Ajusta la altura para pantallas más pequeñas */
+.contenedorTexto {
+  display: flex;
+  text-align: center;
+  margin-top: 1rem;
+ 
+}
+.contenedorTexto2 {
+  text-align: center;
+  margin-top: 1rem;
+ 
+}
+
+.icono {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+
+
+.tituloTarjeta {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2d3748;
+  padding-left: 0.5rem;
+  text-align: center;
+}
+
+.textoSecundario {
+  color: #4a5568;
+  font-size: 0.95rem;
+  padding-left: 0.5rem;
+  text-align: center;
+}
+
+
+/* Tablets (máximo 768px) */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 1rem; /* Ajusta el padding para dispositivos más pequeños */
+    margin: 1rem; /* Márgenes adaptados para mantener el espacio */
+  }
+
+  .contenedor {
+    padding: 1.5rem; /* Ajusta el padding interno */
+    margin: 1rem; /* Márgenes adicionales para que no se "peguen" */
   }
 }
 
-@media (max-width: 480px) {
-  .chartContainer {
-    height: 200px; /* Ajusta la altura para pantallas aún más pequeñas */
+/* Móviles (máximo 480px) */
+@media screen and (max-width: 480px) {
+  .fondo {
+    padding: 0.5rem; /* Reduce el padding para pantallas muy pequeñas */
+  }
+
+  .container {
+    padding: 1rem;
+    margin: 0.5rem; /* Márgenes pequeños para dispositivos muy pequeños */
+  }
+
+  .contenedor {
+    padding: 1rem; /* Ajusta aún más el padding para que se vea bien en móviles */
+    border-radius: 15px; /* Reduce el border-radius para pantallas pequeñas */
+    margin: 0.5rem; /* Márgenes pequeños para móviles */
+  }
+}
+
+@media (min-width: 768px) {
+  .seccionGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Tablets (768px o menos) */
+@media screen and (max-width: 768px) {
+  .bannerTitulo {
+    font-size: 2rem;
+  }
+
+  .bannerContenido {
+    font-size: 1.1rem;
+  }
+
+  .contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .banner {
+    flex-direction: column;
+  }
+
+  .bannerImagen {
+    max-width: 400px;
+  }
+}
+
+/* Celulares (480px o menos) */
+@media screen and (max-width: 480px) {
+  .bannerTitulo {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .bannerContenido {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .bannerImagen {
+    max-width: 100%;
+  }
+}
+
+/* Responsive: tablets y móviles (menos de 768px) */
+@media screen and (max-width: 768px) {
+  .contenedorBarraProgreso {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    align-items: center;
+  }
+
+  .contenedorBarra,
+  .contenedorNivelAlcanzado {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+
+  .contenedorNivelAlcanzado {
+    padding: 1.5rem;
+  }
+}
+
+/* Opcional: extra small para móviles muy pequeños (menos de 480px) */
+@media screen and (max-width: 480px) {
+  .contenedorNivelAlcanzado {
+    padding: 1rem;
+    border-radius: 15px;
+  }
+
+  .nivelDesempeño {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+
+  .nivelMensaje {
+    font-size: 0.95rem;
   }
 }

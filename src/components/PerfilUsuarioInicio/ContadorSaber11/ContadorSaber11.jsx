@@ -95,7 +95,7 @@ const ContadorSaber11 = () => {
       <div className={styles.contenido}>
         <h2>¡Atención!</h2>
         <p>
-          Faltan <strong className={styles.dias}>{tiempoRestante.dias}</strong>{" "}
+          Faltan <strong className={styles.dias}>{dias}</strong>{" "}
           días para las pruebas <strong>Saber 11°</strong>. <br />
           Es momento de prepararte con todo!
         </p>

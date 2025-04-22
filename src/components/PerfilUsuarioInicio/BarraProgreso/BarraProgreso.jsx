@@ -110,6 +110,7 @@ const BarraProgreso = ({ current }) => {
           transform={`rotate(90 ${175 + 90 * Math.cos(Math.PI)} ${
             15 + 90 * Math.sin(Math.PI)
           })`}
+          className={styles.puntajeTexto}
         >
           100
         </text>
@@ -123,8 +124,9 @@ const BarraProgreso = ({ current }) => {
           transform={`rotate(90 ${175 + 90 * Math.cos(Math.PI)} ${
             15 + 90 * Math.sin(Math.PI)
           })`}
+          className={styles.puntajeTexto}
         >
-        {current}
+          {current}
         </text>
         <text
           x={260 + 90 * Math.cos(Math.PI)}
@@ -136,8 +138,9 @@ const BarraProgreso = ({ current }) => {
           transform={`rotate(90 ${175 + 90 * Math.cos(Math.PI)} ${
             15 + 90 * Math.sin(Math.PI)
           })`}
+          className={styles.puntajeTexto}
         >
-        Puntaje
+          Puntaje
         </text>
         <text
           x={10 + 90 * Math.cos(0)}
@@ -149,6 +152,7 @@ const BarraProgreso = ({ current }) => {
           transform={`rotate(90 ${6 + 90 * Math.cos(0)} ${
             175 + 90 * Math.sin(0)
           })`}
+          className={styles.puntajeTexto}
         >
           500
         </text>

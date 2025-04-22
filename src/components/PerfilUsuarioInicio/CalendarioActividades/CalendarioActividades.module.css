@@ -1,0 +1,183 @@
+.calendario {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: sans-serif;
+  width: 75%;
+  margin: 2rem auto;
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  text-transform: capitalize;
+  font-size: 1.4rem;
+}
+
+.header button {
+  background: #e0e7ff;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+}
+
+.diaTitulo {
+  font-weight: bold;
+  text-align: center;
+  color: #555;
+}
+
+.celda {
+  text-align: center;
+  align-items: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 8px;
+  background: #f4f4f4;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+.celda:hover {
+  background: #e5e7eb;
+}
+
+.otroMes {
+  opacity: 0.4;
+}
+
+.conEvento {
+  background-color: #dcfce7;
+  border: 2px solid #15803d;
+  font-weight: bold;
+}
+
+.popup {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fefefe;
+  border: 1px solid #ccc;
+  padding: 1rem;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+
+.popup input {
+  width: 95%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+}
+
+.popupButton {
+  margin-right: 0.5rem;
+  background: #b87a07;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.hoy {
+  border: 2px solid #2563eb;
+  background-color: #e0f2fe;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #1e40af;
+}
+
+.listaEventos {
+  margin-top: 14px;
+  padding-left: 1rem;
+  width: 100%;
+}
+
+.cadaEvento {
+  position: relative;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem; /* Deja espacio para el punto */
+}
+
+.cadaEvento::before {
+  content: "•";
+  position: absolute;
+  left: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #4b5563;
+  font-size: 1.2rem;
+}
+
+.botonEliminar {
+  margin-left: 8px;
+  padding: 0.1rem;
+  background-color: #b87a07;
+  border-radius: 6px;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.botonEliminar:hover {
+  color: darkred;
+}
+
+.diaHoy {
+  margin: 1rem;
+  text-align: center;
+}
+
+.selectorFecha {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-top: 0.5rem;
+    text-align: center;
+    justify-content: center;
+  }
+  
+  .selectorFecha select,
+  .selectorFecha input {
+    padding: 0.3rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .inputAnio {
+    width: 80px;
+  }
+  

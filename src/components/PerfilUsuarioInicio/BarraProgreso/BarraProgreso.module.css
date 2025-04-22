@@ -5,7 +5,15 @@
   justify-content: center;
   text-align: center;
   font-family: sans-serif;
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  border-radius: 1rem;
 }
+
+.puntajeTexto {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #07090a; /* Color del texto */
+}	
 
 .gauge {
   width: 80%;

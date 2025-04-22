@@ -1,0 +1,266 @@
+.contenedorTop {
+  width: 100%;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+
+.topEstudiantes {
+  width: 100%;
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  padding: 2rem;
+  justify-content: center;
+  border-radius: 15px;
+  margin: 1rem 0;
+}
+
+.topEstudiantes h4 {
+  color: #333; /* Color del texto del título */
+  font-weight: bold; /* Peso de la fuente del título */
+  margin-bottom: 1.2rem; /* Espacio superior e inferior del título */
+}
+
+.listaPuntajes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.itemPuntaje {
+  margin: 0.5rem;
+  margin-left: 0.8rem;
+  counter-increment: custom-counter;
+  padding: 0.3rem;
+  display: flex;
+  background-color: #fbffff;
+  align-items: center;
+  width: 96%;
+  justify-content: space-between;
+  border-radius: 15px;
+}
+
+.itemPuntaje::before {
+  content: counter(custom-counter);
+  display: inline-block;
+  width: 1.5rem; /* Ancho del número */
+  height: 1.5rem; /* Altura del número */
+  background-color: #2ecc71; /* Color de fondo del número */
+  color: white; /* Color del texto del número */
+  font-size: 1rem; /* Tamaño del texto del número */
+  font-weight: bold; /* Peso de la fuente del número */
+  text-align: center; /* Alineación del texto del número */
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5rem; /* Altura de línea del número */
+  margin-right: 0.5rem; /* Margen derecho entre el número y el contenido */
+  border-radius: 25%; /* Redondeado del fondo del número */
+}
+
+.bordeVerde {
+  border: 2px solid #2ecc71;
+}
+
+.usuarioInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  width: 50%;
+}
+
+.usuarioInfo2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  width: 20%;
+}
+
+.tituloSimulacro {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold;
+  padding: 0.5rem;
+  width: 20%;
+}
+
+.miPuntaje {
+  margin: 0.4rem;
+  padding: 0.3rem;
+  display: flex;
+  background-color: #fbffff;
+  border-radius: 15px;
+  align-items: center;
+  width: 96.8%;
+  border: 2px solid #2ecc71;
+  justify-content: space-between;
+}
+
+.contenedorNumero {
+  display: flex;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #cc822e;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 25%;
+  justify-content: right;
+  margin-left: 0.3rem;
+}
+
+.indiceNumero {
+  display: flex;
+  background-color: #2ecc71;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25%;
+  padding: 0.2rem;
+}
+
+.nombreUsuario {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+  text-transform: capitalize; /* Transforma el texto a mayúsculas */
+  align-items: center;
+}
+
+.grado {
+  font-size: 0.9rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+  text-transform: lowercase; /* Transforma el texto a mayúsculas */
+  align-items: center;
+}
+
+.puntajeGlobal {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+}
+
+.tiempoPrueba {
+  font-size: 0.9rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+}
+
+.contenedorPorArea {
+  width: 100%;
+  text-align: start;
+  padding: 2rem;
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+  border-radius: 15px;
+}
+
+.contenedorPorArea h4 {
+  color: #333; /* Color del texto del título */
+  font-weight: bold; /* Peso de la fuente del título */
+  margin: 1.2rem 0; /* Espacio superior e inferior del título */
+}
+
+.itemPuntaje2 {
+  margin: 0.5rem;
+  margin-left: 0.8rem;
+  counter-increment: custom-counter;
+  padding: 0.3rem;
+  display: flex;
+  background-color: #fbffff;
+  border-radius: 15px;
+  align-items: center;
+  width: 96%;
+  justify-content: space-between;
+}
+
+.itemPuntaje2::before {
+  content: counter(custom-counter);
+  display: inline-block;
+  width: 1.5rem; /* Ancho del número */
+  height: 1.5rem; /* Altura del número */
+  background-color: #2ecc71; /* Color de fondo del número */
+  color: white; /* Color del texto del número */
+  font-size: 1rem; /* Tamaño del texto del número */
+  font-weight: bold; /* Peso de la fuente del número */
+  text-align: center; /* Alineación del texto del número */
+  align-items: center;
+  justify-content: center;
+  line-height: 1.5rem; /* Altura de línea del número */
+  margin-right: 0.5rem; /* Margen derecho entre el número y el contenido */
+  border-radius: 25%; /* Redondeado del fondo del número */
+}
+
+.areaItem {
+  width: 100%;
+}
+
+.areaImg {
+  height: 1.8rem;
+  margin-right: 0.5rem;
+}
+.contenedorlogo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.areaPuntajes {
+  width: 100%;
+}
+
+.listaMejoresPuntajes {
+  width: 100%;
+}
+
+.area {
+  padding-left: 1rem;
+}
+
+.areasContainer {
+  width: 100%;
+}
+
+.puntajeArea {
+  font-size: 1rem; /* Tamaño de la fuente del nombre de usuario */
+  color: #333333; /* Color del texto del nombre de usuario */
+  font-weight: bold; /* Peso de la fuente del nombre de usuario */
+}
+
+.h2MejorePuntajes {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.botonArea {
+  margin: 0.5rem;
+  padding: 6px 12px;
+  border: none;
+  background-color: #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.botonActivo {
+  background-color: #b87a07;
+  color: white;
+}
+
+.subtitulo {
+  font-size: 0.95rem;
+  color: #666;
+  margin-top: -8px;
+  margin-bottom: 12px;
+}
